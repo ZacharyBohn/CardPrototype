@@ -24,11 +24,13 @@ class _GameCardState extends State<GameCard> {
     return Material(
       child: Draggable(
         data: widget.card,
-        feedback: Container(
-          width: widget.cardSize.width * 1.2,
-          height: widget.cardSize.height * 1.2,
-          color: Colors.black45,
-          child: subCard(widget.card.name),
+        feedback: Material(
+          child: Container(
+            width: widget.cardSize.width * 1.2,
+            height: widget.cardSize.height * 1.2,
+            color: Colors.black45,
+            child: subCard(widget.card.name),
+          ),
         ),
         onDragEnd: (DraggableDetails details) {
           widget.onDraggedFrom(widget.indexPosition);
@@ -54,9 +56,8 @@ Widget subCard(String cardName) {
       ),
       //card name
       Flexible(
-        flex: 1,
         child: Container(
-          color: Colors.black87,
+          color: Colors.black26,
           child: Center(
             child: Text(
               cardName,
