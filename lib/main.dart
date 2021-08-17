@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'empty_position.dart';
 import 'game_card.dart';
-import 'models/card_model.dart';
+import 'models/game_card_model.dart';
 
 void main() {
   runApp(Prototype());
@@ -19,7 +19,9 @@ class _PrototypeState extends State<Prototype> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: GameBoard(),
+        body: Builder(
+          builder: (context) => GameBoard(),
+        ),
       ),
     );
   }
@@ -45,7 +47,18 @@ class _GameBoardState extends State<GameBoard> {
     for (int _ = 0; _ < rows * columns; _++) {
       cards.add(null);
     }
+    cards[0] = GameCardModel();
     super.initState();
+  }
+
+  /// Warning: Math ahead
+  Size getCardSize(Size size) {
+    double outterPadding = 40;
+    double innerPadding = rows * size.height * 0.01;
+    double remainingSpace = size.height - (outterPadding + innerPadding);
+    double cardHeight = remainingSpace / rows;
+    double cardWidth = cardHeight / (1 / cardAspectRatio);
+    return Size(cardWidth, cardHeight);
   }
 
   int getXFromIndex(int index) {
@@ -63,7 +76,7 @@ class _GameBoardState extends State<GameBoard> {
 
   /// Called on each build call, reads from `cards`
   /// to build either a game card or an empty position
-  List<Widget> buildWidgets() {
+  List<Widget> buildWidgets(Size cardSize) {
     List<Widget> widgets = [];
     for (int index = 0; index < rows * columns; index++) {
       if (cards[index] == null) {
@@ -71,16 +84,25 @@ class _GameBoardState extends State<GameBoard> {
           EmptyPosition(
             indexPosition: index,
             color: emptyCardColor,
-            onTap: (int indexPosition) {
+            onDraggedTo: (int indexPosition, GameCardModel card) {
               setState(() {
-                cards[indexPosition] = GameCardModel();
+                cards[indexPosition] = card;
               });
             },
           ),
         );
       }
       if (cards[index] != null) {
-        widgets.add(GameCard(indexPosition: index));
+        widgets.add(GameCard(
+          card: cards[index]!,
+          indexPosition: index,
+          cardSize: cardSize,
+          onDraggedFrom: (int indexPosition) {
+            setState(() {
+              cards[indexPosition] = null;
+            });
+          },
+        ));
       }
     }
     return widgets;
@@ -89,6 +111,7 @@ class _GameBoardState extends State<GameBoard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    Size cardSize = getCardSize(size);
     return Container(
       color: Colors.black,
       child: Row(
@@ -104,7 +127,7 @@ class _GameBoardState extends State<GameBoard> {
               mainAxisSpacing: size.height * 0.01,
               crossAxisSpacing: size.height * 0.01,
               childAspectRatio: cardAspectRatio,
-              children: buildWidgets(),
+              children: buildWidgets(cardSize),
             ),
           ),
           //the side panel

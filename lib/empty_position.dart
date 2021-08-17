@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 
+import 'models/game_card_model.dart';
+
 class EmptyPosition extends StatelessWidget {
   final int indexPosition;
   final Color color;
-  final void Function(int) onTap;
+  final void Function(int, GameCardModel) onDraggedTo;
 
   const EmptyPosition({
     required this.indexPosition,
     required this.color,
-    required this.onTap,
+    required this.onDraggedTo,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTap(indexPosition);
+    return DragTarget(
+      builder: (context, data, __) {
+        return GestureDetector(
+          child: Container(
+            color: color,
+          ),
+        );
       },
-      child: Container(
-        color: color,
-      ),
+      onWillAccept: (object) {
+        if (object is GameCardModel) return true;
+        print('rejecting object: $object');
+        return false;
+      },
+      onAccept: (object) {
+        onDraggedTo(indexPosition, object as GameCardModel);
+      },
     );
   }
 }
