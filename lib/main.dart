@@ -111,6 +111,7 @@ class _GameBoardState extends State<GameBoard> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    //get the exact size that cards should be
     Size cardSize = getCardSize(size);
     return Container(
       color: Colors.black,
