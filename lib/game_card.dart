@@ -39,7 +39,12 @@ class _GameCardState extends State<GameCard> {
           width: widget.cardSize.width.ceilToDouble(),
           height: widget.cardSize.height.ceilToDouble(),
           color: Colors.black45,
-          child: subCard(widget.card.name),
+          child: Stack(
+            children: [
+              subCard(widget.card.name),
+              cardButtons(),
+            ],
+          ),
         ),
       ),
     );
@@ -68,6 +73,16 @@ Widget subCard(String cardName) {
             ),
           ),
         ),
+      ),
+    ],
+  );
+}
+
+Widget cardButtons() {
+  return Column(
+    children: [
+      Row(
+        children: [],
       ),
     ],
   );
