@@ -43,7 +43,7 @@ class _GameCardState extends State<GameCard> {
           child: Stack(
             children: [
               subCard(widget.card.name),
-              cardButtons(),
+              cardButtons(widget.cardSize.width / 2),
             ],
           ),
         ),
@@ -57,11 +57,12 @@ Widget subCard(String cardName) {
     children: [
       //card image
       Flexible(
-        flex: 2,
+        flex: 5,
         child: Container(color: Colors.black45),
       ),
       //card name
       Flexible(
+        flex: 4,
         child: Container(
           color: Colors.black26,
           child: Center(
@@ -79,11 +80,39 @@ Widget subCard(String cardName) {
   );
 }
 
-Widget cardButtons() {
+Widget cardButtons(double iconWidth) {
   return Column(
     children: [
       Row(
-        children: [],
+        children: [
+          Spacer(),
+          PopupMenuButton(
+            color: Colors.black,
+            iconSize: 20,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: Text(
+                  "First",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                value: 1,
+              ),
+              PopupMenuItem(
+                child: Text(
+                  "Second",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                value: 2,
+              )
+            ],
+          ),
+        ],
       ),
     ],
   );
