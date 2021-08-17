@@ -33,6 +33,7 @@ class _GameCardState extends State<GameCard> {
           ),
         ),
         onDragEnd: (DraggableDetails details) {
+          if (!details.wasAccepted) return;
           widget.onDraggedFrom(widget.indexPosition);
         },
         child: Container(
