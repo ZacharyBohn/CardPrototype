@@ -7,11 +7,13 @@ class GameCard extends StatefulWidget {
   final int indexPosition;
   final Size cardSize;
   final void Function(int) onDraggedFrom;
+  final void Function(int)? onPopupItemSelected;
   const GameCard({
     required this.card,
     required this.indexPosition,
     required this.cardSize,
     required this.onDraggedFrom,
+    this.onPopupItemSelected,
   });
 
   @override
@@ -30,7 +32,9 @@ class _GameCardState extends State<GameCard> {
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.2,
             color: AppColors.cardNameBackground,
-            child: subCard(widget.card.name),
+            child: widget.card.faceup
+                ? subCard(widget.card.name)
+                : cardBack(widget.cardSize),
           ),
         ),
         onDragEnd: (DraggableDetails details) {
@@ -43,7 +47,9 @@ class _GameCardState extends State<GameCard> {
           color: AppColors.cardNameBackground,
           child: Stack(
             children: [
-              subCard(widget.card.name),
+              widget.card.faceup
+                  ? subCard(widget.card.name)
+                  : cardBack(widget.cardSize),
               cardButtons(widget.cardSize.width / 2),
             ],
           ),
@@ -51,70 +57,86 @@ class _GameCardState extends State<GameCard> {
       ),
     );
   }
-}
 
-Widget subCard(String cardName) {
-  return Column(
-    children: [
-      //card image
-      Flexible(
-        flex: 5,
-        child: Container(color: AppColors.cardBackground),
-      ),
-      //card name
-      Flexible(
-        flex: 4,
-        child: Container(
-          color: AppColors.cardNameBackground,
-          child: Center(
-            child: Text(
-              cardName,
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.fontColor,
+  Widget cardBack(Size cardSize) {
+    return Container(
+      color: AppColors.cardBack,
+      width: cardSize.width,
+      height: cardSize.height,
+    );
+  }
+
+  Widget subCard(String cardName) {
+    return Column(
+      children: [
+        //card image
+        Flexible(
+          flex: 5,
+          child: Container(color: AppColors.cardBackground),
+        ),
+        //card name
+        Flexible(
+          flex: 4,
+          child: Container(
+            color: AppColors.cardNameBackground,
+            child: Center(
+              child: Text(
+                cardName,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: AppColors.fontColor,
+                ),
               ),
             ),
           ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
-Widget cardButtons(double iconWidth) {
-  return Column(
-    children: [
-      Row(
-        children: [
-          Spacer(),
-          PopupMenuButton(
-            color: Colors.black,
-            iconSize: 20,
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text(
-                  "First",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
+  Widget cardButtons(double iconWidth) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Spacer(),
+            PopupMenuButton(
+              onSelected: (int value) {
+                switch (value) {
+                  case 1:
+                    setState(() {
+                      widget.card.faceup = !widget.card.faceup;
+                    });
+                }
+              },
+              color: Colors.black,
+              iconSize: 20,
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text(
+                    "Flip",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
                   ),
+                  value: 1,
                 ),
-                value: 1,
-              ),
-              PopupMenuItem(
-                child: Text(
-                  "Second",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
+                PopupMenuItem(
+                  child: Text(
+                    "?",
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                value: 2,
-              )
-            ],
-          ),
-        ],
-      ),
-    ],
-  );
+                  value: 2,
+                )
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }
