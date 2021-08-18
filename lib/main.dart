@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'empty_position.dart';
+import 'enum/app_colors.dart';
 import 'game_card.dart';
 import 'models/game_card_model.dart';
 
@@ -38,7 +39,6 @@ class _GameBoardState extends State<GameBoard> {
   final double cardAspectRatio = 1.0 / 1.4;
   final int rows = 5;
   final int columns = 7;
-  final Color emptyCardColor = Colors.cyan.shade800;
 
   List<GameCardModel?> cards = [];
 
@@ -83,7 +83,7 @@ class _GameBoardState extends State<GameBoard> {
         widgets.add(
           EmptyPosition(
             indexPosition: index,
-            color: emptyCardColor,
+            color: AppColors.emptyPosition,
             onDraggedTo: (int indexPosition, GameCardModel card) {
               setState(() {
                 cards[indexPosition] = card;
@@ -114,14 +114,14 @@ class _GameBoardState extends State<GameBoard> {
     //get the exact size that cards should be
     Size cardSize = getCardSize(size);
     return Container(
-      color: Colors.black,
+      color: AppColors.background,
       child: Row(
         children: [
           //the card list
           Container(
             width: size.width > size.height ? size.height : size.width,
             height: size.height,
-            color: Color.fromRGBO(20, 20, 20, 1),
+            color: AppColors.background,
             child: GridView.count(
               crossAxisCount: 7,
               padding: EdgeInsets.all(20),
@@ -135,7 +135,7 @@ class _GameBoardState extends State<GameBoard> {
           Container(
             width: size.width > size.height ? size.width - size.height : 0,
             height: size.height,
-            color: Colors.cyan.shade900,
+            color: AppColors.sidePanelBackground,
           ),
         ],
       ),

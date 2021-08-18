@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'enum/app_colors.dart';
 import 'models/game_card_model.dart';
 
 class GameCard extends StatefulWidget {
@@ -28,7 +29,7 @@ class _GameCardState extends State<GameCard> {
           child: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.2,
-            color: Colors.black45,
+            color: AppColors.cardNameBackground,
             child: subCard(widget.card.name),
           ),
         ),
@@ -39,7 +40,7 @@ class _GameCardState extends State<GameCard> {
         child: Container(
           width: widget.cardSize.width.ceilToDouble(),
           height: widget.cardSize.height.ceilToDouble(),
-          color: Colors.black45,
+          color: AppColors.cardNameBackground,
           child: Stack(
             children: [
               subCard(widget.card.name),
@@ -58,19 +59,19 @@ Widget subCard(String cardName) {
       //card image
       Flexible(
         flex: 5,
-        child: Container(color: Colors.black45),
+        child: Container(color: AppColors.cardBackground),
       ),
       //card name
       Flexible(
         flex: 4,
         child: Container(
-          color: Colors.black26,
+          color: AppColors.cardNameBackground,
           child: Center(
             child: Text(
               cardName,
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.white,
+                color: AppColors.fontColor,
               ),
             ),
           ),
