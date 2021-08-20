@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'models/game_card_model.dart';
+import 'models/game_card.model.dart';
 
 class EmptyPosition extends StatelessWidget {
   final int indexPosition;
@@ -25,7 +25,6 @@ class EmptyPosition extends StatelessWidget {
       },
       onWillAccept: (object) {
         if (object is GameCardModel) return true;
-        print('rejecting object: $object');
         return false;
       },
       onAccept: (object) {

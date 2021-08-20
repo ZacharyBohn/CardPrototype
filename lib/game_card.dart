@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'enum/app_colors.dart';
-import 'models/game_card_model.dart';
+import 'models/game_card.model.dart';
 
 class GameCard extends StatefulWidget {
   final GameCardModel card;
   final int indexPosition;
   final Size cardSize;
   final void Function(int) onDraggedFrom;
+  final void Function(int, GameCardModel) onDraggedTo;
   final void Function(int)? onPopupItemSelected;
   const GameCard({
     required this.card,
     required this.indexPosition,
     required this.cardSize,
     required this.onDraggedFrom,
+    required this.onDraggedTo,
     this.onPopupItemSelected,
   });
 
@@ -23,10 +25,12 @@ class GameCard extends StatefulWidget {
 class _GameCardState extends State<GameCard> {
   @override
   Widget build(BuildContext context) {
-    //use fractionally sized box to build sub components
     return Material(
       child: Draggable(
         data: widget.card,
+        childWhenDragging: Container(
+          color: AppColors.emptyPositionHighlighted,
+        ),
         feedback: Material(
           child: Container(
             width: widget.cardSize.width * 1.2,
@@ -41,18 +45,27 @@ class _GameCardState extends State<GameCard> {
           if (!details.wasAccepted) return;
           widget.onDraggedFrom(widget.indexPosition);
         },
-        child: Container(
-          width: widget.cardSize.width.ceilToDouble(),
-          height: widget.cardSize.height.ceilToDouble(),
-          color: AppColors.cardNameBackground,
-          child: Stack(
-            children: [
-              widget.card.faceup
-                  ? subCard(widget.card.name)
-                  : cardBack(widget.cardSize),
-              cardButtons(widget.cardSize.width / 2),
-            ],
+        child: DragTarget(
+          builder: (context, _, __) => Container(
+            width: widget.cardSize.width.ceilToDouble(),
+            height: widget.cardSize.height.ceilToDouble(),
+            color: AppColors.cardNameBackground,
+            child: Stack(
+              children: [
+                widget.card.faceup
+                    ? subCard(widget.card.name)
+                    : cardBack(widget.cardSize),
+                cardButtons(widget.cardSize.width / 2),
+              ],
+            ),
           ),
+          onWillAccept: (object) {
+            if (object is GameCardModel) return true;
+            return false;
+          },
+          onAccept: (object) {
+            widget.onDraggedTo(widget.indexPosition, object as GameCardModel);
+          },
         ),
       ),
     );

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'empty_position.dart';
 import 'enum/app_colors.dart';
 import 'game_card.dart';
-import 'models/game_card_model.dart';
+import 'models/game_card.model.dart';
+import 'models/game_card_group.model.dart';
 
 void main() {
   runApp(Prototype());
@@ -40,14 +41,17 @@ class _GameBoardState extends State<GameBoard> {
   final int rows = 5;
   final int columns = 7;
 
-  List<GameCardModel?> cards = [];
+  List<GameCardGroupModel> cardGroups = [];
 
   @override
   void initState() {
     for (int _ = 0; _ < rows * columns; _++) {
-      cards.add(null);
+      cardGroups.add(GameCardGroupModel());
     }
-    cards[0] = GameCardModel();
+    cardGroups[0] = GameCardGroupModel();
+    cardGroups[0].addCardToTop(GameCardModel(name: 'First Card'));
+    cardGroups[1] = GameCardGroupModel();
+    cardGroups[1].addCardToTop(GameCardModel(name: 'Second Card'));
     super.initState();
   }
 
@@ -79,27 +83,32 @@ class _GameBoardState extends State<GameBoard> {
   List<Widget> buildWidgets(Size cardSize) {
     List<Widget> widgets = [];
     for (int index = 0; index < rows * columns; index++) {
-      if (cards[index] == null) {
+      if (cardGroups[index].isEmpty) {
         widgets.add(
           EmptyPosition(
             indexPosition: index,
             color: AppColors.emptyPosition,
             onDraggedTo: (int indexPosition, GameCardModel card) {
               setState(() {
-                cards[indexPosition] = card;
+                cardGroups[indexPosition].addCardToTop(card);
               });
             },
           ),
         );
       }
-      if (cards[index] != null) {
+      if (cardGroups[index].isNotEmpty) {
         widgets.add(GameCard(
-          card: cards[index]!,
+          card: cardGroups[index].topCard!,
           indexPosition: index,
           cardSize: cardSize,
           onDraggedFrom: (int indexPosition) {
             setState(() {
-              cards[indexPosition] = null;
+              cardGroups[indexPosition].removeCardFromTop();
+            });
+          },
+          onDraggedTo: (int indexPosition, GameCardModel card) {
+            setState(() {
+              cardGroups[indexPosition].addCardToTop(card);
             });
           },
         ));
