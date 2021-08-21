@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:game_prototype/providers/board_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'home.dart';
 
@@ -11,8 +13,13 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Home(),
+    return MultiProvider(
+      providers: [
+        Provider(create: (context) => BoardProvider()),
+      ],
+      child: MaterialApp(
+        home: Home(),
+      ),
     );
   }
 }

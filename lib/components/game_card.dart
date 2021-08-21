@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'enum/app_colors.dart';
-import 'models/game_card.model.dart';
+import '../enum/app_colors.dart';
+import '../models/game_card.model.dart';
 
 class GameCard extends StatefulWidget {
   final GameCardModel card;

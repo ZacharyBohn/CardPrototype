@@ -15,6 +15,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext conApptext) {
     Size size = MediaQuery.of(conApptext).size;
     return Scaffold(
+      appBar: AppBar(
+        title: AppText(label: 'Card Prototyper'),
+        backgroundColor: AppColors.appBarBackground,
+        elevation: 0,
+      ),
       body: Container(
         color: AppColors.background,
         child: Row(
@@ -24,6 +29,7 @@ class _HomeState extends State<Home> {
               child: Container(
                 color: AppColors.panel,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AppText(label: 'Card Preview Panel'),
                   ],
@@ -41,7 +47,8 @@ class _HomeState extends State<Home> {
                     child: Container(
                       color: ColorPalette.paleWhite,
                       width: size.width * 0.4,
-                      child: Center(child: AppText(label: 'Opponents Hand')),
+                      child:
+                          Center(child: AppText(label: 'Opponents Hand Area')),
                     ),
                   ),
                   Expanded(
@@ -67,7 +74,7 @@ class _HomeState extends State<Home> {
                     child: Container(
                       color: ColorPalette.paleWhite,
                       width: size.width * 0.4,
-                      child: Center(child: AppText(label: 'Player Hand')),
+                      child: Center(child: AppText(label: 'Player Hand Area')),
                     ),
                   ),
                 ],
@@ -79,6 +86,7 @@ class _HomeState extends State<Home> {
               child: Container(
                 color: AppColors.panel,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     AppText(label: 'Chat / Settings Panel'),
                   ],

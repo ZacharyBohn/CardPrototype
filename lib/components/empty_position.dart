@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'models/game_card.model.dart';
+import '../models/game_card.model.dart';
 
 class EmptyPosition extends StatelessWidget {
   final int indexPosition;

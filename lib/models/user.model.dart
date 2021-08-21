@@ -1,7 +1,7 @@
-class User {
+class UserModel {
   String? userId;
   String? username;
-  User({
+  UserModel({
     this.userId,
     this.username,
   });
