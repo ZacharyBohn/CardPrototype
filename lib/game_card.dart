@@ -35,7 +35,7 @@ class _GameCardState extends State<GameCard> {
           child: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.2,
-            color: AppColors.cardNameBackground,
+            color: AppColors.cardBackground,
             child: widget.card.faceup
                 ? subCard(widget.card.name)
                 : cardBack(widget.cardSize),
@@ -49,7 +49,7 @@ class _GameCardState extends State<GameCard> {
           builder: (context, _, __) => Container(
             width: widget.cardSize.width.ceilToDouble(),
             height: widget.cardSize.height.ceilToDouble(),
-            color: AppColors.cardNameBackground,
+            color: AppColors.cardBackground,
             child: Stack(
               children: [
                 widget.card.faceup
@@ -91,7 +91,7 @@ class _GameCardState extends State<GameCard> {
         Flexible(
           flex: 4,
           child: Container(
-            color: AppColors.cardNameBackground,
+            color: AppColors.cardBackground,
             child: Center(
               child: Text(
                 cardName,
