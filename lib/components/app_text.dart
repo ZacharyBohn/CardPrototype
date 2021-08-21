@@ -3,7 +3,8 @@ import 'package:game_prototype/enum/app_colors.dart';
 
 class AppText extends StatelessWidget {
   final String? label;
-  const AppText({Key? key, this.label}) : super(key: key);
+  final double? fontSize;
+  const AppText({Key? key, this.label, this.fontSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class AppText extends StatelessWidget {
       label ?? '',
       style: TextStyle(
         color: AppColors.fontColor,
-        fontSize: 14,
+        fontSize: fontSize ?? 14,
         fontFamily: 'Arial',
       ),
     );

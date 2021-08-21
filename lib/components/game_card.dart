@@ -4,14 +4,19 @@ import '../models/game_card.model.dart';
 
 class GameCard extends StatefulWidget {
   final GameCardModel card;
-  final int indexPosition;
   final Size cardSize;
-  final void Function(int) onDraggedFrom;
-  final void Function(int, GameCardModel) onDraggedTo;
+  final void Function({
+    required int row,
+    required int column,
+  }) onDraggedFrom;
+  final void Function({
+    required int row,
+    required int column,
+    required GameCardModel cardModel,
+  }) onDraggedTo;
   final void Function(int)? onPopupItemSelected;
   const GameCard({
     required this.card,
-    required this.indexPosition,
     required this.cardSize,
     required this.onDraggedFrom,
     required this.onDraggedTo,
@@ -43,7 +48,10 @@ class _GameCardState extends State<GameCard> {
         ),
         onDragEnd: (DraggableDetails details) {
           if (!details.wasAccepted) return;
-          widget.onDraggedFrom(widget.indexPosition);
+          widget.onDraggedFrom(
+            row: widget.card.rowPosition,
+            column: widget.card.columPosition,
+          );
         },
         child: DragTarget(
           builder: (context, _, __) => Container(
@@ -64,7 +72,11 @@ class _GameCardState extends State<GameCard> {
             return false;
           },
           onAccept: (object) {
-            widget.onDraggedTo(widget.indexPosition, object as GameCardModel);
+            widget.onDraggedTo(
+              row: widget.card.rowPosition,
+              column: widget.card.columPosition,
+              cardModel: object as GameCardModel,
+            );
           },
         ),
       ),

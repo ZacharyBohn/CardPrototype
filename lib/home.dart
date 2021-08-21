@@ -16,9 +16,16 @@ class _HomeState extends State<Home> {
     Size size = MediaQuery.of(conApptext).size;
     return Scaffold(
       appBar: AppBar(
-        title: AppText(label: 'Card Prototyper'),
+        title: AppText(
+          label: 'CCG Prototyper',
+          fontSize: 18,
+        ),
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
+        leading: Icon(
+          Icons.menu,
+          color: AppColors.menuIcon,
+        ),
       ),
       body: Container(
         color: AppColors.background,

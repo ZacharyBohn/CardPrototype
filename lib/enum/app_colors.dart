@@ -10,6 +10,7 @@ class AppColors {
   static Color cardBackground = ColorPalette.darkGrey;
   static Color cardBack = ColorPalette.purple;
   static Color appBarBackground = ColorPalette.darkGrey;
+  static Color menuIcon = ColorPalette.white;
 }
 
 class ColorPalette {
