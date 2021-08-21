@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/game_card.dart';
 import 'package:game_prototype/enum/app_colors.dart';
+import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
@@ -13,16 +14,46 @@ class Board extends StatefulWidget {
 }
 
 class _BoardState extends State<Board> {
-  List<Row> buildCardRows(BoardProvider boardProvider) {
-    List<Row> widgets = [];
+  //TODO: move the transform of the board here to it can be
+  //applied to cards when they are being dragged
+  List<Widget> buildCardRows(BoardProvider boardProvider) {
+    List<Widget> widgets = [];
+    int rowPosition = 0;
     for (List<GameCardGroupModel> row in boardProvider.board.positions) {
       List<Widget> rowWidgets = [];
+      int columnPosition = 0;
       for (GameCardGroupModel cardGroup in row) {
-        // rowWidgets.add();
+        //TODO: conditionally add a card / empty position
+        rowWidgets.add(
+          Flexible(
+            child: GameCard(
+              card: GameCardModel(
+                rowPosition: rowPosition,
+                columPosition: columnPosition,
+              ),
+              cardSize: Size(150, 165),
+              onDraggedFrom: ({required int row, required int column}) {
+                // TODO: implement
+              },
+              onDraggedTo: (
+                  {required GameCardModel cardModel,
+                  required int row,
+                  required int column}) {
+                // TODO: implement
+              },
+            ),
+          ),
+        );
+        columnPosition++;
       }
-      widgets.add(Row(
-        children: rowWidgets,
-      ));
+      widgets.add(
+        Flexible(
+          child: Row(
+            children: rowWidgets,
+          ),
+        ),
+      );
+      rowPosition++;
     }
     return widgets;
   }

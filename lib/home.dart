@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_prototype/components/board.dart';
 
 import 'components/app_text.dart';
 import 'enum/app_colors.dart';
@@ -65,14 +66,7 @@ class _HomeState extends State<Home> {
                         ..setEntry(3, 2, 0.001)
                         ..rotateX(-0.75),
                       alignment: FractionalOffset.center,
-                      child: Container(
-                        color: AppColors.board,
-                        width: size.width * 0.4,
-                        height: size.width * 0.45,
-                        child: Center(
-                          child: AppText(label: 'Board Area'),
-                        ),
-                      ),
+                      child: Board(),
                     ),
                   ),
                   Spacer(),
