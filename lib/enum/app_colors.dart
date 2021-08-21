@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static Color get background => Color.fromARGB(255, 10, 10, 15);
-  static Color get background2 => Color.fromARGB(255, 30, 30, 40);
-  static Color get background3 => Color.fromARGB(255, 50, 50, 55);
-  static Color get cardBackground => Colors.black45;
-  static Color get cardNameBackground => Colors.black26;
-  static Color get cardBack => Colors.deepPurple;
-  static Color get emptyPosition => Colors.cyan.shade800;
-  static Color get emptyPositionHighlighted => Colors.cyan.shade700;
-  static Color get sidePanelBackground => Colors.cyan.shade900;
-  static Color get fontColor => Colors.white;
+  //colors
+  static final Color background = ColorPalette.darkGrey;
+  static final Color fontColor = ColorPalette.white;
+  static final Color board = ColorPalette.cyan;
+  static final Color panel = ColorPalette.cyan;
+}
+
+class ColorPalette {
+  static final black = Color.fromRGBO(0, 0, 0, 1);
+  static final white = Color.fromRGBO(240, 240, 240, 1);
+  static final paleWhite = Color.fromRGBO(240, 240, 240, 0.4);
+  static final grey = Color.fromRGBO(55, 55, 65, 1);
+  static final darkGrey = Color.fromRGBO(50, 50, 60, 1);
+
+  static final cyan = Colors.cyan.shade800;
+  static final darkCyan = Colors.cyan.shade900;
+  static final lightCyan = Colors.cyan.shade700;
 }

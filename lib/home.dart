@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'components/app_text.dart';
+import 'enum/app_colors.dart';
+
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -9,10 +12,81 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext conApptext) {
+    Size size = MediaQuery.of(conApptext).size;
     return Scaffold(
       body: Container(
-        color: Colors.green,
+        color: AppColors.background,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                color: AppColors.panel,
+                child: Column(
+                  children: [
+                    AppText(label: 'Card Preview Panel'),
+                  ],
+                ),
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              flex: 4,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: ColorPalette.paleWhite,
+                      width: size.width * 0.4,
+                      child: Center(child: AppText(label: 'Opponents Hand')),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 10,
+                    child: Transform(
+                      transform: Matrix4.identity()
+                        ..setEntry(3, 2, 0.001)
+                        ..rotateX(-0.75),
+                      alignment: FractionalOffset.center,
+                      child: Container(
+                        color: AppColors.board,
+                        width: size.width * 0.4,
+                        height: size.width * 0.45,
+                        child: Center(
+                          child: AppText(label: 'Board Area'),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      color: ColorPalette.paleWhite,
+                      width: size.width * 0.4,
+                      child: Center(child: AppText(label: 'Player Hand')),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Spacer(),
+            Expanded(
+              flex: 3,
+              child: Container(
+                color: AppColors.panel,
+                child: Column(
+                  children: [
+                    AppText(label: 'Chat / Settings Panel'),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
