@@ -15,7 +15,8 @@ class AppRoot extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<BoardProvider>(create: (context) => BoardProvider()),
+        ChangeNotifierProvider<BoardProvider>(
+            create: (context) => BoardProvider()),
       ],
       child: MaterialApp(
         home: Home(),

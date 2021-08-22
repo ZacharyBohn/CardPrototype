@@ -26,21 +26,24 @@ class _BoardState extends State<Board> {
         //TODO: conditionally add a card / empty position
         rowWidgets.add(
           Flexible(
-            child: GameCard(
-              card: GameCardModel(
-                rowPosition: rowPosition,
-                columPosition: columnPosition,
+            child: Padding(
+              padding: EdgeInsets.all(6),
+              child: GameCard(
+                card: GameCardModel(
+                  rowPosition: rowPosition,
+                  columPosition: columnPosition,
+                ),
+                cardSize: Size(150, 165),
+                onDraggedFrom: ({required int row, required int column}) {
+                  // TODO: implement
+                },
+                onDraggedTo: (
+                    {required GameCardModel cardModel,
+                    required int row,
+                    required int column}) {
+                  // TODO: implement
+                },
               ),
-              cardSize: Size(150, 165),
-              onDraggedFrom: ({required int row, required int column}) {
-                // TODO: implement
-              },
-              onDraggedTo: (
-                  {required GameCardModel cardModel,
-                  required int row,
-                  required int column}) {
-                // TODO: implement
-              },
             ),
           ),
         );

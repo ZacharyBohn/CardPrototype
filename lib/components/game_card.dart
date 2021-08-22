@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../enum/app_colors.dart';
 import '../models/game_card.model.dart';
+import 'app_text.dart';
 
 class GameCard extends StatefulWidget {
   final GameCardModel card;
@@ -34,16 +35,17 @@ class _GameCardState extends State<GameCard> {
       child: Draggable(
         data: widget.card,
         childWhenDragging: Container(
-          color: AppColors.emptyPositionHighlighted,
+          width: widget.cardSize.width * 1.2,
+          height: widget.cardSize.height * 1.2,
+          color: AppColors.emptyPosition,
         ),
         feedback: Material(
           child: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.2,
-            color: AppColors.cardBackground,
-            child: widget.card.faceup
-                ? subCard(widget.card.name)
-                : cardBack(widget.cardSize),
+            color: widget.card.faceup
+                ? AppColors.cardForeground
+                : AppColors.cardBack,
           ),
         ),
         onDragEnd: (DraggableDetails details) {
@@ -57,15 +59,9 @@ class _GameCardState extends State<GameCard> {
           builder: (context, _, __) => Container(
             width: widget.cardSize.width.ceilToDouble(),
             height: widget.cardSize.height.ceilToDouble(),
-            color: AppColors.cardBackground,
-            child: Stack(
-              children: [
-                widget.card.faceup
-                    ? subCard(widget.card.name)
-                    : cardBack(widget.cardSize),
-                cardButtons(widget.cardSize.width / 2),
-              ],
-            ),
+            color: widget.card.faceup
+                ? AppColors.cardForeground
+                : AppColors.cardBack,
           ),
           onWillAccept: (object) {
             if (object is GameCardModel) return true;
@@ -80,88 +76,6 @@ class _GameCardState extends State<GameCard> {
           },
         ),
       ),
-    );
-  }
-
-  Widget cardBack(Size cardSize) {
-    return Container(
-      color: AppColors.cardBack,
-      width: cardSize.width,
-      height: cardSize.height,
-    );
-  }
-
-  Widget subCard(String cardName) {
-    return Column(
-      children: [
-        //card image
-        Flexible(
-          flex: 5,
-          child: Container(color: AppColors.cardBackground),
-        ),
-        //card name
-        Flexible(
-          flex: 4,
-          child: Container(
-            color: AppColors.cardBackground,
-            child: Center(
-              child: Text(
-                cardName,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.fontColor,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget cardButtons(double iconWidth) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            Spacer(),
-            PopupMenuButton(
-              onSelected: (int value) {
-                switch (value) {
-                  case 1:
-                    setState(() {
-                      widget.card.faceup = !widget.card.faceup;
-                    });
-                }
-              },
-              color: Colors.black,
-              iconSize: 20,
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: Text(
-                    "Flip",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
-                  ),
-                  value: 1,
-                ),
-                PopupMenuItem(
-                  child: Text(
-                    "?",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white,
-                    ),
-                  ),
-                  value: 2,
-                )
-              ],
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
