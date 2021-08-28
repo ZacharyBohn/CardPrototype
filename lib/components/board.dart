@@ -14,16 +14,28 @@ class Board extends StatefulWidget {
 }
 
 class _BoardState extends State<Board> {
-  //TODO: move the transform of the board here to it can be
-  //applied to cards when they are being dragged
-  List<Widget> buildCardRows(BoardProvider boardProvider) {
+  Matrix4 transformationMatrix = Matrix4.identity()..setEntry(3, 2, 0.001);
+  // ..rotateX(-0.75);
+
+  Size getCardSize(Size screenSize, int rows, int columns) {
+    double boardWidth = screenSize.width * (1 / 3);
+    double boardHeight = screenSize.height * (2 / 3);
+    //6 pixels of padding on each side: 6 * 2
+    double width = (boardWidth / columns) - (6 * 2);
+    double height = (boardHeight / rows) - (6 * 2);
+    return Size(width, height);
+  }
+
+  List<Widget> buildCardRows(BoardProvider boardProvider, Size screenSize) {
     List<Widget> widgets = [];
     int rowPosition = 0;
+    int rowCount = boardProvider.board.positions.length;
+    int columnCount = boardProvider.board.positions[0].length;
     for (List<GameCardGroupModel> row in boardProvider.board.positions) {
       List<Widget> rowWidgets = [];
       int columnPosition = 0;
       for (GameCardGroupModel cardGroup in row) {
-        //TODO: conditionally add a card / empty position
+        //TODO: change to game card group
         rowWidgets.add(
           Flexible(
             child: Padding(
@@ -33,7 +45,7 @@ class _BoardState extends State<Board> {
                   rowPosition: rowPosition,
                   columPosition: columnPosition,
                 ),
-                cardSize: Size(150, 165),
+                cardSize: getCardSize(screenSize, rowCount, columnCount),
                 onDraggedFrom: ({required int row, required int column}) {
                   // TODO: implement
                 },
@@ -64,10 +76,15 @@ class _BoardState extends State<Board> {
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
-    return Container(
-      color: AppColors.board,
-      child: Column(
-        children: buildCardRows(boardProvider),
+    Size size = MediaQuery.of(context).size;
+    return Transform(
+      transform: transformationMatrix,
+      alignment: FractionalOffset.center,
+      child: Container(
+        color: AppColors.board,
+        child: Column(
+          children: buildCardRows(boardProvider, size),
+        ),
       ),
     );
   }
