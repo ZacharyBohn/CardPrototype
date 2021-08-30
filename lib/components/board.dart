@@ -31,12 +31,12 @@ class _BoardState extends State<Board> {
   List<Widget> buildCardRows(BoardProvider boardProvider, Size screenSize) {
     List<Widget> widgets = [];
     int rowPosition = 0;
-    int rowCount = boardProvider.board.positions.length;
-    int columnCount = boardProvider.board.positions[0].length;
-    for (List<GameCardGroupModel> row in boardProvider.board.positions) {
+    int rowCount = boardProvider.rows;
+    int columnCount = boardProvider.columns;
+    for (var _ in Iterable.generate(rowCount)) {
       List<Widget> rowWidgets = [];
       int columnPosition = 0;
-      for (GameCardGroupModel cardGroup in row) {
+      for (var __ in Iterable.generate(columnCount)) {
         rowWidgets.add(
           Flexible(
             child: Padding(
@@ -46,13 +46,13 @@ class _BoardState extends State<Board> {
                 columnPosition: columnPosition,
                 cardSize: getCardSize(screenSize, rowCount, columnCount),
                 onDraggedFrom: ({required int row, required int column}) {
-                  // TODO: implement
+                  boardProvider.removeTopCard(row, column);
                 },
                 onDraggedTo: (
                     {required GameCardModel cardModel,
                     required int row,
                     required int column}) {
-                  // TODO: implement
+                  boardProvider.setTopCard(row, column, cardModel);
                 },
               ),
             ),

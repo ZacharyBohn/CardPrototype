@@ -37,7 +37,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double? mouseY;
   double? offsetX;
   double? offsetY;
-  late GameCardGroupModel cardGroup;
+  // late GameCardGroupModel cardGroup;
 
   @override
   initState() {
@@ -45,14 +45,14 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     return;
   }
 
-  Color getCardColor() {
-    if (cardGroup.topCard == null) {
+  Color getCardColor(GameCardModel? topCard) {
+    if (topCard == null) {
       return AppColors.emptyPosition;
     }
-    if (cardGroup.topCard!.faceup) {
+    if (topCard.faceup) {
       return AppColors.cardForeground;
     }
-    if (!cardGroup.topCard!.faceup) {
+    if (topCard.faceup) {
       return AppColors.cardBack;
     }
     throw Exception('No color?');
@@ -61,8 +61,14 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
-    cardGroup = boardProvider.board.positions[widget.rowPosition]
-        [widget.columnPosition];
+    GameCardModel? topCard = boardProvider.getTopCard(
+      widget.rowPosition,
+      widget.columnPosition,
+    );
+    int cardGroupCount = boardProvider
+        .getCardGroup(widget.rowPosition, widget.columnPosition)
+        .cards
+        .length;
     return MouseRegion(
       onHover: (PointerEvent details) {
         mouseX = details.position.dx;
@@ -70,13 +76,15 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       },
       child: Material(
         child: Draggable(
-          data: cardGroup,
+          data: topCard,
           childWhenDragging: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.1,
-            color: AppColors.emptyPosition,
+            color: cardGroupCount > 1
+                ? AppColors.cardBack
+                : AppColors.emptyPosition,
           ),
-          maxSimultaneousDrags: cardGroup.topCard != null ? 1 : 0,
+          maxSimultaneousDrags: topCard != null ? 1 : 0,
           feedback: Transform.translate(
             //compensate for board x rotation
             offset: Offset(offsetX ?? 0, offsetY ?? 0),
@@ -84,7 +92,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               child: Container(
                 width: widget.cardSize.width * 1.2,
                 height: widget.cardSize.height * 1.1,
-                color: getCardColor(),
+                color: getCardColor(topCard),
               ),
             ),
           ),
@@ -100,8 +108,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           onDragEnd: (DraggableDetails details) {
             if (details.wasAccepted) {
               widget.onDraggedFrom(
-                row: cardGroup.rowPosition,
-                column: cardGroup.columnPosition,
+                row: widget.rowPosition,
+                column: widget.columnPosition,
               );
             }
             offsetX = null;
@@ -112,7 +120,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             builder: (context, _, __) => Container(
               width: widget.cardSize.width.ceilToDouble(),
               height: widget.cardSize.height.ceilToDouble(),
-              color: getCardColor(),
+              color: getCardColor(topCard),
             ),
             onWillAccept: (object) {
               if (object is GameCardModel) return true;
@@ -120,8 +128,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             },
             onAccept: (object) {
               widget.onDraggedTo(
-                row: cardGroup.rowPosition,
-                column: cardGroup.columnPosition,
+                row: widget.rowPosition,
+                column: widget.columnPosition,
                 cardModel: object as GameCardModel,
               );
             },

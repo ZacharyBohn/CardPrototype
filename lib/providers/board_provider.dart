@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:game_prototype/components/board.dart';
 import 'package:game_prototype/models/board.model.dart';
+import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 
 class BoardProvider with ChangeNotifier {
@@ -15,5 +15,29 @@ class BoardProvider with ChangeNotifier {
   int get rows => _board.rows;
   int get columns => _board.columns;
 
-  BoardModel get board => _board;
+  GameCardGroupModel getCardGroup(int row, int column) {
+    return _board.positions[row][column];
+  }
+
+  void setCardGroup(int row, int column, GameCardGroupModel cardGroup) {
+    _board.positions[row][column] = cardGroup;
+    notifyListeners();
+    return;
+  }
+
+  GameCardModel? getTopCard(int row, int column) {
+    return _board.positions[row][column].topCard;
+  }
+
+  void setTopCard(int row, int column, GameCardModel card) {
+    _board.positions[row][column].addCardToTop(card);
+    notifyListeners();
+    return;
+  }
+
+  void removeTopCard(int row, int column) {
+    _board.positions[row][column].removeCardFromTop();
+    notifyListeners();
+    return;
+  }
 }
