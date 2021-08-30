@@ -16,7 +16,7 @@ class Board extends StatefulWidget {
 class _BoardState extends State<Board> {
   //TODO: move the transform of the board here to it can be
   //applied to cards when they are being dragged
-  List<Widget> buildCardRows(BoardProvider boardProvider) {
+  List<Widget> buildCardRows(BoardProvider boardProvider, Size cardSize) {
     List<Widget> widgets = [];
     int rowPosition = 0;
     for (List<GameCardGroupModel> row in boardProvider.board.positions) {
@@ -33,7 +33,7 @@ class _BoardState extends State<Board> {
                   rowPosition: rowPosition,
                   columPosition: columnPosition,
                 ),
-                cardSize: Size(150, 165),
+                cardSize: cardSize,
                 onDraggedFrom: ({required int row, required int column}) {
                   // TODO: implement
                 },
@@ -64,10 +64,14 @@ class _BoardState extends State<Board> {
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
+    Size size = MediaQuery.of(context).size;
     return Container(
       color: AppColors.board,
       child: Column(
-        children: buildCardRows(boardProvider),
+        children: buildCardRows(
+          boardProvider,
+          Size(size.width * 0.04, size.height * 0.10),
+        ),
       ),
     );
   }

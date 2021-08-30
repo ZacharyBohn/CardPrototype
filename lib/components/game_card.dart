@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../enum/app_colors.dart';
 import '../models/game_card.model.dart';
-import 'app_text.dart';
 
 class GameCard extends StatefulWidget {
   final GameCardModel card;
@@ -29,25 +28,30 @@ class GameCard extends StatefulWidget {
 }
 
 class _GameCardState extends State<GameCard> {
+  int? cursorStartX;
+  int? cursorStartY;
   @override
   Widget build(BuildContext context) {
     return Material(
       child: Draggable(
         data: widget.card,
         childWhenDragging: Container(
-          width: widget.cardSize.width * 1.2,
-          height: widget.cardSize.height * 1.2,
+          // width: widget.cardSize.width * 1.2,
+          // height: widget.cardSize.height * 1.2,
           color: AppColors.emptyPosition,
         ),
-        feedback: Material(
-          child: Container(
-            width: widget.cardSize.width * 1.2,
-            height: widget.cardSize.height * 1.2,
-            color: widget.card.faceup
-                ? AppColors.cardForeground
-                : AppColors.cardBack,
+        feedback: Positioned(
+          child: Material(
+            child: Container(
+              width: widget.cardSize.width * 1.1,
+              height: widget.cardSize.height * 1.1,
+              color: widget.card.faceup
+                  ? AppColors.cardForeground
+                  : AppColors.cardBack,
+            ),
           ),
         ),
+        onDragStarted: () {},
         onDragEnd: (DraggableDetails details) {
           if (!details.wasAccepted) return;
           widget.onDraggedFrom(
@@ -57,8 +61,8 @@ class _GameCardState extends State<GameCard> {
         },
         child: DragTarget(
           builder: (context, _, __) => Container(
-            width: widget.cardSize.width.ceilToDouble(),
-            height: widget.cardSize.height.ceilToDouble(),
+            // width: widget.cardSize.width.ceilToDouble(),
+            // height: widget.cardSize.height.ceilToDouble(),
             color: widget.card.faceup
                 ? AppColors.cardForeground
                 : AppColors.cardBack,
