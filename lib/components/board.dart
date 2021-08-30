@@ -17,12 +17,14 @@ class _BoardState extends State<Board> {
   Matrix4 transformationMatrix = Matrix4.identity()..setEntry(3, 2, 0.001);
   // ..rotateX(-0.75);
 
+  double cardPadding = 6;
+
   Size getCardSize(Size screenSize, int rows, int columns) {
     double boardWidth = screenSize.width * (1 / 3);
     double boardHeight = screenSize.height * (2 / 3);
-    //6 pixels of padding on each side: 6 * 2
-    double width = (boardWidth / columns) - (6 * 2);
-    double height = (boardHeight / rows) - (6 * 2);
+    //6 pixels of padding on each side: cardPadding * 2
+    double width = (boardWidth / columns) - (cardPadding * 2);
+    double height = (boardHeight / rows) - (cardPadding * 2);
     return Size(width, height);
   }
 
@@ -39,7 +41,7 @@ class _BoardState extends State<Board> {
         rowWidgets.add(
           Flexible(
             child: Padding(
-              padding: EdgeInsets.all(6),
+              padding: EdgeInsets.all(cardPadding),
               child: GameCardGroupWidget(
                 card: GameCardModel(
                   rowPosition: rowPosition,
