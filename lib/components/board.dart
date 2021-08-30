@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game_prototype/components/game_card.dart';
+import 'package:game_prototype/components/game_card_group_widget.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
@@ -40,7 +40,7 @@ class _BoardState extends State<Board> {
           Flexible(
             child: Padding(
               padding: EdgeInsets.all(6),
-              child: GameCard(
+              child: GameCardGroupWidget(
                 card: GameCardModel(
                   rowPosition: rowPosition,
                   columPosition: columnPosition,

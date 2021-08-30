@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../enum/app_colors.dart';
 import '../models/game_card.model.dart';
 
-class GameCard extends StatefulWidget {
+class GameCardGroupWidget extends StatefulWidget {
   final GameCardModel card;
   final Size cardSize;
   final void Function({
@@ -15,7 +15,7 @@ class GameCard extends StatefulWidget {
     required GameCardModel cardModel,
   }) onDraggedTo;
   final void Function(int)? onPopupItemSelected;
-  const GameCard({
+  const GameCardGroupWidget({
     required this.card,
     required this.cardSize,
     required this.onDraggedFrom,
@@ -24,10 +24,10 @@ class GameCard extends StatefulWidget {
   });
 
   @override
-  _GameCardState createState() => _GameCardState();
+  _GameCardGroupWidgetState createState() => _GameCardGroupWidgetState();
 }
 
-class _GameCardState extends State<GameCard> {
+class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double? mouseX;
   double? mouseY;
   double? offsetX;
@@ -39,10 +39,6 @@ class _GameCardState extends State<GameCard> {
       onHover: (PointerEvent details) {
         mouseX = details.position.dx;
         mouseY = details.position.dy;
-        // setState(() {
-        //   mouseX = details.position.dx;
-        //   mouseY = details.position.dy;
-        // });
       },
       child: Material(
         child: Draggable(
