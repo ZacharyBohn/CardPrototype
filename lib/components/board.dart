@@ -42,10 +42,8 @@ class _BoardState extends State<Board> {
             child: Padding(
               padding: EdgeInsets.all(cardPadding),
               child: GameCardGroupWidget(
-                cardGroup: GameCardGroupModel(
-                  rowPosition: rowPosition,
-                  columnPosition: columnPosition,
-                ),
+                rowPosition: rowPosition,
+                columnPosition: columnPosition,
                 cardSize: getCardSize(screenSize, rowCount, columnCount),
                 onDraggedFrom: ({required int row, required int column}) {
                   // TODO: implement

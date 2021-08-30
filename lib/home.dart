@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/board.dart';
+import 'package:game_prototype/drawer.dart';
+import 'package:game_prototype/enum/fonts.dart';
 
 import 'components/app_text.dart';
 import 'enum/app_colors.dart';
@@ -19,15 +21,21 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: AppText(
           label: 'CCG Prototyper',
-          fontSize: 18,
+          fontSize: FontSizes.header,
         ),
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
-        leading: Icon(
-          Icons.menu,
-          color: AppColors.menuIcon,
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Scaffold.of(context).openDrawer();
+        //   },
+        //   child: Icon(
+        //     Icons.menu,
+        //     color: AppColors.menuIcon,
+        //   ),
+        // ),
       ),
+      drawer: AppDrawer(),
       body: Container(
         color: AppColors.background,
         child: Row(

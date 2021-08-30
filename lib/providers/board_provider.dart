@@ -9,6 +9,7 @@ class BoardProvider with ChangeNotifier {
       rows: 5,
       columns: 7,
     );
+    return;
   }
   late BoardModel _board;
   int get rows => _board.rows;

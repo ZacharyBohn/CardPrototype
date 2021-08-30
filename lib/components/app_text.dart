@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/enum/app_colors.dart';
+import 'package:game_prototype/enum/fonts.dart';
 
 class AppText extends StatelessWidget {
   final String? label;
@@ -12,7 +13,7 @@ class AppText extends StatelessWidget {
       label ?? '',
       style: TextStyle(
         color: AppColors.fontColor,
-        fontSize: fontSize ?? 14,
+        fontSize: fontSize ?? FontSizes.body,
         fontFamily: 'Arial',
       ),
     );
