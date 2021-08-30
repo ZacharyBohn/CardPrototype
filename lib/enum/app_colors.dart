@@ -6,8 +6,10 @@ class AppColors {
   static Color fontColor = ColorPalette.white;
   static Color board = ColorPalette.cyan;
   static Color panel = ColorPalette.cyan;
-  static Color emptyPositionHighlighted = ColorPalette.paleWhite;
-  static Color cardBackground = ColorPalette.darkGrey;
+  static Color drawerHeader = ColorPalette.darkGrey;
+  static Color drawerBody = ColorPalette.cyan;
+  static Color emptyPosition = ColorPalette.lightGrey;
+  static Color cardForeground = ColorPalette.darkGrey;
   static Color cardBack = ColorPalette.purple;
   static Color appBarBackground = ColorPalette.darkGrey;
   static Color menuIcon = ColorPalette.white;

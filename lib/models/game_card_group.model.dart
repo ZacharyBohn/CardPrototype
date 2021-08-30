@@ -1,7 +1,18 @@
 import 'game_card.model.dart';
 
 class GameCardGroupModel {
-  List<GameCardModel> _cards = [];
+  GameCardGroupModel({
+    required this.rowPosition,
+    required this.columnPosition,
+    List<GameCardModel>? cards,
+  }) {
+    _cards = cards ?? [];
+    return;
+  }
+
+  int rowPosition;
+  int columnPosition;
+  late List<GameCardModel> _cards;
   List<GameCardModel> get cards => _cards;
   bool get isEmpty {
     return _cards.isEmpty;

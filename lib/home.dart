@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:game_prototype/components/board.dart';
+import 'package:game_prototype/drawer.dart';
+import 'package:game_prototype/enum/fonts.dart';
 
 import 'components/app_text.dart';
 import 'enum/app_colors.dart';
@@ -18,15 +21,21 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: AppText(
           label: 'CCG Prototyper',
-          fontSize: 18,
+          fontSize: FontSizes.header,
         ),
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
-        leading: Icon(
-          Icons.menu,
-          color: AppColors.menuIcon,
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Scaffold.of(context).openDrawer();
+        //   },
+        //   child: Icon(
+        //     Icons.menu,
+        //     color: AppColors.menuIcon,
+        //   ),
+        // ),
       ),
+      drawer: AppDrawer(),
       body: Container(
         color: AppColors.background,
         child: Row(
@@ -58,22 +67,10 @@ class _HomeState extends State<Home> {
                           Center(child: AppText(label: 'Opponents Hand Area')),
                     ),
                   ),
+                  Spacer(),
                   Expanded(
                     flex: 10,
-                    child: Transform(
-                      transform: Matrix4.identity()
-                        ..setEntry(3, 2, 0.001)
-                        ..rotateX(-0.75),
-                      alignment: FractionalOffset.center,
-                      child: Container(
-                        color: AppColors.board,
-                        width: size.width * 0.4,
-                        height: size.width * 0.45,
-                        child: Center(
-                          child: AppText(label: 'Board Area'),
-                        ),
-                      ),
-                    ),
+                    child: Board(),
                   ),
                   Spacer(),
                   Expanded(

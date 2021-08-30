@@ -1,3 +1,4 @@
+import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 
 class BoardModel {
@@ -6,7 +7,7 @@ class BoardModel {
   late int _columns;
   int get columns => _columns;
   //outter list is rows
-  //inner list is columsn
+  //inner list is columns
   List<List<GameCardGroupModel>> _positions = [];
 
   List<List<GameCardGroupModel>> get positions => _positions;
@@ -14,11 +15,17 @@ class BoardModel {
   BoardModel({required int rows, required int columns}) {
     _rows = rows;
     _columns = columns;
-    for (int _ in Iterable.generate(rows)) {
+    for (int rowPosition in Iterable.generate(rows)) {
       List<GameCardGroupModel> row = [];
       //add 1 game card group model for each column in the row
-      for (int __ in Iterable.generate(columns)) {
-        row.add(GameCardGroupModel());
+      for (int columnPosition in Iterable.generate(columns)) {
+        row.add(GameCardGroupModel(
+          rowPosition: rowPosition,
+          columnPosition: columnPosition,
+          cards: [
+            GameCardModel(),
+          ],
+        ));
       }
       _positions.add(row);
     }
