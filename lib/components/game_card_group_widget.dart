@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:game_prototype/models/game_card_group.model.dart';
 import '../enum/app_colors.dart';
 import '../models/game_card.model.dart';
 
 class GameCardGroupWidget extends StatefulWidget {
-  final GameCardModel card;
+  final GameCardGroupModel cardGroup;
   final Size cardSize;
   final void Function({
     required int row,
@@ -16,7 +17,7 @@ class GameCardGroupWidget extends StatefulWidget {
   }) onDraggedTo;
   final void Function(int)? onPopupItemSelected;
   const GameCardGroupWidget({
-    required this.card,
+    required this.cardGroup,
     required this.cardSize,
     required this.onDraggedFrom,
     required this.onDraggedTo,
@@ -33,6 +34,19 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double? offsetX;
   double? offsetY;
 
+  Color getCardColor() {
+    if (widget.cardGroup.topCard == null) {
+      return AppColors.emptyPosition;
+    }
+    if (widget.cardGroup.topCard!.faceup) {
+      return AppColors.cardForeground;
+    }
+    if (!widget.cardGroup.topCard!.faceup) {
+      return AppColors.cardBack;
+    }
+    throw Exception('No color?');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
@@ -42,12 +56,13 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       },
       child: Material(
         child: Draggable(
-          data: widget.card,
+          data: widget.cardGroup,
           childWhenDragging: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.1,
             color: AppColors.emptyPosition,
           ),
+          maxSimultaneousDrags: widget.cardGroup.topCard != null ? 1 : 0,
           feedback: Transform.translate(
             //compensate for board x rotation
             offset: Offset(offsetX ?? 0, offsetY ?? 0),
@@ -55,9 +70,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               child: Container(
                 width: widget.cardSize.width * 1.2,
                 height: widget.cardSize.height * 1.1,
-                color: widget.card.faceup
-                    ? AppColors.cardForeground
-                    : AppColors.cardBack,
+                color: getCardColor(),
               ),
             ),
           ),
@@ -73,8 +86,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           onDragEnd: (DraggableDetails details) {
             if (details.wasAccepted) {
               widget.onDraggedFrom(
-                row: widget.card.rowPosition,
-                column: widget.card.columPosition,
+                row: widget.cardGroup.rowPosition,
+                column: widget.cardGroup.columnPosition,
               );
             }
             offsetX = null;
@@ -85,9 +98,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             builder: (context, _, __) => Container(
               width: widget.cardSize.width.ceilToDouble(),
               height: widget.cardSize.height.ceilToDouble(),
-              color: widget.card.faceup
-                  ? AppColors.cardForeground
-                  : AppColors.cardBack,
+              color: getCardColor(),
             ),
             onWillAccept: (object) {
               if (object is GameCardModel) return true;
@@ -95,8 +106,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             },
             onAccept: (object) {
               widget.onDraggedTo(
-                row: widget.card.rowPosition,
-                column: widget.card.columPosition,
+                row: widget.cardGroup.rowPosition,
+                column: widget.cardGroup.columnPosition,
                 cardModel: object as GameCardModel,
               );
             },

@@ -37,15 +37,14 @@ class _BoardState extends State<Board> {
       List<Widget> rowWidgets = [];
       int columnPosition = 0;
       for (GameCardGroupModel cardGroup in row) {
-        //TODO: change to game card group
         rowWidgets.add(
           Flexible(
             child: Padding(
               padding: EdgeInsets.all(cardPadding),
               child: GameCardGroupWidget(
-                card: GameCardModel(
+                cardGroup: GameCardGroupModel(
                   rowPosition: rowPosition,
-                  columPosition: columnPosition,
+                  columnPosition: columnPosition,
                 ),
                 cardSize: getCardSize(screenSize, rowCount, columnCount),
                 onDraggedFrom: ({required int row, required int column}) {

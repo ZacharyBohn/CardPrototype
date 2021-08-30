@@ -14,11 +14,14 @@ class BoardModel {
   BoardModel({required int rows, required int columns}) {
     _rows = rows;
     _columns = columns;
-    for (int _ in Iterable.generate(rows)) {
+    for (int rowPosition in Iterable.generate(rows)) {
       List<GameCardGroupModel> row = [];
       //add 1 game card group model for each column in the row
-      for (int __ in Iterable.generate(columns)) {
-        row.add(GameCardGroupModel());
+      for (int columnPosition in Iterable.generate(columns)) {
+        row.add(GameCardGroupModel(
+          rowPosition: rowPosition,
+          columnPosition: columnPosition,
+        ));
       }
       _positions.add(row);
     }
