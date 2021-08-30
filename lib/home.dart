@@ -59,15 +59,10 @@ class _HomeState extends State<Home> {
                           Center(child: AppText(label: 'Opponents Hand Area')),
                     ),
                   ),
+                  Spacer(),
                   Expanded(
                     flex: 10,
-                    child: Transform(
-                      transform: Matrix4.identity()
-                        ..setEntry(3, 2, 0.001)
-                        ..rotateX(-0.75),
-                      alignment: FractionalOffset.center,
-                      child: Board(),
-                    ),
+                    child: Board(),
                   ),
                   Spacer(),
                   Expanded(
