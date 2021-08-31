@@ -14,10 +14,10 @@ class BoardProvider with ChangeNotifier {
   late BoardModel _board;
   int get rows => _board.rows;
   int get columns => _board.columns;
-  GameCardModel? _highlightCard;
-  GameCardModel? get highlightedCard => _highlightCard;
-  set higlightedCard(value) {
-    _highlightCard = value;
+  GameCardModel? _highlightedCard;
+  GameCardModel? get highlightedCard => _highlightedCard;
+  set highlightedCard(value) {
+    _highlightedCard = value;
     notifyListeners();
     return;
   }

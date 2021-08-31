@@ -12,7 +12,8 @@ class AppColors {
   static Color cardForeground = ColorPalette.darkGrey;
   static Color cardBack = ColorPalette.purple;
   static Color appBarBackground = ColorPalette.darkGrey;
-  static Color menuIcon = ColorPalette.white;
+  static Color hightlight = ColorPalette.gold;
+  static Color hightlightPreviewBorder = ColorPalette.black;
 }
 
 class ColorPalette {
@@ -28,6 +29,8 @@ class ColorPalette {
   static Color darkCyan = Color.fromRGBO(0, 95, 80, 1);
 
   static Color purple = Color.fromRGBO(40, 25, 70, 1);
+
+  static Color gold = Color.fromRGBO(255, 216, 0, 0.8);
 
   static Color blue = Color.fromRGBO(40, 85, 120, 1);
 }
