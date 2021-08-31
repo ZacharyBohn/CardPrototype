@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/board.dart';
-import 'package:game_prototype/drawer.dart';
+import 'package:game_prototype/home/drawer.dart';
 import 'package:game_prototype/enum/fonts.dart';
+import 'package:game_prototype/home/preview_panel.dart';
 
-import 'components/app_text.dart';
-import 'enum/app_colors.dart';
+import '../components/app_text.dart';
+import '../enum/app_colors.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -25,15 +26,6 @@ class _HomeState extends State<Home> {
         ),
         backgroundColor: AppColors.appBarBackground,
         elevation: 0,
-        // leading: GestureDetector(
-        //   onTap: () {
-        //     Scaffold.of(context).openDrawer();
-        //   },
-        //   child: Icon(
-        //     Icons.menu,
-        //     color: AppColors.menuIcon,
-        //   ),
-        // ),
       ),
       drawer: AppDrawer(),
       body: Container(
@@ -42,15 +34,7 @@ class _HomeState extends State<Home> {
           children: [
             Expanded(
               flex: 3,
-              child: Container(
-                color: AppColors.panel,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AppText(label: 'Card Preview Panel'),
-                  ],
-                ),
-              ),
+              child: PreviewPanel(),
             ),
             Spacer(),
             Expanded(
