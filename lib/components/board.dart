@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:game_prototype/components/game_card_group_widget.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/models/game_card.model.dart';
-import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 

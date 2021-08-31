@@ -14,6 +14,13 @@ class BoardProvider with ChangeNotifier {
   late BoardModel _board;
   int get rows => _board.rows;
   int get columns => _board.columns;
+  GameCardModel? _highlightedCard;
+  GameCardModel? get highlightedCard => _highlightedCard;
+  set highlightedCard(value) {
+    _highlightedCard = value;
+    notifyListeners();
+    return;
+  }
 
   GameCardGroupModel getCardGroup(int row, int column) {
     return _board.positions[row][column];
