@@ -66,6 +66,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         boardProvider.getTopCard(widget.rowPosition, widget.columnPosition) ==
                 boardProvider.highlightedCard &&
             boardProvider.highlightedCard != null;
+
     return Material(
       child: Draggable(
         data: topCard,
@@ -75,6 +76,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           color: cardGroupCount > 1
               ? AppColors.cardForeground
               : AppColors.emptyPosition,
+
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
         feedback: Material(
