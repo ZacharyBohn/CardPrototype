@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/enum/fonts.dart';
 
-import 'components/app_text.dart';
-import 'enum/app_colors.dart';
+import '../components/app_text.dart';
+import '../enum/app_colors.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
