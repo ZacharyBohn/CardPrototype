@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_prototype/components/shift_fixer.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 import 'home/home.dart';
@@ -17,8 +18,10 @@ class AppRoot extends StatelessWidget {
         ChangeNotifierProvider<BoardProvider>(
             create: (context) => BoardProvider()),
       ],
-      child: MaterialApp(
-        home: Home(),
+      child: ShiftRightFixer(
+        child: MaterialApp(
+          home: Home(),
+        ),
       ),
     );
   }

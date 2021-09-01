@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  //colors
   static Color background = ColorPalette.darkGrey;
   static Color fontColor = ColorPalette.white;
+  static Color hintFontColor = ColorPalette.paleWhite;
+  static Color buttonFontColor = ColorPalette.black;
+  static Color buttonBorder = ColorPalette.black;
   static Color board = ColorPalette.cyan;
   static Color panel = ColorPalette.cyan;
   static Color drawerHeader = ColorPalette.darkGrey;
@@ -14,11 +16,15 @@ class AppColors {
   static Color appBarBackground = ColorPalette.darkGrey;
   static Color hightlight = ColorPalette.gold;
   static Color hightlightPreviewBorder = ColorPalette.black;
+  static Color textInput = ColorPalette.white;
+  static Color textInputUnderline = ColorPalette.white;
+  static Color textInputUnderlineFocused = ColorPalette.white;
+  static Color cursorColor = ColorPalette.white;
 }
 
 class ColorPalette {
   static Color white = Color.fromRGBO(240, 240, 240, 1);
-  static Color paleWhite = Color.fromRGBO(240, 240, 240, 0.4);
+  static Color paleWhite = Color.fromRGBO(240, 240, 240, 0.7);
   static Color lightGrey = Color.fromRGBO(120, 120, 135, 1);
   static Color grey = Color.fromRGBO(55, 55, 65, 1);
   static Color darkGrey = Color.fromRGBO(40, 40, 45, 1);
