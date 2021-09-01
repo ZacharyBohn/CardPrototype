@@ -18,7 +18,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
     Size size = MediaQuery.of(context).size;
-    Size panelSize = Size(size.width * 3 / 11, size.height);
+    Size panelSize = Size(size.width * 3 / 11, size.height * 0.93);
     return Container(
       color: AppColors.panel,
       child: Column(
