@@ -32,11 +32,7 @@ class GameCardGroupWidget extends StatefulWidget {
 }
 
 class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
-  @override
-  initState() {
-    super.initState();
-    return;
-  }
+  double borderRadius = 0.0;
 
   Color getCardColor(GameCardModel? topCard) {
     if (topCard == null) {
@@ -73,17 +69,22 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         childWhenDragging: Container(
           width: widget.cardSize.width * 1.2,
           height: widget.cardSize.height * 1.1,
-          color: cardGroupCount > 1
-              ? AppColors.cardForeground
-              : AppColors.emptyPosition,
-
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: cardGroupCount > 1
+                ? AppColors.cardForeground
+                : AppColors.emptyPosition,
+          ),
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
         feedback: Material(
           child: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.1,
-            color: getCardColor(topCard),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: getCardColor(topCard),
+            ),
           ),
         ),
         onDragStarted: () {
@@ -118,6 +119,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                       ? AppColors.hightlight
                       : getCardColor(topCard),
                 ),
+                borderRadius: BorderRadius.circular(borderRadius),
               ),
             ),
             onWillAccept: (object) {
