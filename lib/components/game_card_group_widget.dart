@@ -45,7 +45,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     if (topCard.faceup) {
       return AppColors.cardForeground;
     }
-    if (topCard.faceup) {
+    if (!topCard.faceup) {
       return AppColors.cardBack;
     }
     throw Exception('No color?');
@@ -64,15 +64,19 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         .length;
     bool topCardHightlighted =
         boardProvider.getTopCard(widget.rowPosition, widget.columnPosition) ==
-            boardProvider.highlightedCard;
+                boardProvider.highlightedCard &&
+            boardProvider.highlightedCard != null;
+
     return Material(
       child: Draggable(
         data: topCard,
         childWhenDragging: Container(
           width: widget.cardSize.width * 1.2,
           height: widget.cardSize.height * 1.1,
-          color:
-              cardGroupCount > 1 ? AppColors.cardBack : AppColors.emptyPosition,
+          color: cardGroupCount > 1
+              ? AppColors.cardForeground
+              : AppColors.emptyPosition,
+
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
         feedback: Material(
