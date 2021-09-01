@@ -4,38 +4,27 @@ import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 
-class PreviewPanel extends StatefulWidget {
-  const PreviewPanel({Key? key}) : super(key: key);
+class CardDesignPanel extends StatefulWidget {
+  const CardDesignPanel({Key? key}) : super(key: key);
 
   @override
-  _PreviewPanelState createState() => _PreviewPanelState();
+  _CardDesignPanelState createState() => _CardDesignPanelState();
 }
 
-class _PreviewPanelState extends State<PreviewPanel> {
+class _CardDesignPanelState extends State<CardDesignPanel> {
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
     Size size = MediaQuery.of(context).size;
-    Size panelSize = Size(size.width * 3 / 11, size.height * 0.93);
+    Size panelSize = Size(size.width * 3 / 11, size.height);
     return Container(
       color: AppColors.panel,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Container(
-              width: panelSize.width * 0.8,
-              height: panelSize.height * 0.65,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColors.hightlightPreviewBorder,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-          ),
+          AppText(label: 'Card Design Panel'),
         ],
       ),
     );

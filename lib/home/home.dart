@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/board.dart';
+import 'package:game_prototype/home/card_design_panel.dart';
 import 'package:game_prototype/home/drawer.dart';
 import 'package:game_prototype/enum/fonts.dart';
 import 'package:game_prototype/home/preview_panel.dart';
@@ -19,13 +20,16 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext conApptext) {
     Size size = MediaQuery.of(conApptext).size;
     return Scaffold(
-      appBar: AppBar(
-        title: AppText(
-          label: 'CCG Prototyper',
-          fontSize: FontSizes.header,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(size.height * 0.07),
+        child: AppBar(
+          title: AppText(
+            label: 'CCG Prototyper',
+            fontSize: FontSizes.header,
+          ),
+          backgroundColor: AppColors.appBarBackground,
+          elevation: 0,
         ),
-        backgroundColor: AppColors.appBarBackground,
-        elevation: 0,
       ),
       drawer: AppDrawer(),
       body: Container(
@@ -71,15 +75,7 @@ class _HomeState extends State<Home> {
             Spacer(),
             Expanded(
               flex: 3,
-              child: Container(
-                color: AppColors.panel,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AppText(label: 'Chat / Settings Panel'),
-                  ],
-                ),
-              ),
+              child: CardDesignPanel(),
             ),
           ],
         ),

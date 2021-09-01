@@ -18,7 +18,7 @@ class AppDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             SizedBox(
-              height: size.height * 0.12,
+              height: size.height * 0.1,
               child: DrawerHeader(
                 decoration: BoxDecoration(
                   color: AppColors.drawerHeader,
