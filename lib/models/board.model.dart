@@ -1,4 +1,3 @@
-import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 
 class BoardModel {
@@ -17,15 +16,12 @@ class BoardModel {
     _columns = columns;
     for (int rowPosition in Iterable.generate(rows)) {
       List<GameCardGroupModel> row = [];
-      //TODO: replace with / empty or loading cards
       for (int columnPosition in Iterable.generate(columns)) {
         row.add(
           GameCardGroupModel(
             rowPosition: rowPosition,
             columnPosition: columnPosition,
-            cards: [
-              GameCardModel(),
-            ],
+            cards: [],
           ),
         );
       }

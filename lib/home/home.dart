@@ -49,7 +49,7 @@ class _HomeState extends State<Home> {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      color: ColorPalette.paleWhite,
+                      color: ColorPalette.grey,
                       width: size.width * 0.4,
                       child:
                           Center(child: AppText(label: 'Opponents Hand Area')),
@@ -64,7 +64,7 @@ class _HomeState extends State<Home> {
                   Expanded(
                     flex: 2,
                     child: Container(
-                      color: ColorPalette.paleWhite,
+                      color: ColorPalette.grey,
                       width: size.width * 0.4,
                       child: Center(child: AppText(label: 'Player Hand Area')),
                     ),

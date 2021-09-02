@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/app_button.dart';
+import 'package:game_prototype/components/app_text.dart';
 import 'package:game_prototype/components/app_text_field.dart';
 import 'package:game_prototype/components/spacing.dart';
 import 'package:game_prototype/enum/app_colors.dart';
@@ -18,7 +19,14 @@ class CardDesignPanel extends StatefulWidget {
 }
 
 class _CardDesignPanelState extends State<CardDesignPanel> {
-  Uint8List? bytes;
+  String? name;
+  String? description;
+  int? topLeft;
+  int? topRight;
+  int? bottomLeft;
+  int? bottomRight;
+  Uint8List? imageBytes;
+  String? error;
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
@@ -80,27 +88,30 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             hint: 'Description',
           ),
           VerticalSpace(panelSize.height * 0.03),
-          if (bytes != null)
+          if (imageBytes != null)
             Image.memory(
-              bytes!,
-              width: panelSize.width * 0.8,
-              height: panelSize.height * 0.3,
+              imageBytes!,
             ),
-          VerticalSpace(panelSize.height * 0.03),
+          Spacer(),
+          if (error != null)
+            AppText(
+              label: '$error',
+              fontColor: AppColors.error,
+            ),
+          VerticalSpace(panelSize.height * 0.01),
           AppButton(
             label: 'Upload Image',
             onTap: () async {
-              bytes = null;
-              print('picking image');
+              imageBytes = null;
               FilePickerResult? image = await FilePicker.platform.pickFiles(
                 dialogTitle: 'Choose Image',
                 type: FileType.image,
+                withData: true,
               );
-              print('image picked');
               if (image == null || image.count == 0) return;
               PlatformFile file = image.files.first;
               setState(() {
-                bytes = file.bytes;
+                imageBytes = file.bytes;
               });
             },
           ),
@@ -109,14 +120,14 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             children: [
               Expanded(
                 child: AppButton(
-                  label: 'Delete Card',
+                  label: 'Copy Card',
                   onTap: () {},
                 ),
               ),
               HorizontalSpace(panelSize.width * 0.05),
               Expanded(
                 child: AppButton(
-                  label: 'Reset Card',
+                  label: 'Delete Card',
                   onTap: () {},
                 ),
               ),
@@ -128,13 +139,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppButton(
                   label: 'Create New Card',
-                  onTap: () {},
-                ),
-              ),
-              HorizontalSpace(panelSize.width * 0.05),
-              Expanded(
-                child: AppButton(
-                  label: 'Copy Card',
                   onTap: () {},
                 ),
               ),
