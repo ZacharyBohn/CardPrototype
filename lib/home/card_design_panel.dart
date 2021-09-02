@@ -1,6 +1,9 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/app_button.dart';
-import 'package:game_prototype/components/app_text.dart';
 import 'package:game_prototype/components/app_text_field.dart';
 import 'package:game_prototype/components/spacing.dart';
 import 'package:game_prototype/enum/app_colors.dart';
@@ -15,6 +18,7 @@ class CardDesignPanel extends StatefulWidget {
 }
 
 class _CardDesignPanelState extends State<CardDesignPanel> {
+  Uint8List? bytes;
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
@@ -76,11 +80,29 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             hint: 'Description',
           ),
           VerticalSpace(panelSize.height * 0.03),
-          Spacer(),
+          if (bytes != null)
+            Image.memory(
+              bytes!,
+              width: panelSize.width * 0.8,
+              height: panelSize.height * 0.3,
+            ),
           VerticalSpace(panelSize.height * 0.03),
           AppButton(
             label: 'Upload Image',
-            onTap: () {},
+            onTap: () async {
+              bytes = null;
+              print('picking image');
+              FilePickerResult? image = await FilePicker.platform.pickFiles(
+                dialogTitle: 'Choose Image',
+                type: FileType.image,
+              );
+              print('image picked');
+              if (image == null || image.count == 0) return;
+              PlatformFile file = image.files.first;
+              setState(() {
+                bytes = file.bytes;
+              });
+            },
           ),
           VerticalSpace(panelSize.height * 0.01),
           Row(
