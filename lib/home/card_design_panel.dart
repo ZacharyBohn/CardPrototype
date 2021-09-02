@@ -21,10 +21,10 @@ class CardDesignPanel extends StatefulWidget {
 class _CardDesignPanelState extends State<CardDesignPanel> {
   String? name;
   String? description;
-  int? topLeft;
-  int? topRight;
-  int? bottomLeft;
-  int? bottomRight;
+  String? topLeft;
+  String? topRight;
+  String? bottomLeft;
+  String? bottomRight;
   Uint8List? imageBytes;
   String? error;
   @override

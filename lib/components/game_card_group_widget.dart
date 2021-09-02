@@ -34,6 +34,8 @@ class GameCardGroupWidget extends StatefulWidget {
 class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double borderRadius = 0.0;
 
+  //TODO: show the card picture if present
+  //otherwise show a question mark for the image
   Color getCardColor(GameCardModel? topCard) {
     if (topCard == null) {
       return AppColors.emptyPosition;

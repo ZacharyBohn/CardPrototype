@@ -4,10 +4,10 @@ class GameCardModel {
   String description;
   String? imageUrl;
   String? customBackUrl;
-  int topLeft;
-  int topRight;
-  int bottomLeft;
-  int bottomRight;
+  String? topLeft;
+  String? topRight;
+  String? bottomLeft;
+  String? bottomRight;
   bool faceup;
   GameCardModel({
     this.name = 'Unknown',
@@ -15,10 +15,10 @@ class GameCardModel {
     this.descriptionAccent = '[card info]',
     this.imageUrl,
     this.customBackUrl,
-    this.topLeft = 0,
-    this.topRight = 0,
-    this.bottomLeft = 0,
-    this.bottomRight = 0,
+    this.topLeft,
+    this.topRight,
+    this.bottomLeft,
+    this.bottomRight,
     this.faceup = true,
   });
 }
