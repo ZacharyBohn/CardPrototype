@@ -20,7 +20,15 @@ class _PreviewPanelState extends State<PreviewPanel> {
     Size size = MediaQuery.of(context).size;
     Size panelSize = Size(size.width * 3 / 11, size.height * 0.93);
     return Container(
-      color: AppColors.panel,
+      decoration: BoxDecoration(
+        color: AppColors.panel,
+        border: Border(
+          right: BorderSide(
+            width: 1,
+            color: AppColors.panelBarrier,
+          ),
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

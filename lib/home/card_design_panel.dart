@@ -23,7 +23,15 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     Size size = MediaQuery.of(context).size;
     Size panelSize = Size(size.width * 3 / 11, size.height * 0.93);
     return Container(
-      color: AppColors.panel,
+      decoration: BoxDecoration(
+        color: AppColors.panel,
+        border: Border(
+          left: BorderSide(
+            width: 1,
+            color: AppColors.panelBarrier,
+          ),
+        ),
+      ),
       padding: EdgeInsets.symmetric(
         horizontal: panelSize.width * 0.05,
         vertical: panelSize.height * 0.02,
@@ -68,19 +76,47 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             hint: 'Description',
           ),
           VerticalSpace(panelSize.height * 0.03),
+          Spacer(),
+          VerticalSpace(panelSize.height * 0.03),
           AppButton(
-            label: 'Create Card',
+            label: 'Upload Image',
             onTap: () {},
           ),
           VerticalSpace(panelSize.height * 0.01),
-          AppButton(
-            label: 'Delete Card',
-            onTap: () {},
+          Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  label: 'Delete Card',
+                  onTap: () {},
+                ),
+              ),
+              HorizontalSpace(panelSize.width * 0.05),
+              Expanded(
+                child: AppButton(
+                  label: 'Reset Card',
+                  onTap: () {},
+                ),
+              ),
+            ],
           ),
           VerticalSpace(panelSize.height * 0.01),
-          AppButton(
-            label: 'Reset Card',
-            onTap: () {},
+          Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  label: 'Create New Card',
+                  onTap: () {},
+                ),
+              ),
+              HorizontalSpace(panelSize.width * 0.05),
+              Expanded(
+                child: AppButton(
+                  label: 'Copy Card',
+                  onTap: () {},
+                ),
+              ),
+            ],
           ),
         ],
       ),
