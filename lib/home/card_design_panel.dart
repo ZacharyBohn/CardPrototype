@@ -26,6 +26,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   String? topRight;
   String? bottomLeft;
   String? bottomRight;
+  String? imageUrl;
   Uint8List? imageBytes;
 
   String? error;
@@ -137,12 +138,19 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               clearError();
             },
           ),
+          AppTextField(
+            hint: 'Image URL',
+            onTextChange: (String value) {
+              imageUrl = value;
+              clearError();
+            },
+          ),
           VerticalSpace(panelSize.height * 0.03),
-          if (imageBytes != null)
-            Image.memory(
-              imageBytes!,
+          if (imageUrl != null)
+            Image.network(
+              imageUrl!,
             ),
-          if (imageBytes == null)
+          if (imageUrl == null)
             AppText(
               label: 'No image set.',
             ),
@@ -154,19 +162,22 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             ),
           VerticalSpace(panelSize.height * 0.01),
           AppButton(
-            label: 'Upload Image',
+            label: 'Load Image',
             onTap: () async {
-              imageBytes = null;
-              FilePickerResult? image = await FilePicker.platform.pickFiles(
-                dialogTitle: 'Choose Image',
-                type: FileType.image,
-                withData: true,
-              );
-              if (image == null || image.count == 0) return;
-              PlatformFile file = image.files.first;
               setState(() {
-                imageBytes = file.bytes;
+                imageUrl = imageUrl;
               });
+              // imageBytes = null;
+              // FilePickerResult? image = await FilePicker.platform.pickFiles(
+              //   dialogTitle: 'Choose Image',
+              //   type: FileType.image,
+              //   withData: true,
+              // );
+              // if (image == null || image.count == 0) return;
+              // PlatformFile file = image.files.first;
+              // setState(() {
+              //   imageBytes = file.bytes;
+              // });
             },
           ),
           VerticalSpace(panelSize.height * 0.01),
@@ -206,7 +217,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         GameCardModel(
                           name: name!,
                           description: description!,
-                          // imageUrl:
+                          imageUrl: imageUrl,
                           topLeft: topLeft,
                           topRight: topRight,
                           bottomLeft: bottomLeft,
