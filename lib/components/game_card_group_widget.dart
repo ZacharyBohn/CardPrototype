@@ -104,7 +104,11 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         },
         child: GestureDetector(
           onTap: () {
-            boardProvider.highlightedCard = boardProvider.getTopCard(
+            if (cardGroupCount == 0) {
+              boardProvider.clearHighlight();
+              return;
+            }
+            boardProvider.highlightCard(
               widget.rowPosition,
               widget.columnPosition,
             );
@@ -119,7 +123,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 border: Border.all(
                   color: topCardHightlighted
                       ? AppColors.hightlight
-                      : getCardColor(topCard),
+                      : AppColors.emptyPosition,
                 ),
                 borderRadius: BorderRadius.circular(borderRadius),
               ),

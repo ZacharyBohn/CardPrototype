@@ -223,6 +223,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                           bottomLeft: bottomLeft,
                           bottomRight: bottomRight,
                         ));
+                    boardProvider.highlightCard(0, 0);
                     clearError();
                   },
                 ),

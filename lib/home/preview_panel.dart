@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/app_text.dart';
+import 'package:game_prototype/components/card_preview.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
@@ -33,15 +34,10 @@ class _PreviewPanelState extends State<PreviewPanel> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Container(
-              width: panelSize.width * 0.8,
+            child: CardPreview(
+              width: panelSize.width * 0.85,
               height: panelSize.height * 0.65,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: AppColors.hightlightPreviewBorder,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
+              card: boardProvider.highlightedCard,
             ),
           ),
         ],
