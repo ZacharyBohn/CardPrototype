@@ -8,6 +8,7 @@ import 'package:game_prototype/components/app_text.dart';
 import 'package:game_prototype/components/app_text_field.dart';
 import 'package:game_prototype/components/spacing.dart';
 import 'package:game_prototype/enum/app_colors.dart';
+import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,32 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   String? bottomLeft;
   String? bottomRight;
   Uint8List? imageBytes;
+
   String? error;
+
+  bool checkCardValid() {
+    if (name == null) {
+      setState(() {
+        error = 'Name must be set.';
+      });
+      return false;
+    }
+    if (description == null) {
+      setState(() {
+        error = 'Description must be set.';
+      });
+      return false;
+    }
+    return true;
+  }
+
+  void clearError() {
+    setState(() {
+      error = null;
+    });
+    return;
+  }
+
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
@@ -53,18 +79,30 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
         children: [
           AppTextField(
             hint: 'Name',
+            onTextChange: (String value) {
+              name = value;
+              clearError();
+            },
           ),
           Row(
             children: [
               Expanded(
                 child: AppTextField(
                   hint: 'Top Left Value',
+                  onTextChange: (String value) {
+                    topLeft = value;
+                    clearError();
+                  },
                 ),
               ),
               HorizontalSpace(panelSize.width * 0.05),
               Expanded(
                 child: AppTextField(
                   hint: 'Top Right Value',
+                  onTextChange: (String value) {
+                    topRight = value;
+                    clearError();
+                  },
                 ),
               ),
             ],
@@ -74,23 +112,39 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Bottom Left Value',
+                  onTextChange: (String value) {
+                    bottomLeft = value;
+                    clearError();
+                  },
                 ),
               ),
               HorizontalSpace(panelSize.width * 0.05),
               Expanded(
                 child: AppTextField(
                   hint: 'Bottom Right Value',
+                  onTextChange: (String value) {
+                    bottomRight = value;
+                    clearError();
+                  },
                 ),
               ),
             ],
           ),
           AppTextField(
             hint: 'Description',
+            onTextChange: (String value) {
+              description = value;
+              clearError();
+            },
           ),
           VerticalSpace(panelSize.height * 0.03),
           if (imageBytes != null)
             Image.memory(
               imageBytes!,
+            ),
+          if (imageBytes == null)
+            AppText(
+              label: 'No image set.',
             ),
           Spacer(),
           if (error != null)
@@ -121,14 +175,18 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppButton(
                   label: 'Copy Card',
-                  onTap: () {},
+                  onTap: () {
+                    clearError();
+                  },
                 ),
               ),
               HorizontalSpace(panelSize.width * 0.05),
               Expanded(
                 child: AppButton(
                   label: 'Delete Card',
-                  onTap: () {},
+                  onTap: () {
+                    clearError();
+                  },
                 ),
               ),
             ],
@@ -139,7 +197,23 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppButton(
                   label: 'Create New Card',
-                  onTap: () {},
+                  onTap: () {
+                    //error checking
+                    if (checkCardValid() == false) return;
+                    boardProvider.setTopCard(
+                        0,
+                        0,
+                        GameCardModel(
+                          name: name!,
+                          description: description!,
+                          // imageUrl:
+                          topLeft: topLeft,
+                          topRight: topRight,
+                          bottomLeft: bottomLeft,
+                          bottomRight: bottomRight,
+                        ));
+                    clearError();
+                  },
                 ),
               ),
             ],
