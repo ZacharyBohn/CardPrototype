@@ -32,12 +32,10 @@ class GameCardGroupWidget extends StatefulWidget {
 }
 
 class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
-  @override
-  initState() {
-    super.initState();
-    return;
-  }
+  double borderRadius = 0.0;
 
+  //TODO: show the card picture if present
+  //otherwise show a question mark for the image
   Color getCardColor(GameCardModel? topCard) {
     if (topCard == null) {
       return AppColors.emptyPosition;
@@ -73,17 +71,22 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         childWhenDragging: Container(
           width: widget.cardSize.width * 1.2,
           height: widget.cardSize.height * 1.1,
-          color: cardGroupCount > 1
-              ? AppColors.cardForeground
-              : AppColors.emptyPosition,
-
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(borderRadius),
+            color: cardGroupCount > 1
+                ? AppColors.cardForeground
+                : AppColors.emptyPosition,
+          ),
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
         feedback: Material(
           child: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.1,
-            color: getCardColor(topCard),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(borderRadius),
+              color: getCardColor(topCard),
+            ),
           ),
         ),
         onDragStarted: () {
@@ -101,7 +104,11 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         },
         child: GestureDetector(
           onTap: () {
-            boardProvider.highlightedCard = boardProvider.getTopCard(
+            if (cardGroupCount == 0) {
+              boardProvider.clearHighlight();
+              return;
+            }
+            boardProvider.highlightCard(
               widget.rowPosition,
               widget.columnPosition,
             );
@@ -116,8 +123,9 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 border: Border.all(
                   color: topCardHightlighted
                       ? AppColors.hightlight
-                      : getCardColor(topCard),
+                      : AppColors.emptyPosition,
                 ),
+                borderRadius: BorderRadius.circular(borderRadius),
               ),
             ),
             onWillAccept: (object) {

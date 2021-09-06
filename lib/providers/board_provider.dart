@@ -47,4 +47,16 @@ class BoardProvider with ChangeNotifier {
     notifyListeners();
     return;
   }
+
+  void highlightCard(int row, int column) {
+    _highlightedCard = _board.positions[row][column].topCard;
+    notifyListeners();
+    return;
+  }
+
+  void clearHighlight() {
+    _highlightedCard = null;
+    notifyListeners();
+    return;
+  }
 }
