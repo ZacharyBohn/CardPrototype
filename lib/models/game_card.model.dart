@@ -21,4 +21,6 @@ class GameCardModel {
     this.bottomRight,
     this.faceup = true,
   });
+
+  bool get hasImage => imageUrl != null;
 }

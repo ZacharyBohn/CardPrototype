@@ -49,6 +49,13 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     throw Exception('No color?');
   }
 
+  Widget? getCardImage(GameCardModel? topCard) {
+    if (topCard != null && topCard.hasImage) {
+      return Image.network(topCard.imageUrl!);
+    }
+    return Center(child: Text('?'));
+  }
+
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
@@ -79,6 +86,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           ),
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
+        //card that is dragged
         feedback: Material(
           child: Container(
             width: widget.cardSize.width * 1.2,
@@ -87,6 +95,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               borderRadius: BorderRadius.circular(borderRadius),
               color: getCardColor(topCard),
             ),
+            child: getCardImage(topCard),
           ),
         ),
         onDragStarted: () {
@@ -114,6 +123,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             );
             return;
           },
+          //stationary card
           child: DragTarget(
             builder: (context, _, __) => Container(
               width: widget.cardSize.width.ceilToDouble(),
@@ -127,6 +137,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 ),
                 borderRadius: BorderRadius.circular(borderRadius),
               ),
+              child: getCardImage(topCard),
             ),
             onWillAccept: (object) {
               if (object is GameCardModel) return true;
