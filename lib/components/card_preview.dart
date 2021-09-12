@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/enum/app_colors.dart';
+import 'package:game_prototype/enum/fonts.dart';
 import 'package:game_prototype/models/game_card.model.dart';
 
 import 'app_text.dart';
@@ -77,6 +78,7 @@ class CardPreview extends StatelessWidget {
                       child: Center(
                         child: AppText(
                           label: card?.name,
+                          fontSize: FontSizes.cardName,
                         ),
                       ),
                     ),
