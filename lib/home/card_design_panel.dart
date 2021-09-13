@@ -144,8 +144,10 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           ),
           VerticalSpace(panelSize.height * 0.03),
           if (imageUrl != null)
-            Image.network(
-              imageUrl!,
+            Expanded(
+              child: Image.network(
+                imageUrl!,
+              ),
             ),
           if (imageUrl == null)
             AppText(

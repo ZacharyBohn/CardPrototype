@@ -28,72 +28,126 @@ class CardPreview extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: card != null
-          ? Stack(
-              children: [
-                //info
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //top values
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: AppText(
-                              label: card?.topLeft,
-                            ),
-                          ),
-                          Expanded(
-                            child: AppText(
-                              label: card?.topRight,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Spacer(
-                      flex: 6,
-                    ),
-                    //bottom values
-                    Expanded(
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: AppText(
-                              label: card?.bottomLeft,
-                            ),
-                          ),
-                          Expanded(
-                            child: AppText(
-                              label: card?.bottomRight,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Divider(
-                      color: AppColors.hightlightPreviewBorder,
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: AppText(
-                          label: card?.name,
-                          fontSize: FontSizes.cardName,
+          ? Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8,
+                vertical: 8,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Flexible(
+                          child: AppText(label: card!.topLeft),
                         ),
-                      ),
+                        Flexible(
+                          child: AppText(label: card!.name),
+                        ),
+                        Flexible(
+                          child: AppText(label: card!.topRight),
+                        ),
+                      ],
                     ),
-                    Expanded(
-                      flex: 4,
-                      child: AppText(
-                        label: card?.description,
-                        textAlign: TextAlign.left,
-                      ),
+                  ),
+                  Divider(
+                    color: AppColors.hightlightPreviewBorder,
+                  ),
+                  Expanded(
+                    flex: 8,
+                    child: card?.imageUrl != null
+                        ? Center(
+                            child: Image.network(card!.imageUrl!),
+                          )
+                        : Container(),
+                  ),
+                  Divider(
+                    color: AppColors.hightlightPreviewBorder,
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: AppText(
+                      label: card!.description,
                     ),
-                  ],
-                ),
-                //image
-                if (card?.imageUrl != null) Image.network(card!.imageUrl!),
-              ],
+                  ),
+                  Divider(
+                    color: AppColors.hightlightPreviewBorder,
+                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Flexible(
+                          child: AppText(label: card!.bottomLeft),
+                        ),
+                        Flexible(
+                          child: AppText(label: card!.bottomRight),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //poop this stuff
+                  //top values
+                  // Expanded(
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: AppText(
+                  //           label: card?.topLeft,
+                  //         ),
+                  //       ),
+                  //       Expanded(
+                  //         child: AppText(
+                  //           label: card?.topRight,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Spacer(
+                  //   flex: 6,
+                  // ),
+                  //bottom values
+                  // Expanded(
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //         child: AppText(
+                  //           label: card?.bottomLeft,
+                  //         ),
+                  //       ),
+                  //       Expanded(
+                  //         child: AppText(
+                  //           label: card?.bottomRight,
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Divider(
+                  //   color: AppColors.hightlightPreviewBorder,
+                  // ),
+                  // Expanded(
+                  //   child: Center(
+                  //     child: AppText(
+                  //       label: card?.name,
+                  //       fontSize: FontSizes.cardName,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Expanded(
+                  //   flex: 4,
+                  //   child: AppText(
+                  //     label: card?.description,
+                  //     textAlign: TextAlign.left,
+                  //   ),
+                  // ),
+                ],
+              ),
             )
           : Container(),
     );
