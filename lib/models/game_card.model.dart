@@ -23,4 +23,19 @@ class GameCardModel {
   });
 
   bool get hasImage => imageUrl != null;
+
+  GameCardModel copy() {
+    return GameCardModel(
+      name: this.name,
+      descriptionAccent: this.descriptionAccent,
+      description: this.description,
+      imageUrl: this.imageUrl,
+      customBackUrl: this.customBackUrl,
+      topLeft: this.topLeft,
+      topRight: this.topRight,
+      bottomLeft: this.bottomLeft,
+      bottomRight: this.bottomRight,
+      faceup: this.faceup,
+    );
+  }
 }

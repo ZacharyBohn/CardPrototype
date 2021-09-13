@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/app_button.dart';
 import 'package:game_prototype/components/app_text.dart';
@@ -24,9 +23,29 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   String? bottomLeft;
   String? bottomRight;
   String? imageUrl;
-  Uint8List? imageBytes;
 
   String? error;
+
+  late TextEditingController nameController;
+  late TextEditingController topLeftController;
+  late TextEditingController topRightController;
+  late TextEditingController bottomLeftController;
+  late TextEditingController bottomRightController;
+  late TextEditingController descriptionController;
+  late TextEditingController imageUrlController;
+
+  @override
+  initState() {
+    nameController = TextEditingController();
+    topLeftController = TextEditingController();
+    topRightController = TextEditingController();
+    bottomLeftController = TextEditingController();
+    bottomRightController = TextEditingController();
+    descriptionController = TextEditingController();
+    imageUrlController = TextEditingController();
+    super.initState();
+    return;
+  }
 
   bool checkCardValid() {
     if (name == null) {
@@ -48,6 +67,26 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     setState(() {
       error = null;
     });
+    return;
+  }
+
+  void clearDesignPanel() {
+    setState(() {
+      name = null;
+      description = null;
+      topLeft = null;
+      topRight = null;
+      bottomLeft = null;
+      bottomRight = null;
+      imageUrl = null;
+    });
+    nameController.text = '';
+    topLeftController.text = '';
+    topRightController.text = '';
+    bottomLeftController.text = '';
+    bottomRightController.text = '';
+    descriptionController.text = '';
+    imageUrlController.text = '';
     return;
   }
 
@@ -77,6 +116,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
         children: [
           AppTextField(
             hint: 'Name',
+            controller: nameController,
             onTextChange: (String value) {
               name = value;
               clearError();
@@ -87,6 +127,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Top Left Value',
+                  controller: topLeftController,
                   onTextChange: (String value) {
                     topLeft = value;
                     clearError();
@@ -97,6 +138,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Top Right Value',
+                  controller: topRightController,
                   onTextChange: (String value) {
                     topRight = value;
                     clearError();
@@ -110,6 +152,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Bottom Left Value',
+                  controller: bottomLeftController,
                   onTextChange: (String value) {
                     bottomLeft = value;
                     clearError();
@@ -120,6 +163,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Bottom Right Value',
+                  controller: bottomRightController,
                   onTextChange: (String value) {
                     bottomRight = value;
                     clearError();
@@ -130,6 +174,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           ),
           AppTextField(
             hint: 'Description',
+            controller: descriptionController,
             onTextChange: (String value) {
               description = value;
               clearError();
@@ -137,6 +182,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           ),
           AppTextField(
             hint: 'Image URL',
+            controller: imageUrlController,
             onTextChange: (String value) {
               imageUrl = value;
               clearError();
@@ -160,33 +206,25 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               fontColor: AppColors.error,
             ),
           VerticalSpace(panelSize.height * 0.01),
-          AppButton(
-            label: 'Load Image',
-            onTap: () async {
-              setState(() {
-                imageUrl = imageUrl;
-              });
-              // imageBytes = null;
-              // FilePickerResult? image = await FilePicker.platform.pickFiles(
-              //   dialogTitle: 'Choose Image',
-              //   type: FileType.image,
-              //   withData: true,
-              // );
-              // if (image == null || image.count == 0) return;
-              // PlatformFile file = image.files.first;
-              // setState(() {
-              //   imageBytes = file.bytes;
-              // });
-            },
-          ),
-          VerticalSpace(panelSize.height * 0.01),
           Row(
             children: [
               Expanded(
                 child: AppButton(
                   label: 'Copy Card',
                   onTap: () {
+                    if (boardProvider.highlightedCard == null) {
+                      setState(() {
+                        error = 'A card must be highlighted to be copied.';
+                      });
+                      return;
+                    }
+                    boardProvider.setTopCard(
+                      0,
+                      0,
+                      boardProvider.highlightedCard!.copy(),
+                    );
                     clearError();
+                    clearDesignPanel();
                   },
                 ),
               ),
@@ -196,6 +234,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                   label: 'Delete Card',
                   onTap: () {
                     clearError();
+                    clearDesignPanel();
                   },
                 ),
               ),
@@ -224,6 +263,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         ));
                     boardProvider.highlightCard(0, 0);
                     clearError();
+                    clearDesignPanel();
                   },
                 ),
               ),

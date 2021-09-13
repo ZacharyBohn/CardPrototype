@@ -6,12 +6,14 @@ class AppTextField extends StatefulWidget {
   final String? hint;
   final String? initialText;
   final double? fontSize;
+  final TextEditingController? controller;
   final void Function(String)? onTextChange;
   const AppTextField({
     Key? key,
     this.hint,
     this.initialText,
     this.fontSize,
+    this.controller,
     this.onTextChange,
   }) : super(key: key);
 
@@ -24,7 +26,8 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   initState() {
-    controller = TextEditingController(text: widget.initialText);
+    controller =
+        widget.controller ?? TextEditingController(text: widget.initialText);
     super.initState();
     return;
   }
