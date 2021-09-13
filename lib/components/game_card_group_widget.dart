@@ -88,6 +88,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 ? AppColors.cardForeground
                 : AppColors.emptyPosition,
           ),
+          child: getCardImage(topCard),
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
         //card that is dragged

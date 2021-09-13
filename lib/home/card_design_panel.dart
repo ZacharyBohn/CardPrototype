@@ -233,6 +233,13 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                 child: AppButton(
                   label: 'Delete Card',
                   onTap: () {
+                    if (boardProvider.highlightedColumn != null) {
+                      boardProvider.removeTopCard(
+                        boardProvider.highlightedRow!,
+                        boardProvider.highlightedColumn!,
+                      );
+                    }
+                    boardProvider.clearHighlight();
                     clearError();
                     clearDesignPanel();
                   },
