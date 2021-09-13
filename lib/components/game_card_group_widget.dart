@@ -3,6 +3,7 @@ import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 import '../enum/app_colors.dart';
 import '../models/game_card.model.dart';
+import 'app_text.dart';
 
 class GameCardGroupWidget extends StatefulWidget {
   final int rowPosition;
@@ -48,10 +49,15 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   }
 
   Widget? getCardImage(GameCardModel? topCard) {
-    if (topCard != null && topCard.hasImage) {
+    if (topCard == null) return Container();
+    if (topCard.hasImage) {
       return Image.network(topCard.imageUrl!);
     }
-    return Center(child: Text('?'));
+    return Center(
+      child: AppText(
+        label: '?',
+      ),
+    );
   }
 
   @override
