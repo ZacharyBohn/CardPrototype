@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/enum/fonts.dart';
+import 'package:game_prototype/utils/helpers.dart';
 
 import '../components/app_text.dart';
 import '../enum/app_colors.dart';
@@ -33,7 +34,8 @@ class AppDrawer extends StatelessWidget {
             ),
             ListTile(
               title: AppText(label: 'Upload Card List (.csv)'),
-              onTap: () {
+              onTap: () async {
+                String? data = await pickFile('Select Card List File', ['csv']);
                 Navigator.of(context).pop();
                 return;
               },

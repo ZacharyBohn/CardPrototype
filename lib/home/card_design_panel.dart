@@ -16,6 +16,8 @@ class CardDesignPanel extends StatefulWidget {
 }
 
 class _CardDesignPanelState extends State<CardDesignPanel> {
+  //TODO: finish implementing id
+  String? id;
   String? name;
   String? description;
   String? topLeft;
@@ -26,6 +28,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
 
   String? error;
 
+  late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController topLeftController;
   late TextEditingController topRightController;
@@ -36,6 +39,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
 
   @override
   initState() {
+    idController = TextEditingController();
     nameController = TextEditingController();
     topLeftController = TextEditingController();
     topRightController = TextEditingController();
@@ -48,6 +52,11 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   }
 
   bool checkCardValid() {
+    if (id == null) {
+      setState(() {
+        error = 'ID must be set.';
+      });
+    }
     if (name == null) {
       setState(() {
         error = 'Name must be set.';
@@ -72,6 +81,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
 
   void clearDesignPanel() {
     setState(() {
+      id = null;
       name = null;
       description = null;
       topLeft = null;
@@ -80,6 +90,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       bottomRight = null;
       imageUrl = null;
     });
+    idController.text = '';
     nameController.text = '';
     topLeftController.text = '';
     topRightController.text = '';
@@ -114,13 +125,31 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          AppTextField(
-            hint: 'Name',
-            controller: nameController,
-            onTextChange: (String value) {
-              name = value;
-              clearError();
-            },
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: AppTextField(
+                  hint: 'Name',
+                  controller: nameController,
+                  onTextChange: (String value) {
+                    name = value;
+                    clearError();
+                  },
+                ),
+              ),
+              HorizontalSpace(panelSize.width * 0.05),
+              Expanded(
+                child: AppTextField(
+                  hint: 'ID',
+                  controller: nameController,
+                  onTextChange: (String value) {
+                    name = value;
+                    clearError();
+                  },
+                ),
+              ),
+            ],
           ),
           Row(
             children: [
@@ -260,6 +289,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         0,
                         0,
                         GameCardModel(
+                          id: id!,
                           name: name!,
                           description: description!,
                           imageUrl: imageUrl,
