@@ -18,7 +18,6 @@ class CardDesignPanel extends StatefulWidget {
 class _CardDesignPanelState extends State<CardDesignPanel> {
   GameCardModel? previousSelectedCard;
 
-  String? id;
   String? name;
   String? descriptionAccent;
   String? description;
@@ -30,7 +29,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
 
   String? error;
 
-  late TextEditingController idController;
   late TextEditingController nameController;
   late TextEditingController topLeftController;
   late TextEditingController topRightController;
@@ -42,7 +40,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
 
   @override
   initState() {
-    idController = TextEditingController();
     nameController = TextEditingController();
     topLeftController = TextEditingController();
     topRightController = TextEditingController();
@@ -56,11 +53,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   }
 
   bool checkCardValid() {
-    if (id == null) {
-      setState(() {
-        error = 'ID must be set.';
-      });
-    }
     if (name == null) {
       setState(() {
         error = 'Name must be set.';
@@ -85,7 +77,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
 
   void clearDesignPanel() {
     setState(() {
-      id = null;
       name = null;
       descriptionAccent = null;
       description = null;
@@ -95,7 +86,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       bottomRight = null;
       imageUrl = null;
     });
-    idController.text = '';
     nameController.text = '';
     topLeftController.text = '';
     topRightController.text = '';
@@ -110,8 +100,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   void loadHighlightedCardInfo(BoardProvider boardProvider) {
     GameCardModel? card = boardProvider.highlightedCard;
     if (card == null) return;
-    idController.text = card.id;
-    id = card.id;
     nameController.text = card.name;
     name = card.name;
     descriptionAccentController.text = card.descriptionAccent ?? '';
@@ -168,31 +156,13 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: AppTextField(
-                  hint: 'Name',
-                  controller: nameController,
-                  onTextChange: (String value) {
-                    name = value;
-                    clearError();
-                  },
-                ),
-              ),
-              HorizontalSpace(panelSize.width * 0.05),
-              Expanded(
-                child: AppTextField(
-                  hint: 'ID',
-                  controller: idController,
-                  onTextChange: (String value) {
-                    id = value;
-                    clearError();
-                  },
-                ),
-              ),
-            ],
+          AppTextField(
+            hint: 'Name',
+            controller: nameController,
+            onTextChange: (String value) {
+              name = value;
+              clearError();
+            },
           ),
           Row(
             children: [
@@ -338,7 +308,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                     if (checkCardValid() == false) return;
                     if (editingHighlightedCard(boardProvider)) {
                       boardProvider.highlightedCard = GameCardModel(
-                        id: id!,
                         name: name!,
                         descriptionAccent: descriptionAccent,
                         description: description!,
@@ -356,7 +325,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         0,
                         0,
                         GameCardModel(
-                          id: id!,
                           name: name!,
                           descriptionAccent: descriptionAccent,
                           description: description!,

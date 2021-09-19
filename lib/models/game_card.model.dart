@@ -1,5 +1,4 @@
 class GameCardModel {
-  late String id;
   late String name;
   late String? descriptionAccent;
   late String description;
@@ -11,7 +10,6 @@ class GameCardModel {
   late bool faceup;
   late String? customBackUrl;
   GameCardModel({
-    required this.id,
     this.name = 'Unknown',
     this.description = '[desc]',
     this.descriptionAccent = '[card info]',
@@ -28,26 +26,24 @@ class GameCardModel {
     //assume string is a comma seperates line
     List<String> values = string.split(',');
     values.forEach((element) => element.trim());
-    if (values.length != 10) {
+    if (values.length != 9) {
       return null;
     }
     return GameCardModel(
-      id: values[0],
-      name: values[1],
-      descriptionAccent: values[2],
-      description: values[3],
-      imageUrl: values[4],
-      topLeft: values[5],
-      topRight: values[6],
-      bottomLeft: values[7],
-      bottomRight: values[8],
-      customBackUrl: values[9],
+      name: values[0],
+      descriptionAccent: values[1],
+      description: values[2],
+      imageUrl: values[3],
+      topLeft: values[4],
+      topRight: values[5],
+      bottomLeft: values[6],
+      bottomRight: values[7],
+      customBackUrl: values[8],
     );
   }
 
   String toCsvString() {
     String data = '';
-    data += '$id,';
     data += '$name,';
     data += '$descriptionAccent,';
     data += '$description,';
@@ -65,7 +61,6 @@ class GameCardModel {
 
   GameCardModel copy() {
     return GameCardModel(
-      id: this.id,
       name: this.name,
       descriptionAccent: this.descriptionAccent,
       description: this.description,
