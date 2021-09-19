@@ -16,6 +16,8 @@ class CardDesignPanel extends StatefulWidget {
 }
 
 class _CardDesignPanelState extends State<CardDesignPanel> {
+  GameCardModel? previousSelectedCard;
+
   String? id;
   String? name;
   String? descriptionAccent;
@@ -109,22 +111,41 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     GameCardModel? card = boardProvider.highlightedCard;
     if (card == null) return;
     idController.text = card.id;
+    id = card.id;
     nameController.text = card.name;
+    name = card.name;
     descriptionAccentController.text = card.descriptionAccent ?? '';
+    descriptionAccent = card.descriptionAccent ?? '';
     descriptionController.text = card.description;
+    description = card.description;
     topLeftController.text = card.topLeft ?? '';
+    topLeft = card.topLeft ?? '';
     topRightController.text = card.topRight ?? '';
+    topRight = card.topRight ?? '';
     bottomLeftController.text = card.bottomLeft ?? '';
+    bottomLeft = card.bottomLeft ?? '';
     bottomRightController.text = card.bottomRight ?? '';
+    bottomRight = card.bottomRight ?? '';
     imageUrlController.text = card.imageUrl ?? '';
+    imageUrl = card.imageUrl ?? '';
     return;
+  }
+
+  bool editingHighlightedCard(BoardProvider boardProvider) {
+    if (previousSelectedCard == null) return false;
+    return boardProvider.highlightedCard == previousSelectedCard;
   }
 
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
-    if (boardProvider.highlightedCard != null) {
-      loadHighlightedCardInfo(boardProvider);
+    if (boardProvider.highlightedCard != previousSelectedCard) {
+      if (boardProvider.highlightedCard != null) {
+        loadHighlightedCardInfo(boardProvider);
+      } else {
+        clearDesignPanel();
+      }
+      previousSelectedCard = boardProvider.highlightedCard;
     }
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
@@ -248,7 +269,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             },
           ),
           VerticalSpace(panelSize.height * 0.03),
-          if (imageUrl != null)
+          if (imageUrl != null && imageUrl!.isNotEmpty)
             Expanded(
               child: Image.network(
                 imageUrl!,
@@ -311,10 +332,26 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             children: [
               Expanded(
                 child: AppButton(
-                  label: 'Create Card',
+                  label: 'Save Card',
                   onTap: () {
                     //error checking
                     if (checkCardValid() == false) return;
+                    if (editingHighlightedCard(boardProvider)) {
+                      boardProvider.highlightedCard = GameCardModel(
+                        id: id!,
+                        name: name!,
+                        descriptionAccent: descriptionAccent,
+                        description: description!,
+                        imageUrl: imageUrl,
+                        topLeft: topLeft,
+                        topRight: topRight,
+                        bottomLeft: bottomLeft,
+                        bottomRight: bottomRight,
+                      );
+                      clearError();
+                      clearDesignPanel();
+                      return;
+                    }
                     boardProvider.setTopCard(
                         0,
                         0,
