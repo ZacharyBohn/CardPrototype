@@ -100,9 +100,26 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     return;
   }
 
+  void loadHighlightedCardInfo(BoardProvider boardProvider) {
+    GameCardModel? card = boardProvider.highlightedCard;
+    if (card == null) return;
+    idController.text = card.id;
+    nameController.text = card.name;
+    descriptionController.text = card.description;
+    topLeftController.text = card.topLeft ?? '';
+    topRightController.text = card.topRight ?? '';
+    bottomLeftController.text = card.bottomLeft ?? '';
+    bottomRightController.text = card.bottomRight ?? '';
+    imageUrlController.text = card.imageUrl ?? '';
+    return;
+  }
+
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
+    if (boardProvider.highlightedCard != null) {
+      loadHighlightedCardInfo(boardProvider);
+    }
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
     Size size = MediaQuery.of(context).size;
@@ -141,7 +158,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'ID',
-                  controller: nameController,
+                  controller: idController,
                   onTextChange: (String value) {
                     name = value;
                     clearError();
@@ -280,7 +297,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             children: [
               Expanded(
                 child: AppButton(
-                  label: 'Create New Card',
+                  label: 'Create Card',
                   onTap: () {
                     //error checking
                     if (checkCardValid() == false) return;
