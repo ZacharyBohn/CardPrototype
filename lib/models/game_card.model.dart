@@ -45,6 +45,22 @@ class GameCardModel {
     );
   }
 
+  String toCsvString() {
+    String data = '';
+    data += '$id,';
+    data += '$name,';
+    data += '$descriptionAccent,';
+    data += '$description,';
+    data += '$imageUrl,';
+    data += '$topLeft,';
+    data += '$topRight,';
+    data += '$bottomLeft,';
+    data += '$bottomRight,';
+    data += '$customBackUrl,';
+    data += '\n';
+    return data;
+  }
+
   bool get hasImage => imageUrl != null && imageUrl!.isNotEmpty;
 
   GameCardModel copy() {

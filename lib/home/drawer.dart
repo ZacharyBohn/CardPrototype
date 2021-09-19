@@ -52,13 +52,21 @@ class AppDrawer extends StatelessWidget {
                 return;
               },
             ),
-            // ListTile(
-            //   title: AppText(label: 'Download Card List Template'),
-            //   onTap: () {
-            //     Navigator.of(context).pop();
-            //     return;
-            //   },
-            // ),
+            ListTile(
+              title: AppText(label: 'Download Card List (.csv)'),
+              onTap: () async {
+                BoardProvider boardProvider =
+                    Provider.of<BoardProvider>(context, listen: false);
+                String csvData = convertCardsToCsvString(boardProvider);
+                String topLine =
+                    'ID,Name,Accent,Description,Image URL,Top Left,Top Right,Bottom Left,Bottom Right,Back URL\n';
+                csvData = topLine + csvData;
+                //download the file to the client here
+                await downloadCsvToClient(csvData);
+                Navigator.of(context).pop();
+                return;
+              },
+            ),
             // ListTile(
             //   title: AppText(label: 'Load Save State (.cpsave)'),
             //   onTap: () {
