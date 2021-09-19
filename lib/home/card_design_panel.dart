@@ -1,7 +1,3 @@
-import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/app_button.dart';
 import 'package:game_prototype/components/app_text.dart';
@@ -20,18 +16,51 @@ class CardDesignPanel extends StatefulWidget {
 }
 
 class _CardDesignPanelState extends State<CardDesignPanel> {
+  GameCardModel? previousSelectedCard;
+
+  String? id;
   String? name;
+  String? descriptionAccent;
   String? description;
   String? topLeft;
   String? topRight;
   String? bottomLeft;
   String? bottomRight;
   String? imageUrl;
-  Uint8List? imageBytes;
 
   String? error;
 
+  late TextEditingController idController;
+  late TextEditingController nameController;
+  late TextEditingController topLeftController;
+  late TextEditingController topRightController;
+  late TextEditingController bottomLeftController;
+  late TextEditingController bottomRightController;
+  late TextEditingController descriptionAccentController;
+  late TextEditingController descriptionController;
+  late TextEditingController imageUrlController;
+
+  @override
+  initState() {
+    idController = TextEditingController();
+    nameController = TextEditingController();
+    topLeftController = TextEditingController();
+    topRightController = TextEditingController();
+    bottomLeftController = TextEditingController();
+    bottomRightController = TextEditingController();
+    descriptionAccentController = TextEditingController();
+    descriptionController = TextEditingController();
+    imageUrlController = TextEditingController();
+    super.initState();
+    return;
+  }
+
   bool checkCardValid() {
+    if (id == null) {
+      setState(() {
+        error = 'ID must be set.';
+      });
+    }
     if (name == null) {
       setState(() {
         error = 'Name must be set.';
@@ -54,9 +83,70 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     return;
   }
 
+  void clearDesignPanel() {
+    setState(() {
+      id = null;
+      name = null;
+      descriptionAccent = null;
+      description = null;
+      topLeft = null;
+      topRight = null;
+      bottomLeft = null;
+      bottomRight = null;
+      imageUrl = null;
+    });
+    idController.text = '';
+    nameController.text = '';
+    topLeftController.text = '';
+    topRightController.text = '';
+    bottomLeftController.text = '';
+    bottomRightController.text = '';
+    descriptionAccentController.text = '';
+    descriptionController.text = '';
+    imageUrlController.text = '';
+    return;
+  }
+
+  void loadHighlightedCardInfo(BoardProvider boardProvider) {
+    GameCardModel? card = boardProvider.highlightedCard;
+    if (card == null) return;
+    idController.text = card.id;
+    id = card.id;
+    nameController.text = card.name;
+    name = card.name;
+    descriptionAccentController.text = card.descriptionAccent ?? '';
+    descriptionAccent = card.descriptionAccent ?? '';
+    descriptionController.text = card.description;
+    description = card.description;
+    topLeftController.text = card.topLeft ?? '';
+    topLeft = card.topLeft ?? '';
+    topRightController.text = card.topRight ?? '';
+    topRight = card.topRight ?? '';
+    bottomLeftController.text = card.bottomLeft ?? '';
+    bottomLeft = card.bottomLeft ?? '';
+    bottomRightController.text = card.bottomRight ?? '';
+    bottomRight = card.bottomRight ?? '';
+    imageUrlController.text = card.imageUrl ?? '';
+    imageUrl = card.imageUrl ?? '';
+    return;
+  }
+
+  bool editingHighlightedCard(BoardProvider boardProvider) {
+    if (previousSelectedCard == null) return false;
+    return boardProvider.highlightedCard == previousSelectedCard;
+  }
+
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
+    if (boardProvider.highlightedCard != previousSelectedCard) {
+      if (boardProvider.highlightedCard != null) {
+        loadHighlightedCardInfo(boardProvider);
+      } else {
+        clearDesignPanel();
+      }
+      previousSelectedCard = boardProvider.highlightedCard;
+    }
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
     Size size = MediaQuery.of(context).size;
@@ -78,18 +168,38 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          AppTextField(
-            hint: 'Name',
-            onTextChange: (String value) {
-              name = value;
-              clearError();
-            },
+          Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: AppTextField(
+                  hint: 'Name',
+                  controller: nameController,
+                  onTextChange: (String value) {
+                    name = value;
+                    clearError();
+                  },
+                ),
+              ),
+              HorizontalSpace(panelSize.width * 0.05),
+              Expanded(
+                child: AppTextField(
+                  hint: 'ID',
+                  controller: idController,
+                  onTextChange: (String value) {
+                    id = value;
+                    clearError();
+                  },
+                ),
+              ),
+            ],
           ),
           Row(
             children: [
               Expanded(
                 child: AppTextField(
                   hint: 'Top Left Value',
+                  controller: topLeftController,
                   onTextChange: (String value) {
                     topLeft = value;
                     clearError();
@@ -100,6 +210,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Top Right Value',
+                  controller: topRightController,
                   onTextChange: (String value) {
                     topRight = value;
                     clearError();
@@ -113,6 +224,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Bottom Left Value',
+                  controller: bottomLeftController,
                   onTextChange: (String value) {
                     bottomLeft = value;
                     clearError();
@@ -123,6 +235,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               Expanded(
                 child: AppTextField(
                   hint: 'Bottom Right Value',
+                  controller: bottomRightController,
                   onTextChange: (String value) {
                     bottomRight = value;
                     clearError();
@@ -132,7 +245,16 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             ],
           ),
           AppTextField(
+            hint: 'Description Accent',
+            controller: descriptionAccentController,
+            onTextChange: (String value) {
+              descriptionAccent = value;
+              clearError();
+            },
+          ),
+          AppTextField(
             hint: 'Description',
+            controller: descriptionController,
             onTextChange: (String value) {
               description = value;
               clearError();
@@ -140,15 +262,18 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           ),
           AppTextField(
             hint: 'Image URL',
+            controller: imageUrlController,
             onTextChange: (String value) {
               imageUrl = value;
               clearError();
             },
           ),
           VerticalSpace(panelSize.height * 0.03),
-          if (imageUrl != null)
-            Image.network(
-              imageUrl!,
+          if (imageUrl != null && imageUrl!.isNotEmpty)
+            Expanded(
+              child: Image.network(
+                imageUrl!,
+              ),
             ),
           if (imageUrl == null)
             AppText(
@@ -161,33 +286,25 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
               fontColor: AppColors.error,
             ),
           VerticalSpace(panelSize.height * 0.01),
-          AppButton(
-            label: 'Load Image',
-            onTap: () async {
-              setState(() {
-                imageUrl = imageUrl;
-              });
-              // imageBytes = null;
-              // FilePickerResult? image = await FilePicker.platform.pickFiles(
-              //   dialogTitle: 'Choose Image',
-              //   type: FileType.image,
-              //   withData: true,
-              // );
-              // if (image == null || image.count == 0) return;
-              // PlatformFile file = image.files.first;
-              // setState(() {
-              //   imageBytes = file.bytes;
-              // });
-            },
-          ),
-          VerticalSpace(panelSize.height * 0.01),
           Row(
             children: [
               Expanded(
                 child: AppButton(
                   label: 'Copy Card',
                   onTap: () {
+                    if (boardProvider.highlightedCard == null) {
+                      setState(() {
+                        error = 'A card must be highlighted to be copied.';
+                      });
+                      return;
+                    }
+                    boardProvider.setTopCard(
+                      0,
+                      0,
+                      boardProvider.highlightedCard!.copy(),
+                    );
                     clearError();
+                    clearDesignPanel();
                   },
                 ),
               ),
@@ -196,7 +313,15 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                 child: AppButton(
                   label: 'Delete Card',
                   onTap: () {
+                    if (boardProvider.highlightedColumn != null) {
+                      boardProvider.removeTopCard(
+                        boardProvider.highlightedRow!,
+                        boardProvider.highlightedColumn!,
+                      );
+                    }
+                    boardProvider.clearHighlight();
                     clearError();
+                    clearDesignPanel();
                   },
                 ),
               ),
@@ -207,15 +332,33 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             children: [
               Expanded(
                 child: AppButton(
-                  label: 'Create New Card',
+                  label: 'Save Card',
                   onTap: () {
                     //error checking
                     if (checkCardValid() == false) return;
+                    if (editingHighlightedCard(boardProvider)) {
+                      boardProvider.highlightedCard = GameCardModel(
+                        id: id!,
+                        name: name!,
+                        descriptionAccent: descriptionAccent,
+                        description: description!,
+                        imageUrl: imageUrl,
+                        topLeft: topLeft,
+                        topRight: topRight,
+                        bottomLeft: bottomLeft,
+                        bottomRight: bottomRight,
+                      );
+                      clearError();
+                      clearDesignPanel();
+                      return;
+                    }
                     boardProvider.setTopCard(
                         0,
                         0,
                         GameCardModel(
+                          id: id!,
                           name: name!,
+                          descriptionAccent: descriptionAccent,
                           description: description!,
                           imageUrl: imageUrl,
                           topLeft: topLeft,
@@ -225,6 +368,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         ));
                     boardProvider.highlightCard(0, 0);
                     clearError();
+                    clearDesignPanel();
                   },
                 ),
               ),

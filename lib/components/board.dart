@@ -52,6 +52,7 @@ class _BoardState extends State<Board> {
                     required int row,
                     required int column}) {
                   boardProvider.setTopCard(row, column, cardModel);
+                  boardProvider.highlightCard(row, column);
                 },
               ),
             ),

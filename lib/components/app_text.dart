@@ -7,12 +7,14 @@ class AppText extends StatelessWidget {
   final double? fontSize;
   final Color? fontColor;
   final TextAlign? textAlign;
+  final FontStyle? fontStyle;
   const AppText({
     Key? key,
     this.label,
     this.fontSize,
     this.fontColor,
     this.textAlign,
+    this.fontStyle,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class AppText extends StatelessWidget {
         color: fontColor ?? AppColors.fontColor,
         fontSize: fontSize ?? FontSizes.body,
         fontFamily: 'Arial',
+        fontStyle: fontStyle,
       ),
     );
   }

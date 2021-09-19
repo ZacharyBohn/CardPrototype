@@ -22,6 +22,11 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  int? _highlightedRow;
+  int? get highlightedRow => _highlightedRow;
+  int? _highlightedColumn;
+  int? get highlightedColumn => _highlightedColumn;
+
   GameCardGroupModel getCardGroup(int row, int column) {
     return _board.positions[row][column];
   }
@@ -34,6 +39,10 @@ class BoardProvider with ChangeNotifier {
 
   GameCardModel? getTopCard(int row, int column) {
     return _board.positions[row][column].topCard;
+  }
+
+  GameCardModel? getSecondCard(int row, int column) {
+    return _board.positions[row][column].secondCard;
   }
 
   void setTopCard(int row, int column, GameCardModel card) {
@@ -50,6 +59,10 @@ class BoardProvider with ChangeNotifier {
 
   void highlightCard(int row, int column) {
     _highlightedCard = _board.positions[row][column].topCard;
+    if (_highlightedCard != null) {
+      _highlightedRow = row;
+      _highlightedColumn = column;
+    }
     notifyListeners();
     return;
   }
