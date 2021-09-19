@@ -110,7 +110,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     if (card == null) return;
     idController.text = card.id;
     nameController.text = card.name;
-    descriptionAccentController.text = card.descriptionAccent;
+    descriptionAccentController.text = card.descriptionAccent ?? '';
     descriptionController.text = card.description;
     topLeftController.text = card.topLeft ?? '';
     topRightController.text = card.topRight ?? '';
@@ -235,7 +235,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             hint: 'Description',
             controller: descriptionController,
             onTextChange: (String value) {
-              descriptionAccent = value;
+              description = value;
               clearError();
             },
           ),
@@ -321,6 +321,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         GameCardModel(
                           id: id!,
                           name: name!,
+                          descriptionAccent: descriptionAccent,
                           description: description!,
                           imageUrl: imageUrl,
                           topLeft: topLeft,

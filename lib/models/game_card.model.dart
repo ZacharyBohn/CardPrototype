@@ -1,7 +1,7 @@
 class GameCardModel {
   late String id;
   late String name;
-  late String descriptionAccent;
+  late String? descriptionAccent;
   late String description;
   late String? imageUrl;
   late String? topLeft;

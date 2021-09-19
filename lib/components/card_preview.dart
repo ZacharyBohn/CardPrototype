@@ -57,7 +57,7 @@ class CardPreview extends StatelessWidget {
                     color: AppColors.hightlightPreviewBorder,
                   ),
                   Expanded(
-                    flex: 8,
+                    flex: 9,
                     child: card?.hasImage == true
                         ? Center(
                             child: Image.network(card!.imageUrl!),
@@ -68,9 +68,9 @@ class CardPreview extends StatelessWidget {
                     color: AppColors.hightlightPreviewBorder,
                   ),
                   Flexible(
-                    flex: 4,
                     child: AppText(
                       label: card!.descriptionAccent,
+                      fontStyle: FontStyle.italic,
                     ),
                   ),
                   Expanded(
