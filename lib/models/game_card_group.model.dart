@@ -27,6 +27,12 @@ class GameCardGroupModel {
     return _cards[0];
   }
 
+  GameCardModel? get secondCard {
+    if (_cards.isEmpty) return null;
+    if (_cards.length < 2) return null;
+    return _cards[1];
+  }
+
   void addCardToBottom(GameCardModel card) {
     _cards.add(card);
     return;

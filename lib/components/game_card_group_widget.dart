@@ -67,6 +67,10 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       widget.rowPosition,
       widget.columnPosition,
     );
+    GameCardModel? secondCard = boardProvider.getSecondCard(
+      widget.rowPosition,
+      widget.columnPosition,
+    );
     int cardGroupCount = boardProvider
         .getCardGroup(widget.rowPosition, widget.columnPosition)
         .cards
@@ -88,7 +92,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 ? AppColors.cardForeground
                 : AppColors.emptyPosition,
           ),
-          child: getCardImage(topCard),
+          child: getCardImage(secondCard),
         ),
         maxSimultaneousDrags: topCard != null ? 1 : 0,
         //card that is dragged

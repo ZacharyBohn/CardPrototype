@@ -41,6 +41,10 @@ class BoardProvider with ChangeNotifier {
     return _board.positions[row][column].topCard;
   }
 
+  GameCardModel? getSecondCard(int row, int column) {
+    return _board.positions[row][column].secondCard;
+  }
+
   void setTopCard(int row, int column, GameCardModel card) {
     _board.positions[row][column].addCardToTop(card);
     notifyListeners();
