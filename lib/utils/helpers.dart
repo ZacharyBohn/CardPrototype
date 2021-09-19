@@ -23,8 +23,11 @@ List<GameCardModel>? getCardsFromCsv(String? csvData) {
   if (csvData == null || csvData.isEmpty) return null;
   List<GameCardModel> cards = [];
   List<String> lines = csvData.split('\n');
+  lines = lines.sublist(1);
   for (String line in lines) {
-    cards.add(GameCardModel.fromString(line));
+    GameCardModel? card = GameCardModel.fromString(line);
+    if (card == null) continue;
+    cards.add(card);
   }
   return cards;
 }

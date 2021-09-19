@@ -4,58 +4,48 @@ class GameCardModel {
   late String descriptionAccent;
   late String description;
   late String? imageUrl;
-  late String? customBackUrl;
   late String? topLeft;
   late String? topRight;
   late String? bottomLeft;
   late String? bottomRight;
   late bool faceup;
+  late String? customBackUrl;
   GameCardModel({
     required this.id,
     this.name = 'Unknown',
     this.description = '[desc]',
     this.descriptionAccent = '[card info]',
     this.imageUrl,
-    this.customBackUrl,
     this.topLeft,
     this.topRight,
     this.bottomLeft,
     this.bottomRight,
     this.faceup = true,
+    this.customBackUrl,
   });
 
-  GameCardModel.fromString(String string) {
+  static GameCardModel? fromString(String string) {
     //assume string is a comma seperates line
     List<String> values = string.split(',');
     values.forEach((element) => element.trim());
     if (values.length != 10) {
-      String error = 'Failed to Load';
-      this.id = error;
-      this.name = error;
-      this.descriptionAccent = error;
-      this.description = error;
-      this.imageUrl = error;
-      this.customBackUrl = error;
-      this.topLeft = error;
-      this.topRight = error;
-      this.bottomLeft = error;
-      this.bottomRight = error;
-      this.faceup = true;
-      return;
+      return null;
     }
-    this.id = values[0];
-    this.name = values[1];
-    this.descriptionAccent = values[2];
-    this.description = values[3];
-    this.imageUrl = values[4];
-    this.customBackUrl = values[5];
-    this.topLeft = values[6];
-    this.topRight = values[7];
-    this.bottomLeft = values[8];
-    this.bottomRight = values[9];
+    return GameCardModel(
+      id: values[0],
+      name: values[1],
+      descriptionAccent: values[2],
+      description: values[3],
+      imageUrl: values[4],
+      topLeft: values[5],
+      topRight: values[6],
+      bottomLeft: values[7],
+      bottomRight: values[8],
+      customBackUrl: values[9],
+    );
   }
 
-  bool get hasImage => imageUrl != null;
+  bool get hasImage => imageUrl != null && imageUrl!.isNotEmpty;
 
   GameCardModel copy() {
     return GameCardModel(

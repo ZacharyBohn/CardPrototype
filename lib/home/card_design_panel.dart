@@ -16,7 +16,6 @@ class CardDesignPanel extends StatefulWidget {
 }
 
 class _CardDesignPanelState extends State<CardDesignPanel> {
-  //TODO: finish implementing id
   String? id;
   String? name;
   String? description;

@@ -58,7 +58,7 @@ class CardPreview extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 8,
-                    child: card?.imageUrl != null
+                    child: card?.hasImage == true
                         ? Center(
                             child: Image.network(card!.imageUrl!),
                           )

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/enum/fonts.dart';
+import 'package:game_prototype/models/game_card.model.dart';
+import 'package:game_prototype/models/game_card_group.model.dart';
+import 'package:game_prototype/providers/board_provider.dart';
 import 'package:game_prototype/utils/helpers.dart';
+import 'package:provider/provider.dart';
 
 import '../components/app_text.dart';
 import '../enum/app_colors.dart';
@@ -35,32 +39,40 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               title: AppText(label: 'Upload Card List (.csv)'),
               onTap: () async {
-                String? data = await pickFile('Select Card List File', ['csv']);
+                String? data = await pickFile('Select Deck', ['csv']);
+                List<GameCardModel>? cards = getCardsFromCsv(data);
+                GameCardGroupModel cardGroup = GameCardGroupModel(
+                  columnPosition: 0,
+                  rowPosition: 0,
+                  cards: cards,
+                );
+                Provider.of<BoardProvider>(context, listen: false)
+                    .setCardGroup(0, 0, cardGroup);
                 Navigator.of(context).pop();
                 return;
               },
             ),
-            ListTile(
-              title: AppText(label: 'Download Card List Template'),
-              onTap: () {
-                Navigator.of(context).pop();
-                return;
-              },
-            ),
-            ListTile(
-              title: AppText(label: 'Load Save State (.cpsave)'),
-              onTap: () {
-                Navigator.of(context).pop();
-                return;
-              },
-            ),
-            ListTile(
-              title: AppText(label: 'Save State'),
-              onTap: () {
-                Navigator.of(context).pop();
-                return;
-              },
-            ),
+            // ListTile(
+            //   title: AppText(label: 'Download Card List Template'),
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //     return;
+            //   },
+            // ),
+            // ListTile(
+            //   title: AppText(label: 'Load Save State (.cpsave)'),
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //     return;
+            //   },
+            // ),
+            // ListTile(
+            //   title: AppText(label: 'Save State'),
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //     return;
+            //   },
+            // ),
           ],
         ),
       ),
