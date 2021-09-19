@@ -18,6 +18,7 @@ class CardDesignPanel extends StatefulWidget {
 class _CardDesignPanelState extends State<CardDesignPanel> {
   String? id;
   String? name;
+  String? descriptionAccent;
   String? description;
   String? topLeft;
   String? topRight;
@@ -33,6 +34,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   late TextEditingController topRightController;
   late TextEditingController bottomLeftController;
   late TextEditingController bottomRightController;
+  late TextEditingController descriptionAccentController;
   late TextEditingController descriptionController;
   late TextEditingController imageUrlController;
 
@@ -44,6 +46,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     topRightController = TextEditingController();
     bottomLeftController = TextEditingController();
     bottomRightController = TextEditingController();
+    descriptionAccentController = TextEditingController();
     descriptionController = TextEditingController();
     imageUrlController = TextEditingController();
     super.initState();
@@ -82,6 +85,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     setState(() {
       id = null;
       name = null;
+      descriptionAccent = null;
       description = null;
       topLeft = null;
       topRight = null;
@@ -95,6 +99,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     topRightController.text = '';
     bottomLeftController.text = '';
     bottomRightController.text = '';
+    descriptionAccentController.text = '';
     descriptionController.text = '';
     imageUrlController.text = '';
     return;
@@ -105,6 +110,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
     if (card == null) return;
     idController.text = card.id;
     nameController.text = card.name;
+    descriptionAccentController.text = card.descriptionAccent;
     descriptionController.text = card.description;
     topLeftController.text = card.topLeft ?? '';
     topRightController.text = card.topRight ?? '';
@@ -160,7 +166,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                   hint: 'ID',
                   controller: idController,
                   onTextChange: (String value) {
-                    name = value;
+                    id = value;
                     clearError();
                   },
                 ),
@@ -218,10 +224,18 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             ],
           ),
           AppTextField(
+            hint: 'Description Accent',
+            controller: descriptionAccentController,
+            onTextChange: (String value) {
+              descriptionAccent = value;
+              clearError();
+            },
+          ),
+          AppTextField(
             hint: 'Description',
             controller: descriptionController,
             onTextChange: (String value) {
-              description = value;
+              descriptionAccent = value;
               clearError();
             },
           ),

@@ -67,6 +67,12 @@ class CardPreview extends StatelessWidget {
                   Divider(
                     color: AppColors.hightlightPreviewBorder,
                   ),
+                  Flexible(
+                    flex: 4,
+                    child: AppText(
+                      label: card!.descriptionAccent,
+                    ),
+                  ),
                   Expanded(
                     flex: 4,
                     child: AppText(
