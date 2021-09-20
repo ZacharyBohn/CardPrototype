@@ -13,6 +13,7 @@ Future<String?> pickFile(
 ) async {
   FilePickerResult? result = await FilePicker.platform.pickFiles(
     dialogTitle: title,
+    type: FileType.custom,
     allowedExtensions: allowedExtentions,
     withData: true,
   );
