@@ -51,12 +51,15 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   Widget? getCardImage(GameCardModel? topCard) {
     if (topCard == null) return Container();
     if (topCard.hasImage) {
-      return Image.network(topCard.imageUrl!);
+      return Image.network(
+        topCard.imageUrl!,
+        errorBuilder: (context, _, __) {
+          return AppText(label: '?');
+        },
+      );
     }
     return Center(
-      child: AppText(
-        label: '?',
-      ),
+      child: AppText(label: '?'),
     );
   }
 

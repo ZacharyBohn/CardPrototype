@@ -60,7 +60,10 @@ class CardPreview extends StatelessWidget {
                     flex: 9,
                     child: card?.hasImage == true
                         ? Center(
-                            child: Image.network(card!.imageUrl!),
+                            child: Image.network(card!.imageUrl!,
+                                errorBuilder: (context, _, __) {
+                              return AppText(label: '?');
+                            }),
                           )
                         : Container(),
                   ),
