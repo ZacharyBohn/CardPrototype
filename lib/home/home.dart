@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/board.dart';
+import 'package:game_prototype/components/player_hand.dart';
 import 'package:game_prototype/home/card_design_panel.dart';
 import 'package:game_prototype/home/drawer.dart';
 import 'package:game_prototype/enum/fonts.dart';
@@ -63,10 +64,10 @@ class _HomeState extends State<Home> {
                   Spacer(),
                   Expanded(
                     flex: 2,
-                    child: Container(
-                      color: ColorPalette.grey,
-                      width: size.width * 0.4,
-                      child: Center(child: AppText(label: 'Player Hand Area')),
+                    child: Center(
+                      child: PlayerHand(
+                        isPlayer1: true,
+                      ),
                     ),
                   ),
                 ],

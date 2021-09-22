@@ -9,6 +9,11 @@ class BoardProvider with ChangeNotifier {
       rows: 5,
       columns: 7,
     );
+    //setup hands
+    for (var x in Iterable.generate(7)) {
+      player1Hand.add(GameCardGroupModel(rowPosition: 5, columnPosition: x));
+      player2Hand.add(GameCardGroupModel(rowPosition: -1, columnPosition: x));
+    }
     return;
   }
   late BoardModel _board;
@@ -27,7 +32,16 @@ class BoardProvider with ChangeNotifier {
   int? _highlightedColumn;
   int? get highlightedColumn => _highlightedColumn;
 
+  List<GameCardGroupModel> player1Hand = [];
+  List<GameCardGroupModel> player2Hand = [];
+
   GameCardGroupModel getCardGroup(int row, int column) {
+    if (row == rows) {
+      return player1Hand[column];
+    }
+    if (row == -1) {
+      return player2Hand[column];
+    }
     return _board.positions[row][column];
   }
 
@@ -38,26 +52,59 @@ class BoardProvider with ChangeNotifier {
   }
 
   GameCardModel? getTopCard(int row, int column) {
+    if (row == rows) {
+      return player1Hand[column].topCard;
+    }
+    if (row == -1) {
+      return player2Hand[column].topCard;
+    }
     return _board.positions[row][column].topCard;
   }
 
   GameCardModel? getSecondCard(int row, int column) {
+    if (row == -1 || row == rows) return null;
     return _board.positions[row][column].secondCard;
   }
 
   void setTopCard(int row, int column, GameCardModel card) {
+    if (row == rows) {
+      player1Hand[column].addCardToTop(card);
+      return;
+    }
+    if (row == -1) {
+      player2Hand[column].addCardToTop(card);
+      return;
+    }
     _board.positions[row][column].addCardToTop(card);
     notifyListeners();
     return;
   }
 
   void removeTopCard(int row, int column) {
+    if (row == rows) {
+      player1Hand[column].removeCardFromTop();
+      return;
+    }
+    if (row == -1) {
+      player2Hand[column].removeCardFromTop();
+      return;
+    }
     _board.positions[row][column].removeCardFromTop();
     notifyListeners();
     return;
   }
 
   void highlightCard(int row, int column) {
+    if (row == rows) {
+      _highlightedCard = player1Hand[column].topCard;
+      notifyListeners();
+      return;
+    }
+    if (row == -1) {
+      _highlightedCard = player2Hand[column].topCard;
+      notifyListeners();
+      return;
+    }
     _highlightedCard = _board.positions[row][column].topCard;
     if (_highlightedCard != null) {
       _highlightedRow = row;

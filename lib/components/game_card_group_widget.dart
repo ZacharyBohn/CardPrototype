@@ -9,6 +9,8 @@ class GameCardGroupWidget extends StatefulWidget {
   final int rowPosition;
   final int columnPosition;
   final Size cardSize;
+  final bool alwaysFaceUp;
+  final bool onlyOneCard;
   final void Function({
     required int row,
     required int column,
@@ -26,6 +28,8 @@ class GameCardGroupWidget extends StatefulWidget {
     required this.onDraggedFrom,
     required this.onDraggedTo,
     this.onPopupItemSelected,
+    this.alwaysFaceUp = false,
+    this.onlyOneCard = false,
   });
 
   @override
@@ -39,7 +43,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     if (topCard == null) {
       return AppColors.emptyPosition;
     }
-    if (topCard.faceup) {
+    if (topCard.faceup || widget.alwaysFaceUp) {
       return AppColors.cardForeground;
     }
     if (!topCard.faceup) {
@@ -50,6 +54,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
 
   Widget? getCardImage(GameCardModel? topCard) {
     if (topCard == null) return Container();
+    if (topCard.faceup == false && widget.alwaysFaceUp == false)
+      return Container();
     if (topCard.hasImage) {
       return Image.network(
         topCard.imageUrl!,
@@ -84,84 +90,90 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             boardProvider.highlightedCard != null;
 
     return Material(
-      child: Draggable(
-        data: topCard,
-        childWhenDragging: Container(
-          width: widget.cardSize.width * 1.2,
-          height: widget.cardSize.height * 1.1,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(borderRadius),
-            color: cardGroupCount > 1
-                ? AppColors.cardForeground
-                : AppColors.emptyPosition,
-          ),
-          child: getCardImage(secondCard),
-        ),
-        maxSimultaneousDrags: topCard != null ? 1 : 0,
-        //card that is dragged
-        feedback: Material(
-          child: Container(
+      child: GestureDetector(
+        onDoubleTap: () {
+          if (topCard == null || widget.alwaysFaceUp) return;
+          setState(() {
+            topCard.faceup = !topCard.faceup;
+          });
+        },
+        child: Draggable(
+          data: topCard,
+          childWhenDragging: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.1,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(borderRadius),
-              color: getCardColor(topCard),
+              color: getCardColor(secondCard),
             ),
-            child: getCardImage(topCard),
+            child: getCardImage(secondCard),
           ),
-        ),
-        onDragStarted: () {
-          boardProvider.highlightedCard = null;
-          return;
-        },
-        onDragEnd: (DraggableDetails details) {
-          if (details.wasAccepted) {
-            widget.onDraggedFrom(
-              row: widget.rowPosition,
-              column: widget.columnPosition,
-            );
-          }
-          return;
-        },
-        child: GestureDetector(
-          onTap: () {
-            if (cardGroupCount == 0) {
-              boardProvider.clearHighlight();
-              return;
-            }
-            boardProvider.highlightCard(
-              widget.rowPosition,
-              widget.columnPosition,
-            );
-            return;
-          },
-          //stationary card
-          child: DragTarget(
-            builder: (context, _, __) => Container(
-              width: widget.cardSize.width.ceilToDouble(),
-              height: widget.cardSize.height.ceilToDouble(),
+          maxSimultaneousDrags: topCard != null ? 1 : 0,
+          //card that is dragged
+          feedback: Material(
+            child: Container(
+              width: widget.cardSize.width * 1.2,
+              height: widget.cardSize.height * 1.1,
               decoration: BoxDecoration(
-                color: getCardColor(topCard),
-                border: Border.all(
-                  color: topCardHightlighted
-                      ? AppColors.hightlight
-                      : AppColors.emptyPosition,
-                ),
                 borderRadius: BorderRadius.circular(borderRadius),
+                color: getCardColor(topCard),
               ),
               child: getCardImage(topCard),
             ),
-            onWillAccept: (object) {
-              if (object is GameCardModel) return true;
-              return false;
-            },
-            onAccept: (object) {
-              widget.onDraggedTo(
+          ),
+          onDragStarted: () {
+            boardProvider.highlightedCard = null;
+            return;
+          },
+          onDragEnd: (DraggableDetails details) {
+            if (details.wasAccepted) {
+              widget.onDraggedFrom(
                 row: widget.rowPosition,
                 column: widget.columnPosition,
-                cardModel: object as GameCardModel,
               );
+            }
+            return;
+          },
+          child: GestureDetector(
+            onTap: () {
+              if (cardGroupCount == 0) {
+                boardProvider.clearHighlight();
+                return;
+              }
+              boardProvider.highlightCard(
+                widget.rowPosition,
+                widget.columnPosition,
+              );
+              return;
             },
+            //stationary card
+            child: DragTarget(
+              builder: (context, _, __) => Container(
+                width: widget.cardSize.width.ceilToDouble(),
+                height: widget.cardSize.height.ceilToDouble(),
+                decoration: BoxDecoration(
+                  color: getCardColor(topCard),
+                  border: Border.all(
+                    color: topCardHightlighted
+                        ? AppColors.hightlight
+                        : AppColors.emptyPosition,
+                  ),
+                  borderRadius: BorderRadius.circular(borderRadius),
+                ),
+                child: getCardImage(topCard),
+              ),
+              onWillAccept: (object) {
+                if (object is GameCardModel) return true;
+                return false;
+              },
+              onAccept: (object) {
+                widget.onDraggedTo(
+                  row: widget.rowPosition,
+                  column: widget.columnPosition,
+                  cardModel: object as GameCardModel,
+                );
+              },
+            ),
           ),
         ),
       ),
