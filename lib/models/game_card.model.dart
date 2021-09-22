@@ -26,19 +26,52 @@ class GameCardModel {
     //assume string is a comma seperates line
     List<String> values = string.split(',');
     values.forEach((element) => element.trim());
-    if (values.length != 9) {
-      return null;
+    String name = '';
+    String descriptionAccent = '';
+    String description = '';
+    String imageUrl = '';
+    String topLeft = '';
+    String topRight = '';
+    String bottomLeft = '';
+    String bottomRight = '';
+    String customBackUrl = '';
+    if (values.length > 0) {
+      name = values[0];
+    }
+    if (values.length > 1) {
+      descriptionAccent = values[1];
+    }
+    if (values.length > 2) {
+      description = values[2];
+    }
+    if (values.length > 3) {
+      imageUrl = values[3];
+    }
+    if (values.length > 4) {
+      topLeft = values[4];
+    }
+    if (values.length > 5) {
+      topRight = values[5];
+    }
+    if (values.length > 6) {
+      bottomLeft = values[6];
+    }
+    if (values.length > 7) {
+      bottomRight = values[7];
+    }
+    if (values.length > 8) {
+      customBackUrl = values[8];
     }
     return GameCardModel(
-      name: values[0],
-      descriptionAccent: values[1],
-      description: values[2],
-      imageUrl: values[3],
-      topLeft: values[4],
-      topRight: values[5],
-      bottomLeft: values[6],
-      bottomRight: values[7],
-      customBackUrl: values[8],
+      name: name,
+      descriptionAccent: descriptionAccent,
+      description: description,
+      imageUrl: imageUrl,
+      topLeft: topLeft,
+      topRight: topRight,
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
+      customBackUrl: customBackUrl,
     );
   }
 
