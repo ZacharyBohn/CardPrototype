@@ -62,6 +62,7 @@ class GameCardModel {
     if (values.length > 8) {
       customBackUrl = values[8];
     }
+    if (name.isEmpty || description.isEmpty) return null;
     return GameCardModel(
       name: name,
       descriptionAccent: descriptionAccent,
