@@ -307,7 +307,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                     //error checking
                     if (checkCardValid() == false) return;
                     if (editingHighlightedCard(boardProvider)) {
-                      boardProvider.highlightedCard = GameCardModel(
+                      var card = GameCardModel(
                         name: name!,
                         descriptionAccent: descriptionAccent,
                         description: description!,
@@ -316,6 +316,12 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         topRight: topRight,
                         bottomLeft: bottomLeft,
                         bottomRight: bottomRight,
+                      );
+                      boardProvider.highlightedCard = card;
+                      boardProvider.setTopCard(
+                        boardProvider.highlightedRow!,
+                        boardProvider.highlightedColumn!,
+                        card,
                       );
                       clearError();
                       clearDesignPanel();
