@@ -62,7 +62,7 @@ class CardPreview extends StatelessWidget {
                         ? Center(
                             child: Image.network(card!.imageUrl!,
                                 errorBuilder: (context, _, __) {
-                              return AppText(label: '?');
+                              return AppText(label: 'Failed to load image');
                             }),
                           )
                         : Container(),

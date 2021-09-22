@@ -54,7 +54,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       return Image.network(
         topCard.imageUrl!,
         errorBuilder: (context, _, __) {
-          return AppText(label: '?');
+          return AppText(label: 'Failed to load image');
         },
       );
     }

@@ -242,7 +242,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           if (imageUrl != null && imageUrl!.isNotEmpty)
             Expanded(
               child: Image.network(imageUrl!, errorBuilder: (context, _, __) {
-                return AppText(label: '?');
+                return AppText(label: 'Failed to load image');
               }),
             ),
           if (imageUrl == null)
