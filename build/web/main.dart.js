@@ -14992,13 +14992,17 @@ s=1
 break
 case 1:return P.Z(q,r)}})
 return P.a_($async$aa8,r)},
-axs(a){var s,r,q,p,o
+axs(a){var s,r,q,p,o,n,m
 if(a==null||a.length===0)return null
 s=H.a([],t.TG)
 r=C.b.d8(H.a(a.split("\n"),t.s),1)
-for(q=r.length,p=0;p<r.length;r.length===q||(0,H.D)(r),++p){o=D.ar4(r[p])
-if(o==null)continue
-s.push(o)}return s},
+for(q=r.length,p=0;p<r.length;r.length===q||(0,H.D)(r),++p){o=r[p]
+n=J.as(o)
+if(n.gl(o)===0)continue
+if(n.gl(o)>1&&n.h(o,0)==="/"&&n.h(o,1)==="/")continue
+m=D.ar4(o)
+if(m==null)continue
+s.push(m)}return s},
 ax4(a){var s,r,q,p,o,n,m,l,k,j=H.a([],t.TG)
 for(s=t.z,r=P.lP(a.gdl().gwz(),s),r=r.gN(r);r.t();){q=r.gC(r)
 p=a.a
