@@ -12,7 +12,7 @@ class AppColors {
   static Color drawerBody = ColorPalette.cyan;
   static Color emptyPosition = ColorPalette.darkerGrey;
   static Color cardForeground = ColorPalette.darkerGrey;
-  static Color cardBack = ColorPalette.purple;
+  static Color cardBack = ColorPalette.red;
   static Color appBarBackground = ColorPalette.darkerGrey;
   static Color hightlight = ColorPalette.gold;
   static Color hightlightPreviewBorder = ColorPalette.black;
@@ -21,7 +21,8 @@ class AppColors {
   static Color textInputUnderlineFocused = ColorPalette.white;
   static Color cursorColor = ColorPalette.white;
   static Color panelBarrier = ColorPalette.black;
-  static Color error = ColorPalette.blue;
+  static Color error = ColorPalette.lightBlue;
+  static Color handArea = ColorPalette.grey;
 }
 
 class ColorPalette {
@@ -36,11 +37,13 @@ class ColorPalette {
   static Color cyan = Color.fromRGBO(0, 115, 100, 1);
   static Color darkCyan = Color.fromRGBO(0, 95, 80, 1);
 
-  static Color red = Color.fromRGBO(255, 50, 60, 1);
+  static Color red = Color.fromRGBO(100, 0, 0, 1);
 
   static Color purple = Color.fromRGBO(40, 25, 70, 1);
 
   static Color gold = Color.fromRGBO(255, 216, 0, 0.8);
 
   static Color blue = Color.fromRGBO(20, 40, 100, 1);
+
+  static Color lightBlue = Color.fromRGBO(30, 150, 250, 1);
 }

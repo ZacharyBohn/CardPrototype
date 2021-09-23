@@ -8,7 +8,6 @@ class GameCardModel {
   late String? bottomLeft;
   late String? bottomRight;
   late bool faceup;
-  late String? customBackUrl;
   GameCardModel({
     this.name = 'Unknown',
     this.description = '[desc]',
@@ -19,7 +18,6 @@ class GameCardModel {
     this.bottomLeft,
     this.bottomRight,
     this.faceup = true,
-    this.customBackUrl,
   });
 
   static GameCardModel? fromString(String string) {
@@ -34,7 +32,6 @@ class GameCardModel {
     String topRight = '';
     String bottomLeft = '';
     String bottomRight = '';
-    String customBackUrl = '';
     if (values.length > 0) {
       name = values[0];
     }
@@ -59,9 +56,6 @@ class GameCardModel {
     if (values.length > 7) {
       bottomRight = values[7];
     }
-    if (values.length > 8) {
-      customBackUrl = values[8];
-    }
     if (name.isEmpty || description.isEmpty) return null;
     return GameCardModel(
       name: name,
@@ -72,7 +66,6 @@ class GameCardModel {
       topRight: topRight,
       bottomLeft: bottomLeft,
       bottomRight: bottomRight,
-      customBackUrl: customBackUrl,
     );
   }
 
@@ -86,7 +79,6 @@ class GameCardModel {
     data += '$topRight,';
     data += '$bottomLeft,';
     data += '$bottomRight,';
-    data += '$customBackUrl,';
     data += '\n';
     return data;
   }
@@ -99,7 +91,6 @@ class GameCardModel {
       descriptionAccent: this.descriptionAccent,
       description: this.description,
       imageUrl: this.imageUrl,
-      customBackUrl: this.customBackUrl,
       topLeft: this.topLeft,
       topRight: this.topRight,
       bottomLeft: this.bottomLeft,
