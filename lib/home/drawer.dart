@@ -59,7 +59,7 @@ class AppDrawer extends StatelessWidget {
                     Provider.of<BoardProvider>(context, listen: false);
                 String csvData = convertCardsToCsvString(boardProvider);
                 String topLine =
-                    'Name,Accent,Description,Image URL,Top Left,Top Right,Bottom Left,Bottom Right,Back URL\n';
+                    'Name,Accent,Description,Image URL,Top Left,Top Right,Bottom Left,Bottom Right\n';
                 csvData = topLine + csvData;
                 //download the file to the client here
                 await downloadCsvToClient(csvData);

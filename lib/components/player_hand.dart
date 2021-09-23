@@ -42,7 +42,8 @@ class _PlayerHandState extends State<PlayerHand> {
               onlyOneCard: true,
               rowPosition: rowPosition,
               columnPosition: columnPosition,
-              cardSize: getCardSize(screenSize, rowPosition, columnCount),
+              cardSize:
+                  getCardSize(screenSize, boardProvider.rows, columnCount),
               onDraggedFrom: ({required int row, required int column}) {
                 boardProvider.removeTopCard(row, column);
               },
