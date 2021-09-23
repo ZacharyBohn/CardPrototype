@@ -30,6 +30,8 @@ List<GameCardModel>? getCardsFromCsv(String? csvData) {
   List<String> lines = csvData.split('\n');
   lines = lines.sublist(1);
   for (String line in lines) {
+    if (line.isEmpty) continue;
+    if (line.length > 1 && line[0] == '/' && line[1] == '/') continue;
     GameCardModel? card = GameCardModel.fromString(line);
     if (card == null) continue;
     cards.add(card);
