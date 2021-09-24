@@ -39,15 +39,18 @@ class AppDrawer extends StatelessWidget {
             ListTile(
               title: AppText(label: 'Upload Card List (.csv)'),
               onTap: () async {
+                BoardProvider boardProvider =
+                    Provider.of<BoardProvider>(context, listen: false);
+                int column = boardProvider.columns;
+                int row = boardProvider.rows;
                 String? data = await pickFile('Select Deck', ['csv']);
                 List<GameCardModel>? cards = getCardsFromCsv(data);
                 GameCardGroupModel cardGroup = GameCardGroupModel(
-                  columnPosition: 0,
-                  rowPosition: 0,
+                  columnPosition: column,
+                  rowPosition: row,
                   cards: cards,
                 );
-                Provider.of<BoardProvider>(context, listen: false)
-                    .setCardGroup(0, 0, cardGroup);
+                boardProvider.setCardGroup(column, row, cardGroup);
                 Navigator.of(context).pop();
                 return;
               },
