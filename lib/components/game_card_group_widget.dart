@@ -38,6 +38,9 @@ class GameCardGroupWidget extends StatefulWidget {
 
 class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double borderRadius = 0.0;
+  int? longPressStartedTimeStamp;
+  Offset? longPressStartedAt;
+  bool movingEntireGroup = false;
 
   Color getCardColor(GameCardModel? topCard) {
     if (topCard == null) {
@@ -91,6 +94,30 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
 
     return Material(
       child: GestureDetector(
+        onLongPressDown: (details) {
+          //TODO: move all of the long press logic to the draggable
+          longPressStartedTimeStamp = DateTime.now().millisecondsSinceEpoch;
+          longPressStartedAt = details.globalPosition;
+        },
+        onLongPressMoveUpdate: (details) {
+          if (longPressStartedTimeStamp == null) return;
+          int pressTime = DateTime.now().millisecondsSinceEpoch -
+              longPressStartedTimeStamp!;
+          //must hover for a least 3 / 4 of a second
+          if (pressTime < 750) return;
+          setState(() {
+            movingEntireGroup = true;
+            longPressStartedAt = null;
+            longPressStartedTimeStamp = null;
+          });
+        },
+        onLongPressEnd: (details) {
+          setState(() {
+            movingEntireGroup = false;
+            longPressStartedAt = null;
+            longPressStartedTimeStamp = null;
+          });
+        },
         onDoubleTap: () {
           if (topCard == null || widget.alwaysFaceUp) return;
           setState(() {
@@ -107,7 +134,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               borderRadius: BorderRadius.circular(borderRadius),
               color: getCardColor(secondCard),
             ),
-            child: getCardImage(secondCard),
+            child: movingEntireGroup ? null : getCardImage(secondCard),
           ),
           maxSimultaneousDrags: topCard != null ? 1 : 0,
           //card that is dragged
