@@ -38,8 +38,8 @@ List<GameCardModel>? getCardsFromCsv(String? csvData) {
       card = GameCardModel(
         name: line[0].toString().isNotEmpty ? line[0].toString() : null,
         descriptionAccent:
-            line[1].toString().isNotEmpty ? line[2].toString() : null,
-        description: line[2].toString().isNotEmpty ? line[1].toString() : null,
+            line[1].toString().isNotEmpty ? line[1].toString() : null,
+        description: line[2].toString().isNotEmpty ? line[2].toString() : null,
         imageUrl: line[3].toString().isNotEmpty ? line[3].toString() : null,
         topLeft: line[4].toString().isNotEmpty ? line[4].toString() : null,
         topRight: line[5].toString().isNotEmpty ? line[5].toString() : null,
@@ -49,17 +49,6 @@ List<GameCardModel>? getCardsFromCsv(String? csvData) {
     } catch (e) {
       continue;
     }
-    cards.add(card);
-  }
-
-  return cards;
-  List<String> lines = csvData.split('\n');
-  lines = lines.sublist(1);
-  for (String line in lines) {
-    if (line.isEmpty) continue;
-    if (line.length > 1 && line[0] == '/' && line[1] == '/') continue;
-    GameCardModel? card = GameCardModel.fromString(line);
-    if (card == null) continue;
     cards.add(card);
   }
   return cards;

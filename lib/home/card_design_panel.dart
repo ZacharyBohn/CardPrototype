@@ -135,6 +135,9 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       }
       previousSelectedCard = boardProvider.highlightedCard;
     }
+    if (boardProvider.highlightedCard?.faceup == false) {
+      clearDesignPanel();
+    }
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
     Size size = MediaQuery.of(context).size;

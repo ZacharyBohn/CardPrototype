@@ -96,6 +96,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           setState(() {
             topCard.faceup = !topCard.faceup;
           });
+          boardProvider.highlightedCard = boardProvider.highlightedCard;
         },
         child: Draggable(
           data: topCard,

@@ -26,7 +26,7 @@ class CardPreview extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: card != null
+      child: card != null && card!.faceup
           ? Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: 8,

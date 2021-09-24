@@ -20,7 +20,13 @@ class GameCardModel {
     faceup,
   })  : this.name = name ?? 'Unknown',
         this.description = description ?? 'Unknown',
-        this.faceup = faceup ?? true;
+        this.faceup = faceup ?? true,
+        this.descriptionAccent = descriptionAccent,
+        this.imageUrl = imageUrl,
+        this.topLeft = topLeft,
+        this.topRight = topRight,
+        this.bottomLeft = bottomLeft,
+        this.bottomRight = bottomRight;
 
   static GameCardModel? fromString(String string) {
     //assume string is a comma seperates line
