@@ -331,8 +331,8 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                       return;
                     }
                     boardProvider.setTopCard(
-                        0,
-                        0,
+                        boardProvider.rows - 1,
+                        boardProvider.columns - 1,
                         GameCardModel(
                           name: name!,
                           descriptionAccent: descriptionAccent,
@@ -342,8 +342,12 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                           topRight: topRight,
                           bottomLeft: bottomLeft,
                           bottomRight: bottomRight,
+                          faceup: true,
                         ));
-                    boardProvider.highlightCard(0, 0);
+                    boardProvider.highlightCard(
+                      boardProvider.rows - 1,
+                      boardProvider.columns - 1,
+                    );
                     clearError();
                     clearDesignPanel();
                   },

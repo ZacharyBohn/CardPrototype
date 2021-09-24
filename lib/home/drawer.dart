@@ -41,8 +41,8 @@ class AppDrawer extends StatelessWidget {
               onTap: () async {
                 BoardProvider boardProvider =
                     Provider.of<BoardProvider>(context, listen: false);
-                int column = boardProvider.columns;
-                int row = boardProvider.rows;
+                int column = boardProvider.columns - 1;
+                int row = boardProvider.rows - 1;
                 String? data = await pickFile('Select Deck', ['csv']);
                 List<GameCardModel>? cards = getCardsFromCsv(data);
                 GameCardGroupModel cardGroup = GameCardGroupModel(

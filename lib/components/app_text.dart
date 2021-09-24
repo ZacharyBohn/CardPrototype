@@ -27,6 +27,7 @@ class AppText extends StatelessWidget {
         fontSize: fontSize ?? FontSizes.body,
         fontFamily: 'Arial',
         fontStyle: fontStyle,
+        fontWeight: FontWeight.w300,
       ),
     );
   }
