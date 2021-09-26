@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game_prototype/components/game_card_group_widget.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/models/game_card.model.dart';
+import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -44,14 +45,18 @@ class _BoardState extends State<Board> {
                 rowPosition: rowPosition,
                 columnPosition: columnPosition,
                 cardSize: getCardSize(screenSize, rowCount, columnCount),
-                onDraggedFrom: ({required int row, required int column}) {
+                onDraggedFrom: ({
+                  required int row,
+                  required int column,
+                  required moveAllCards,
+                }) {
                   boardProvider.removeTopCard(row, column);
                 },
                 onDraggedTo: (
-                    {required GameCardModel cardModel,
+                    {required GameCardGroupModel groupModel,
                     required int row,
                     required int column}) {
-                  boardProvider.setTopCard(row, column, cardModel);
+                  boardProvider.addGroupToTop(row, column, groupModel);
                   boardProvider.highlightCard(row, column);
                 },
               ),

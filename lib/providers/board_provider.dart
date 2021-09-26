@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:game_prototype/models/board.model.dart';
 import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
+import 'package:game_prototype/utils/helpers.dart';
 
 class BoardProvider with ChangeNotifier {
   BoardProvider() {
@@ -51,6 +52,17 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  void removeCardGroup(int row, int column) {
+    this.setCardGroup(
+        row,
+        column,
+        GameCardGroupModel(
+          rowPosition: row,
+          columnPosition: column,
+        ));
+    return;
+  }
+
   GameCardModel? getTopCard(int row, int column) {
     if (row == rows) {
       return player1Hand[column].topCard;
@@ -64,6 +76,16 @@ class BoardProvider with ChangeNotifier {
   GameCardModel? getSecondCard(int row, int column) {
     if (row == -1 || row == rows) return null;
     return _board.positions[row][column].secondCard;
+  }
+
+  void addGroupToTop(int row, int column, GameCardGroupModel groupModel) {
+    //loop through the group backwards, adding each card to the top
+    int len = groupModel.cards.length;
+    for (int x in range(len)) {
+      int index = len - x - 1;
+      this.setTopCard(row, column, groupModel.cards[index]);
+    }
+    return;
   }
 
   void setTopCard(int row, int column, GameCardModel card) {
