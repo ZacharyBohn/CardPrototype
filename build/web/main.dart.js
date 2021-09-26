@@ -63086,7 +63086,7 @@ h=Q
 s=3
 return P.a6(Q.ab4("Select Deck",H.a(["csv"],t.s)),$async$$0)
 case 3:j=i.Un(h.ayq(b),m,k)
-n.gcd().c[m][k]=j
+n.gcd().c[k][m]=j
 n.an()
 K.EG(o).cZ(0)
 s=1
