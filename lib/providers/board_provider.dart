@@ -28,6 +28,13 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  bool _movingAllCards = false;
+  bool get movingAllCards => _movingAllCards;
+  set movingAllCards(value) {
+    _movingAllCards = value;
+    notifyListeners();
+  }
+
   int? _highlightedRow;
   int? get highlightedRow => _highlightedRow;
   int? _highlightedColumn;
@@ -53,13 +60,19 @@ class BoardProvider with ChangeNotifier {
   }
 
   void removeCardGroup(int row, int column) {
-    this.setCardGroup(
-        row,
-        column,
-        GameCardGroupModel(
-          rowPosition: row,
-          columnPosition: column,
-        ));
+    if (row == rows) {
+      player1Hand[column] =
+          GameCardGroupModel(rowPosition: row, columnPosition: column);
+      return;
+    }
+    if (row == -1) {
+      player2Hand[column] =
+          GameCardGroupModel(rowPosition: row, columnPosition: column);
+      return;
+    }
+    _board.positions[row][column] =
+        GameCardGroupModel(rowPosition: row, columnPosition: column);
+    notifyListeners();
     return;
   }
 
@@ -83,12 +96,12 @@ class BoardProvider with ChangeNotifier {
     int len = groupModel.cards.length;
     for (int x in range(len)) {
       int index = len - x - 1;
-      this.setTopCard(row, column, groupModel.cards[index]);
+      this.addCardToTop(row, column, groupModel.cards[index]);
     }
     return;
   }
 
-  void setTopCard(int row, int column, GameCardModel card) {
+  void addCardToTop(int row, int column, GameCardModel card) {
     if (row == rows) {
       player1Hand[column].addCardToTop(card);
       return;

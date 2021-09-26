@@ -50,13 +50,24 @@ class _BoardState extends State<Board> {
                   required int column,
                   required moveAllCards,
                 }) {
+                  if (moveAllCards) {
+                    boardProvider.removeCardGroup(row, column);
+                    return;
+                  }
                   boardProvider.removeTopCard(row, column);
                 },
-                onDraggedTo: (
-                    {required GameCardGroupModel groupModel,
-                    required int row,
-                    required int column}) {
-                  boardProvider.addGroupToTop(row, column, groupModel);
+                onDraggedTo: ({
+                  required GameCardGroupModel groupModel,
+                  required int row,
+                  required int column,
+                }) {
+                  if (Provider.of<BoardProvider>(context, listen: false)
+                      .movingAllCards) {
+                    boardProvider.addGroupToTop(row, column, groupModel);
+                  } else {
+                    boardProvider.addCardToTop(
+                        row, column, groupModel.topCard!);
+                  }
                   boardProvider.highlightCard(row, column);
                 },
               ),

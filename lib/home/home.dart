@@ -5,6 +5,8 @@ import 'package:game_prototype/home/card_design_panel.dart';
 import 'package:game_prototype/home/drawer.dart';
 import 'package:game_prototype/enum/fonts.dart';
 import 'package:game_prototype/home/preview_panel.dart';
+import 'package:game_prototype/providers/board_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../components/app_text.dart';
 import '../enum/app_colors.dart';
@@ -33,51 +35,57 @@ class _HomeState extends State<Home> {
         ),
       ),
       drawer: AppDrawer(),
-      body: Container(
-        color: AppColors.background,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: PreviewPanel(),
-            ),
-            Spacer(),
-            Expanded(
-              flex: 4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: PlayerHand(
-                        isPlayer1: false,
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Expanded(
-                    flex: 10,
-                    child: Board(),
-                  ),
-                  Spacer(),
-                  Expanded(
-                    flex: 2,
-                    child: Center(
-                      child: PlayerHand(
-                        isPlayer1: true,
-                      ),
-                    ),
-                  ),
-                ],
+      body: GestureDetector(
+        onTap: () {
+          Provider.of<BoardProvider>(context, listen: false).highlightedCard =
+              null;
+        },
+        child: Container(
+          color: AppColors.background,
+          child: Row(
+            children: [
+              Expanded(
+                flex: 3,
+                child: PreviewPanel(),
               ),
-            ),
-            Spacer(),
-            Expanded(
-              flex: 3,
-              child: CardDesignPanel(),
-            ),
-          ],
+              Spacer(),
+              Expanded(
+                flex: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: PlayerHand(
+                          isPlayer1: false,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Expanded(
+                      flex: 10,
+                      child: Board(),
+                    ),
+                    Spacer(),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: PlayerHand(
+                          isPlayer1: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Spacer(),
+              Expanded(
+                flex: 3,
+                child: CardDesignPanel(),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -44,7 +44,6 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double borderRadius = 0.0;
   int? dragStartedTimeStamp;
   Offset? longPressStartedAtPos;
-  bool movingEntireGroup = false;
   Timer? longDragTimer;
   DragUpdateDetails? dragDetails;
 
@@ -109,7 +108,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       return;
     }
     setState(() {
-      movingEntireGroup = true;
+      Provider.of<BoardProvider>(context, listen: false).movingAllCards = true;
       draggableStream.add(true);
     });
     return;
@@ -158,7 +157,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               borderRadius: BorderRadius.circular(borderRadius),
               color: getCardColor(secondCard),
             ),
-            child: movingEntireGroup ? null : getCardImage(secondCard),
+            child:
+                boardProvider.movingAllCards ? null : getCardImage(secondCard),
           ),
           maxSimultaneousDrags: topCard != null ? 1 : 0,
           //card that is dragged
@@ -173,7 +173,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(borderRadius),
                     color: getCardColor(topCard),
-                    border: movingEntireGroup
+                    border: boardProvider.movingAllCards
                         ? Border.all(
                             width: 2,
                             color: AppColors.grabbingAllCardsHighlight,
@@ -187,6 +187,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           ),
           onDragStarted: () {
             boardProvider.highlightedCard = null;
+            boardProvider.movingAllCards = false;
             dragStartedTimeStamp = getEpochMs();
             longDragTimer = Timer(
               Duration(milliseconds: 650),
@@ -206,12 +207,11 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               widget.onDraggedFrom(
                 row: widget.rowPosition,
                 column: widget.columnPosition,
-                moveAllCards: movingEntireGroup,
+                moveAllCards: boardProvider.movingAllCards,
               );
             }
             setState(() {
               draggableStream = StreamController<bool>();
-              movingEntireGroup = false;
               longPressStartedAtPos = null;
               dragStartedTimeStamp = null;
             });
@@ -248,9 +248,6 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               onWillAccept: (object) {
                 if (object is GameCardGroupModel) return true;
                 return false;
-              },
-              onMove: (_) {
-                print('poop');
               },
               onAccept: (object) {
                 widget.onDraggedTo(

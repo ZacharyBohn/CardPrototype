@@ -57,7 +57,12 @@ class _PlayerHandState extends State<PlayerHand> {
                 required int row,
                 required int column,
               }) {
-                boardProvider.addGroupToTop(row, column, groupModel);
+                if (Provider.of<BoardProvider>(context, listen: false)
+                    .movingAllCards) {
+                  boardProvider.addGroupToTop(row, column, groupModel);
+                } else {
+                  boardProvider.addCardToTop(row, column, groupModel.topCard!);
+                }
                 boardProvider.highlightCard(row, column);
               },
             ),
