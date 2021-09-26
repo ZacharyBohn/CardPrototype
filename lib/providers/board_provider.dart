@@ -103,10 +103,12 @@ class BoardProvider with ChangeNotifier {
 
   void addCardToTop(int row, int column, GameCardModel card) {
     if (row == rows) {
+      card.faceup = true;
       player1Hand[column].addCardToTop(card);
       return;
     }
     if (row == -1) {
+      card.faceup = true;
       player2Hand[column].addCardToTop(card);
       return;
     }
