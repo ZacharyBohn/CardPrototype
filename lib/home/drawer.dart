@@ -50,7 +50,7 @@ class AppDrawer extends StatelessWidget {
                   rowPosition: row,
                   cards: cards,
                 );
-                boardProvider.setCardGroup(column, row, cardGroup);
+                boardProvider.setCardGroup(row, column, cardGroup);
                 Navigator.of(context).pop();
                 return;
               },
