@@ -91,8 +91,8 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     deltaX = deltaX.abs();
     deltaY = deltaY.abs();
 
-    bool withinXBound = deltaX < widget.cardSize.width;
-    bool withinYBound = deltaY < widget.cardSize.height;
+    bool withinXBound = deltaX < (widget.cardSize.width * 0.8);
+    bool withinYBound = deltaY < (widget.cardSize.height * 0.8);
 
     if (withinXBound && withinYBound) {
       return false;

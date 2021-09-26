@@ -59,12 +59,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       });
       return false;
     }
-    if (description == null) {
-      setState(() {
-        error = 'Description must be set.';
-      });
-      return false;
-    }
     return true;
   }
 
@@ -313,7 +307,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                       var card = GameCardModel(
                         name: name!,
                         descriptionAccent: descriptionAccent,
-                        description: description!,
+                        description: description,
                         imageUrl: imageUrl,
                         topLeft: topLeft,
                         topRight: topRight,
@@ -337,7 +331,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         GameCardModel(
                           name: name!,
                           descriptionAccent: descriptionAccent,
-                          description: description!,
+                          description: description,
                           imageUrl: imageUrl,
                           topLeft: topLeft,
                           topRight: topRight,
