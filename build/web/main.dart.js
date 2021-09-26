@@ -63197,9 +63197,11 @@ q=c.c
 if(q==null)q=H.f(H.o("_cards"))
 this.mq(a,b,q[p-r-1])}return},
 mq(a,b,c){var s=this,r=s.gcd()
-if(a===r.gfq(r)){r=s.f[b]
+if(a===r.gfq(r)){c.y=!0
+r=s.f[b]
 r.c=C.c.P(H.a([c],t.TG),r.geZ())
-return}if(a===-1){r=s.r[b]
+return}if(a===-1){c.y=!0
+r=s.r[b]
 r.c=C.c.P(H.a([c],t.TG),r.geZ())
 return}r=s.gcd().c[a][b]
 r.c=C.c.P(H.a([c],t.TG),r.geZ())
