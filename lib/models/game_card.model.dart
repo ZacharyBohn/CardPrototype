@@ -1,24 +1,32 @@
 class GameCardModel {
-  late String name;
-  late String? descriptionAccent;
-  late String description;
-  late String? imageUrl;
-  late String? topLeft;
-  late String? topRight;
-  late String? bottomLeft;
-  late String? bottomRight;
-  late bool faceup;
+  String name;
+  String? descriptionAccent;
+  String description;
+  String? imageUrl;
+  String? topLeft;
+  String? topRight;
+  String? bottomLeft;
+  String? bottomRight;
+  bool faceup;
   GameCardModel({
-    this.name = 'Unknown',
-    this.description = '[desc]',
-    this.descriptionAccent = '[card info]',
-    this.imageUrl,
-    this.topLeft,
-    this.topRight,
-    this.bottomLeft,
-    this.bottomRight,
-    this.faceup = true,
-  });
+    name,
+    description,
+    descriptionAccent,
+    imageUrl,
+    topLeft,
+    topRight,
+    bottomLeft,
+    bottomRight,
+    faceup,
+  })  : this.name = name ?? 'Unknown',
+        this.description = description ?? 'Unknown',
+        this.faceup = faceup ?? false,
+        this.descriptionAccent = descriptionAccent,
+        this.imageUrl = imageUrl,
+        this.topLeft = topLeft,
+        this.topRight = topRight,
+        this.bottomLeft = bottomLeft,
+        this.bottomRight = bottomRight;
 
   static GameCardModel? fromString(String string) {
     //assume string is a comma seperates line

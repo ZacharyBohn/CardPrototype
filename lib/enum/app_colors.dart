@@ -23,6 +23,7 @@ class AppColors {
   static Color panelBarrier = ColorPalette.black;
   static Color error = ColorPalette.lightBlue;
   static Color handArea = ColorPalette.grey;
+  static Color grabbingAllCardsHighlight = ColorPalette.lightBlue;
 }
 
 class ColorPalette {
@@ -45,5 +46,5 @@ class ColorPalette {
 
   static Color blue = Color.fromRGBO(20, 40, 100, 1);
 
-  static Color lightBlue = Color.fromRGBO(30, 150, 250, 1);
+  static Color lightBlue = Color.fromRGBO(40, 160, 255, 1);
 }

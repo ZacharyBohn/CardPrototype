@@ -59,12 +59,6 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
       });
       return false;
     }
-    if (description == null) {
-      setState(() {
-        error = 'Description must be set.';
-      });
-      return false;
-    }
     return true;
   }
 
@@ -134,6 +128,9 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
         clearDesignPanel();
       }
       previousSelectedCard = boardProvider.highlightedCard;
+    }
+    if (boardProvider.highlightedCard?.faceup == false) {
+      clearDesignPanel();
     }
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
@@ -268,7 +265,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                       });
                       return;
                     }
-                    boardProvider.setTopCard(
+                    boardProvider.addCardToTop(
                       0,
                       0,
                       boardProvider.highlightedCard!.copy(),
@@ -310,15 +307,16 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                       var card = GameCardModel(
                         name: name!,
                         descriptionAccent: descriptionAccent,
-                        description: description!,
+                        description: description,
                         imageUrl: imageUrl,
                         topLeft: topLeft,
                         topRight: topRight,
                         bottomLeft: bottomLeft,
                         bottomRight: bottomRight,
+                        faceup: true,
                       );
                       boardProvider.highlightedCard = card;
-                      boardProvider.setTopCard(
+                      boardProvider.addCardToTop(
                         boardProvider.highlightedRow!,
                         boardProvider.highlightedColumn!,
                         card,
@@ -327,20 +325,24 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                       clearDesignPanel();
                       return;
                     }
-                    boardProvider.setTopCard(
-                        0,
-                        0,
+                    boardProvider.addCardToTop(
+                        boardProvider.rows - 1,
+                        boardProvider.columns - 1,
                         GameCardModel(
                           name: name!,
                           descriptionAccent: descriptionAccent,
-                          description: description!,
+                          description: description,
                           imageUrl: imageUrl,
                           topLeft: topLeft,
                           topRight: topRight,
                           bottomLeft: bottomLeft,
                           bottomRight: bottomRight,
+                          faceup: true,
                         ));
-                    boardProvider.highlightCard(0, 0);
+                    boardProvider.highlightCard(
+                      boardProvider.rows - 1,
+                      boardProvider.columns - 1,
+                    );
                     clearError();
                     clearDesignPanel();
                   },

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 import '../enum/app_colors.dart';
@@ -14,11 +17,12 @@ class GameCardGroupWidget extends StatefulWidget {
   final void Function({
     required int row,
     required int column,
+    required bool moveAllCards,
   }) onDraggedFrom;
   final void Function({
     required int row,
     required int column,
-    required GameCardModel cardModel,
+    required GameCardGroupModel groupModel,
   }) onDraggedTo;
   final void Function(int)? onPopupItemSelected;
   const GameCardGroupWidget({
@@ -38,6 +42,12 @@ class GameCardGroupWidget extends StatefulWidget {
 
 class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   double borderRadius = 0.0;
+  int? dragStartedTimeStamp;
+  Offset? longPressStartedAtPos;
+  Timer? longDragTimer;
+  DragUpdateDetails? dragDetails;
+
+  StreamController draggableStream = StreamController<bool>();
 
   Color getCardColor(GameCardModel? topCard) {
     if (topCard == null) {
@@ -69,9 +79,46 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     );
   }
 
+  int getEpochMs() {
+    return DateTime.now().millisecondsSinceEpoch;
+  }
+
+  bool didCursorLeaveCard() {
+    double deltaX =
+        (dragDetails!.globalPosition.dx - longPressStartedAtPos!.dx);
+    double deltaY =
+        (dragDetails!.globalPosition.dy - longPressStartedAtPos!.dy);
+    deltaX = deltaX.abs();
+    deltaY = deltaY.abs();
+
+    bool withinXBound = deltaX < (widget.cardSize.width * 0.8);
+    bool withinYBound = deltaY < (widget.cardSize.height * 0.8);
+
+    if (withinXBound && withinYBound) {
+      return false;
+    }
+    return true;
+  }
+
+  void checkLongDrag() {
+    if (dragDetails == null) {
+      return;
+    }
+    if (longPressStartedAtPos == null || didCursorLeaveCard()) {
+      return;
+    }
+    setState(() {
+      Provider.of<BoardProvider>(context, listen: false).movingAllCards = true;
+      draggableStream.add(true);
+    });
+    return;
+  }
+
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
+    GameCardGroupModel groupModel =
+        boardProvider.getCardGroup(widget.rowPosition, widget.columnPosition);
     GameCardModel? topCard = boardProvider.getTopCard(
       widget.rowPosition,
       widget.columnPosition,
@@ -91,14 +138,18 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
 
     return Material(
       child: GestureDetector(
+        onLongPressDown: (details) {},
+        onLongPressMoveUpdate: (details) {},
+        onLongPressEnd: (details) {},
         onDoubleTap: () {
           if (topCard == null || widget.alwaysFaceUp) return;
           setState(() {
             topCard.faceup = !topCard.faceup;
           });
+          boardProvider.highlightedCard = boardProvider.highlightedCard;
         },
         child: Draggable(
-          data: topCard,
+          data: groupModel,
           childWhenDragging: Container(
             width: widget.cardSize.width * 1.2,
             height: widget.cardSize.height * 1.1,
@@ -106,23 +157,49 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               borderRadius: BorderRadius.circular(borderRadius),
               color: getCardColor(secondCard),
             ),
-            child: getCardImage(secondCard),
+            child:
+                boardProvider.movingAllCards ? null : getCardImage(secondCard),
           ),
           maxSimultaneousDrags: topCard != null ? 1 : 0,
           //card that is dragged
           feedback: Material(
-            child: Container(
-              width: widget.cardSize.width * 1.2,
-              height: widget.cardSize.height * 1.1,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(borderRadius),
-                color: getCardColor(topCard),
-              ),
-              child: getCardImage(topCard),
+            child: StreamBuilder(
+              initialData: false,
+              stream: draggableStream.stream,
+              builder: (context, _) {
+                return Container(
+                  width: widget.cardSize.width * 1.2,
+                  height: widget.cardSize.height * 1.1,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    color: getCardColor(topCard),
+                    border: boardProvider.movingAllCards
+                        ? Border.all(
+                            width: 2,
+                            color: AppColors.grabbingAllCardsHighlight,
+                          )
+                        : null,
+                  ),
+                  child: getCardImage(topCard),
+                );
+              },
             ),
           ),
           onDragStarted: () {
             boardProvider.highlightedCard = null;
+            boardProvider.movingAllCards = false;
+            dragStartedTimeStamp = getEpochMs();
+            longDragTimer = Timer(
+              Duration(milliseconds: 650),
+              checkLongDrag,
+            );
+            return;
+          },
+          onDragUpdate: (details) {
+            dragDetails = details;
+            if (longPressStartedAtPos == null) {
+              longPressStartedAtPos = details.globalPosition;
+            }
             return;
           },
           onDragEnd: (DraggableDetails details) {
@@ -130,8 +207,14 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               widget.onDraggedFrom(
                 row: widget.rowPosition,
                 column: widget.columnPosition,
+                moveAllCards: boardProvider.movingAllCards,
               );
             }
+            setState(() {
+              draggableStream = StreamController<bool>();
+              longPressStartedAtPos = null;
+              dragStartedTimeStamp = null;
+            });
             return;
           },
           child: GestureDetector(
@@ -163,14 +246,14 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 child: getCardImage(topCard),
               ),
               onWillAccept: (object) {
-                if (object is GameCardModel) return true;
+                if (object is GameCardGroupModel) return true;
                 return false;
               },
               onAccept: (object) {
                 widget.onDraggedTo(
                   row: widget.rowPosition,
                   column: widget.columnPosition,
-                  cardModel: object as GameCardModel,
+                  groupModel: object as GameCardGroupModel,
                 );
               },
             ),

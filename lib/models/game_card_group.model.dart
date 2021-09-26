@@ -48,6 +48,11 @@ class GameCardGroupModel {
     return;
   }
 
+  void removeGroupFromTop() {
+    _cards = [];
+    return;
+  }
+
   void shuffle() {
     _cards.shuffle();
     return;

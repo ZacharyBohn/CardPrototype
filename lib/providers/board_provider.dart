@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:game_prototype/models/board.model.dart';
 import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
+import 'package:game_prototype/utils/helpers.dart';
 
 class BoardProvider with ChangeNotifier {
   BoardProvider() {
@@ -25,6 +26,13 @@ class BoardProvider with ChangeNotifier {
     _highlightedCard = value;
     notifyListeners();
     return;
+  }
+
+  bool _movingAllCards = false;
+  bool get movingAllCards => _movingAllCards;
+  set movingAllCards(value) {
+    _movingAllCards = value;
+    notifyListeners();
   }
 
   int? _highlightedRow;
@@ -51,6 +59,23 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  void removeCardGroup(int row, int column) {
+    if (row == rows) {
+      player1Hand[column] =
+          GameCardGroupModel(rowPosition: row, columnPosition: column);
+      return;
+    }
+    if (row == -1) {
+      player2Hand[column] =
+          GameCardGroupModel(rowPosition: row, columnPosition: column);
+      return;
+    }
+    _board.positions[row][column] =
+        GameCardGroupModel(rowPosition: row, columnPosition: column);
+    notifyListeners();
+    return;
+  }
+
   GameCardModel? getTopCard(int row, int column) {
     if (row == rows) {
       return player1Hand[column].topCard;
@@ -66,7 +91,17 @@ class BoardProvider with ChangeNotifier {
     return _board.positions[row][column].secondCard;
   }
 
-  void setTopCard(int row, int column, GameCardModel card) {
+  void addGroupToTop(int row, int column, GameCardGroupModel groupModel) {
+    //loop through the group backwards, adding each card to the top
+    int len = groupModel.cards.length;
+    for (int x in range(len)) {
+      int index = len - x - 1;
+      this.addCardToTop(row, column, groupModel.cards[index]);
+    }
+    return;
+  }
+
+  void addCardToTop(int row, int column, GameCardModel card) {
     if (row == rows) {
       player1Hand[column].addCardToTop(card);
       return;
