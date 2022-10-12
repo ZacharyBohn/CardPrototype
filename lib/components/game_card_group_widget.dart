@@ -75,7 +75,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       );
     }
     return Center(
-      child: AppText(label: '?'),
+      child: AppText(label: topCard.name.isNotEmpty ? topCard.name : '?'),
     );
   }
 
