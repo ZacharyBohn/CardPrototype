@@ -21912,7 +21912,7 @@ j=$.oC.d.h(0,k)
 if(j==null){$.bO().$1("A fallback font was registered but we cannot retrieve the typeface for it.")
 continue}for(i=J.aA(j);i.q();){h=i.gG(i).getGlyphIDs(p)
 for(g=h.length,f=0;f<g;++f){e=h[f]===0
-if(!e)m.F(0,r[f])
+if(!e)m.G(0,r[f])
 d=q[f]
 if(e){e=r[f]
 if(!(e<32))e=e>127&&e<160
@@ -28871,7 +28871,7 @@ this.x=d
 this.y=c},
 a25(a){var s,r,q=this,p=q.ch
 if(p===a)return
-else if(p!=null)q.hN(0)
+else if(p!=null)q.hR(0)
 q.ch=a
 p=a.c
 p===$&&A.b()
@@ -33508,7 +33508,7 @@ return s.a},
 gN(a){var s=this.f
 if(s==null)throw A.c(A.a7("No elements"))
 return s.a},
-F(a,b){var s,r,q=this
+G(a,b){var s,r,q=this
 if(typeof b=="string"&&b!=="__proto__"){s=q.b
 return q.nl(s==null?q.b=A.ah8():s,b)}else if(typeof b=="number"&&(b&1073741823)===b){r=q.c
 return q.nl(r==null?q.c=A.ah8():r,b)}else return q.er(0,b)},
@@ -53539,7 +53539,7 @@ m=n.length
 if(m!==0){l=new Int32Array(m)
 for(o=0;o<n.length;++o){m=n[o]
 l[o]=m
-a5.F(0,m)}}else l=null
+a5.G(0,m)}}else l=null
 n=a2.e
 m=a3.c
 k=a3.d
@@ -63875,7 +63875,7 @@ r.toString
 q.JT(s,r,a)},
 zi(){var s,r,q,p=this,o=p.dy
 o.toString
-s=p.hL()
+s=p.hP()
 r=p.r
 q=$.D.D$.z.h(0,r.z)
 q.toString
