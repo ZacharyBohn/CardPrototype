@@ -316,6 +316,10 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         faceup: true,
                       );
                       boardProvider.highlightedCard = card;
+                      boardProvider.removeTopCard(
+                        boardProvider.highlightedRow!,
+                        boardProvider.highlightedColumn!,
+                      );
                       boardProvider.addCardToTop(
                         boardProvider.highlightedRow!,
                         boardProvider.highlightedColumn!,
