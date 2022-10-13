@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:game_prototype/enum/fonts.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
@@ -109,7 +110,10 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       );
     }
     return Center(
-      child: AppText(label: topCard.name.isNotEmpty ? topCard.name : '?'),
+      child: AppText(
+        label: topCard.name.isNotEmpty ? topCard.name : '?',
+        fontSize: FontSizes.small,
+      ),
     );
   }
 

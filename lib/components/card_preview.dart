@@ -44,7 +44,8 @@ class CardPreview extends StatelessWidget {
                           child: AppText(label: card!.topLeft),
                         ),
                         Flexible(
-                          child: AppText(label: card!.name),
+                          flex: 4,
+                          child: AppText(label: card!.name, singleLine: true),
                         ),
                         Flexible(
                           child: AppText(label: card!.topRight),

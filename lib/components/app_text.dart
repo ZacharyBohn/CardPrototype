@@ -8,6 +8,7 @@ class AppText extends StatelessWidget {
   final Color? fontColor;
   final TextAlign? textAlign;
   final FontStyle? fontStyle;
+  final bool singleLine;
   const AppText({
     Key? key,
     this.label,
@@ -15,6 +16,7 @@ class AppText extends StatelessWidget {
     this.fontColor,
     this.textAlign,
     this.fontStyle,
+    this.singleLine = false,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,7 @@ class AppText extends StatelessWidget {
     return Text(
       label ?? '',
       textAlign: textAlign,
+      maxLines: singleLine ? 1 : null,
       style: TextStyle(
         color: fontColor ?? AppColors.fontColor,
         fontSize: fontSize ?? FontSizes.body,
