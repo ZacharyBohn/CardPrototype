@@ -1,5 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'game_card.model.dart';
 
+part 'game_card_group.model.g.dart';
+
+@JsonSerializable()
 class GameCardGroupModel {
   GameCardGroupModel({
     required this.rowPosition,
@@ -57,4 +62,9 @@ class GameCardGroupModel {
     _cards.shuffle();
     return;
   }
+
+  factory GameCardGroupModel.fromJson(Map<String, dynamic> json) =>
+      _$GameCardGroupModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GameCardGroupModelToJson(this);
 }

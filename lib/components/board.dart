@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/game_card_group_widget.dart';
 import 'package:game_prototype/enum/app_colors.dart';
-import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
@@ -36,6 +35,7 @@ class _BoardState extends State<Board> {
     for (var _ in Iterable.generate(rowCount)) {
       List<Widget> rowWidgets = [];
       int columnPosition = 0;
+      // ignore: non_constant_identifier_names
       for (var __ in Iterable.generate(columnCount)) {
         rowWidgets.add(
           Flexible(
@@ -92,6 +92,15 @@ class _BoardState extends State<Board> {
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
     Size size = MediaQuery.of(context).size;
+    if (boardProvider.readingFromDisk) {
+      return Center(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Transform(
       transform: transformationMatrix,
       alignment: FractionalOffset.center,

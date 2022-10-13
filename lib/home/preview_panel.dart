@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:game_prototype/components/app_text.dart';
 import 'package:game_prototype/components/card_preview.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/providers/board_provider.dart';

@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'game_card.model.g.dart';
+
+@JsonSerializable()
 class GameCardModel {
   String name;
   String? descriptionAccent;
@@ -106,4 +111,9 @@ class GameCardModel {
       faceup: this.faceup,
     );
   }
+
+  factory GameCardModel.fromJson(Map<String, dynamic> json) =>
+      _$GameCardModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GameCardModelToJson(this);
 }

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:game_prototype/models/board.model.dart';
 import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/utils/helpers.dart';
+import 'package:hive/hive.dart';
 
 class BoardProvider with ChangeNotifier {
   BoardProvider() {
@@ -15,6 +18,7 @@ class BoardProvider with ChangeNotifier {
       player1Hand.add(GameCardGroupModel(rowPosition: 5, columnPosition: x));
       player2Hand.add(GameCardGroupModel(rowPosition: -1, columnPosition: x));
     }
+    readFromDisk();
     return;
   }
   late BoardModel _board;
@@ -26,6 +30,38 @@ class BoardProvider with ChangeNotifier {
     _highlightedCard = value;
     notifyListeners();
     return;
+  }
+
+  Timer? saveToDiskTimer;
+  final box = Hive.box<Map<String, dynamic>>('CCG_Prototype');
+  bool readingFromDisk = false;
+
+  Future<void> readFromDisk() async {
+    readingFromDisk = true;
+    Map<String, dynamic>? data = box.get('data');
+    if (data == null) {
+      return;
+    }
+    _board = BoardModel.fromJson(data);
+    readingFromDisk = false;
+    return;
+  }
+
+  dispose() {
+    saveToDiskTimer?.cancel();
+    super.dispose();
+    return;
+  }
+
+  Future<void> saveToDisk() async {
+    if (readingFromDisk) {
+      return;
+    }
+    saveToDiskTimer?.cancel();
+    saveToDiskTimer = Timer(Duration(milliseconds: 400), () async {
+      await box.put('data', _board.toJson());
+      return;
+    });
   }
 
   bool _movingAllCards = false;
@@ -56,6 +92,7 @@ class BoardProvider with ChangeNotifier {
   void setCardGroup(int row, int column, GameCardGroupModel cardGroup) {
     _board.positions[row][column] = cardGroup;
     notifyListeners();
+    saveToDisk();
     return;
   }
 
@@ -73,6 +110,7 @@ class BoardProvider with ChangeNotifier {
     _board.positions[row][column] =
         GameCardGroupModel(rowPosition: row, columnPosition: column);
     notifyListeners();
+    saveToDisk();
     return;
   }
 
@@ -114,6 +152,7 @@ class BoardProvider with ChangeNotifier {
     }
     _board.positions[row][column].addCardToTop(card);
     notifyListeners();
+    saveToDisk();
     return;
   }
 
@@ -128,6 +167,7 @@ class BoardProvider with ChangeNotifier {
     }
     _board.positions[row][column].removeCardFromTop();
     notifyListeners();
+    saveToDisk();
     return;
   }
 

@@ -1,5 +1,9 @@
 import 'package:game_prototype/models/game_card_group.model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'board.model.g.dart';
+
+@JsonSerializable()
 class BoardModel {
   late int _rows;
   int get rows => _rows;
@@ -29,4 +33,9 @@ class BoardModel {
     }
     return;
   }
+
+  factory BoardModel.fromJson(Map<String, dynamic> json) =>
+      _$BoardModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BoardModelToJson(this);
 }
