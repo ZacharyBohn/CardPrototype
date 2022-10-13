@@ -62,7 +62,41 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     throw Exception('No color?');
   }
 
-  Widget? getCardImage(GameCardModel? topCard) {
+  Widget? getCardImage(
+    GameCardModel? topCard, {
+    bool subtractOneFromCardCount = false,
+    bool hideNumber = false,
+  }) {
+    if (topCard == null) return Container();
+
+    GameCardGroupModel groupModel = context
+        .read<BoardProvider>()
+        .getCardGroup(widget.rowPosition, widget.columnPosition);
+    int cards = groupModel.cards.length;
+    if (subtractOneFromCardCount) {
+      cards--;
+    }
+    if (hideNumber) {
+      cards = 0;
+    }
+    return Stack(
+      children: [
+        Align(
+          alignment: Alignment.topRight,
+          child: AppText(
+            label: cards == 0 || cards == 1 ? '' : '$cards',
+          ),
+        ),
+        getInnerCardImage(topCard,
+            subtractOneFromCardCount: subtractOneFromCardCount),
+      ],
+    );
+  }
+
+  Widget getInnerCardImage(
+    GameCardModel? topCard, {
+    bool subtractOneFromCardCount = false,
+  }) {
     if (topCard == null) return Container();
     if (topCard.faceup == false && widget.alwaysFaceUp == false)
       return Container();
@@ -157,8 +191,12 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               borderRadius: BorderRadius.circular(borderRadius),
               color: getCardColor(secondCard),
             ),
-            child:
-                boardProvider.movingAllCards ? null : getCardImage(secondCard),
+            child: boardProvider.movingAllCards
+                ? null
+                : getCardImage(
+                    secondCard,
+                    subtractOneFromCardCount: true,
+                  ),
           ),
           maxSimultaneousDrags: topCard != null ? 1 : 0,
           //card that is dragged
@@ -180,7 +218,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                           )
                         : null,
                   ),
-                  child: getCardImage(topCard),
+                  child: getCardImage(topCard, hideNumber: true),
                 );
               },
             ),
