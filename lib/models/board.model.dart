@@ -5,19 +5,15 @@ part 'board.model.g.dart';
 
 @JsonSerializable()
 class BoardModel {
-  late int _rows;
-  int get rows => _rows;
-  late int _columns;
-  int get columns => _columns;
+  int rows;
+  int columns;
   //outter list is rows
   //inner list is columns
-  List<List<GameCardGroupModel>> _positions = [];
+  List<List<GameCardGroupModel>> positions = [];
 
-  List<List<GameCardGroupModel>> get positions => _positions;
-
-  BoardModel({required int rows, required int columns}) {
-    _rows = rows;
-    _columns = columns;
+  BoardModel({required this.rows, required this.columns}) {
+    rows = rows;
+    columns = columns;
     for (int rowPosition in Iterable.generate(rows)) {
       List<GameCardGroupModel> row = [];
       for (int columnPosition in Iterable.generate(columns)) {
@@ -29,7 +25,7 @@ class BoardModel {
           ),
         );
       }
-      _positions.add(row);
+      positions.add(row);
     }
     return;
   }

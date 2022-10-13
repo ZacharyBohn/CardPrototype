@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:game_prototype/models/board.model.dart';
@@ -6,6 +7,7 @@ import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/utils/helpers.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BoardProvider with ChangeNotifier {
   BoardProvider() {
@@ -33,17 +35,25 @@ class BoardProvider with ChangeNotifier {
   }
 
   Timer? saveToDiskTimer;
-  final box = Hive.box<Map<String, dynamic>>('CCG_Prototype');
+  late SharedPreferences prefs;
   bool readingFromDisk = false;
 
   Future<void> readFromDisk() async {
     readingFromDisk = true;
-    Map<String, dynamic>? data = box.get('data');
-    if (data == null) {
-      return;
+    try {
+      prefs = await SharedPreferences.getInstance();
+      String? data = prefs.getString('ccg');
+      if (data != null) {
+        Map? map = jsonDecode(data);
+        if (map != null && map is Map<String, dynamic>) {
+          _board = BoardModel.fromJson(map);
+        }
+      }
+    } catch (e) {
+      debugPrint('Failed to open Hive box: $e');
     }
-    _board = BoardModel.fromJson(data);
     readingFromDisk = false;
+    notifyListeners();
     return;
   }
 
@@ -59,7 +69,8 @@ class BoardProvider with ChangeNotifier {
     }
     saveToDiskTimer?.cancel();
     saveToDiskTimer = Timer(Duration(milliseconds: 400), () async {
-      await box.put('data', _board.toJson());
+      Map<String, dynamic> data = _board.toJson();
+      await prefs.setString('ccg', jsonEncode(data));
       return;
     });
   }
