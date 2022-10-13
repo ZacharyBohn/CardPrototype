@@ -222,6 +222,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           AppTextField(
             hint: 'Description',
             controller: descriptionController,
+            oneLine: false,
             onTextChange: (String value) {
               description = value;
               clearError();

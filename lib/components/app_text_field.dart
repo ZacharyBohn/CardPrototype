@@ -8,6 +8,7 @@ class AppTextField extends StatefulWidget {
   final double? fontSize;
   final TextEditingController? controller;
   final void Function(String)? onTextChange;
+  final bool oneLine;
   const AppTextField({
     Key? key,
     this.hint,
@@ -15,6 +16,7 @@ class AppTextField extends StatefulWidget {
     this.fontSize,
     this.controller,
     this.onTextChange,
+    this.oneLine = true,
   }) : super(key: key);
 
   @override
@@ -34,10 +36,10 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
     return TextField(
       controller: controller,
       textCapitalization: TextCapitalization.none,
+      maxLines: widget.oneLine ? 1 : null,
       onChanged: (String value) {
         widget.onTextChange?.call(value);
       },
