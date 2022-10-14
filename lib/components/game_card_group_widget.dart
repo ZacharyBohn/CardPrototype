@@ -86,6 +86,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           alignment: Alignment.topRight,
           child: AppText(
             label: cards == 0 || cards == 1 ? '' : '$cards',
+            fontSize: FontSizes.small,
           ),
         ),
         getInnerCardImage(topCard,
