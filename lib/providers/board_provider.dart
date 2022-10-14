@@ -16,8 +16,10 @@ class BoardProvider with ChangeNotifier {
     );
     //setup hands
     for (var x in Iterable.generate(7)) {
-      player1Hand.add(GameCardGroupModel(rowPosition: 5, columnPosition: x));
-      player2Hand.add(GameCardGroupModel(rowPosition: -1, columnPosition: x));
+      _board.player1Hand
+          .add(GameCardGroupModel(rowPosition: 5, columnPosition: x));
+      _board.player2Hand
+          .add(GameCardGroupModel(rowPosition: -1, columnPosition: x));
     }
     readFromDisk();
     return;
@@ -88,15 +90,12 @@ class BoardProvider with ChangeNotifier {
   int? _highlightedColumn;
   int? get highlightedColumn => _highlightedColumn;
 
-  List<GameCardGroupModel> player1Hand = [];
-  List<GameCardGroupModel> player2Hand = [];
-
   GameCardGroupModel getCardGroup(int row, int column) {
     if (row == rows) {
-      return player1Hand[column];
+      return _board.player1Hand[column];
     }
     if (row == -1) {
-      return player2Hand[column];
+      return _board.player2Hand[column];
     }
     return _board.positions[row][column];
   }
@@ -110,12 +109,12 @@ class BoardProvider with ChangeNotifier {
 
   void removeCardGroup(int row, int column) {
     if (row == rows) {
-      player1Hand[column] =
+      _board.player1Hand[column] =
           GameCardGroupModel(rowPosition: row, columnPosition: column);
       return;
     }
     if (row == -1) {
-      player2Hand[column] =
+      _board.player2Hand[column] =
           GameCardGroupModel(rowPosition: row, columnPosition: column);
       return;
     }
@@ -128,10 +127,10 @@ class BoardProvider with ChangeNotifier {
 
   GameCardModel? getTopCard(int row, int column) {
     if (row == rows) {
-      return player1Hand[column].topCard;
+      return _board.player1Hand[column].topCard;
     }
     if (row == -1) {
-      return player2Hand[column].topCard;
+      return _board.player2Hand[column].topCard;
     }
     return _board.positions[row][column].topCard;
   }
@@ -167,12 +166,12 @@ class BoardProvider with ChangeNotifier {
   void addCardToTop(int row, int column, GameCardModel card) {
     if (row == rows) {
       card.faceup = true;
-      player1Hand[column].addCardToTop(card);
+      _board.player1Hand[column].addCardToTop(card);
       return;
     }
     if (row == -1) {
       card.faceup = true;
-      player2Hand[column].addCardToTop(card);
+      _board.player2Hand[column].addCardToTop(card);
       return;
     }
     _board.positions[row][column].addCardToTop(card);
@@ -183,11 +182,11 @@ class BoardProvider with ChangeNotifier {
 
   void removeTopCard(int row, int column) {
     if (row == rows) {
-      player1Hand[column].removeCardFromTop();
+      _board.player1Hand[column].removeCardFromTop();
       return;
     }
     if (row == -1) {
-      player2Hand[column].removeCardFromTop();
+      _board.player2Hand[column].removeCardFromTop();
       return;
     }
     _board.positions[row][column].removeCardFromTop();
@@ -198,12 +197,12 @@ class BoardProvider with ChangeNotifier {
 
   void highlightCard(int row, int column) {
     if (row == rows) {
-      _highlightedCard = player1Hand[column].topCard;
+      _highlightedCard = _board.player1Hand[column].topCard;
       notifyListeners();
       return;
     }
     if (row == -1) {
-      _highlightedCard = player2Hand[column].topCard;
+      _highlightedCard = _board.player2Hand[column].topCard;
       notifyListeners();
       return;
     }

@@ -10,6 +10,8 @@ class BoardModel {
   //outter list is rows
   //inner list is columns
   List<List<GameCardGroupModel>> positions = [];
+  List<GameCardGroupModel> player1Hand = [];
+  List<GameCardGroupModel> player2Hand = [];
 
   BoardModel({required this.rows, required this.columns}) {
     rows = rows;
