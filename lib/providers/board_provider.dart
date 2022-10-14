@@ -153,12 +153,16 @@ class BoardProvider with ChangeNotifier {
   }
 
   void updateAllCardsWithName(String name, GameCardModel updatedCard) {
+    List<GameCardGroupModel> allCards = [];
     for (var row in _board.positions) {
-      for (var group in row) {
-        for (var cardIndex in Iterable.generate(group.cards.length)) {
-          if (group.cards[cardIndex].name == name) {
-            group.cards[cardIndex] = updatedCard.copy();
-          }
+      allCards.addAll(row);
+    }
+    allCards.addAll(_board.player1Hand);
+    allCards.addAll(_board.player2Hand);
+    for (var group in allCards) {
+      for (var cardIndex in Iterable.generate(group.cards.length)) {
+        if (group.cards[cardIndex].name == name) {
+          group.cards[cardIndex] = updatedCard.copy();
         }
       }
     }
