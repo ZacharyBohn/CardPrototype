@@ -177,9 +177,6 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
 
     return Material(
       child: GestureDetector(
-        onLongPressDown: (details) {},
-        onLongPressMoveUpdate: (details) {},
-        onLongPressEnd: (details) {},
         onDoubleTap: () {
           if (topCard == null || widget.alwaysFaceUp) return;
           bool newFace = !topCard.faceup;

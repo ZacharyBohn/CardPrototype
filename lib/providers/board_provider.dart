@@ -150,6 +150,19 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  void updateAllCardsWithName(String name, GameCardModel updatedCard) {
+    for (var row in _board.positions) {
+      for (var group in row) {
+        for (var cardIndex in Iterable.generate(group.cards.length)) {
+          if (group.cards[cardIndex].name == name) {
+            group.cards[cardIndex] = updatedCard.copy();
+          }
+        }
+      }
+    }
+    return;
+  }
+
   void addCardToTop(int row, int column, GameCardModel card) {
     if (row == rows) {
       card.faceup = true;

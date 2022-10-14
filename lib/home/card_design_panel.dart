@@ -326,6 +326,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                         boardProvider.highlightedColumn!,
                         card,
                       );
+                      boardProvider.updateAllCardsWithName(card.name, card);
                       clearError();
                       clearDesignPanel();
                       return;
