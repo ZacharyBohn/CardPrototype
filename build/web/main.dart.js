@@ -67934,10 +67934,14 @@ this.lb()
 return},
 tA(a,b){var s=this,r=s.a
 r===$&&A.b()
-if(a===r.a){s.b=r.d[b].gjQ()
-s.a9()
-return}if(a===-1){s.b=r.e[b].gjQ()
-s.a9()
+if(a===r.a){r=r.d[b].gjQ()
+s.b=r
+if(r!=null){s.w=a
+s.x=b}s.a9()
+return}if(a===-1){r=r.e[b].gjQ()
+s.b=r
+if(r!=null){s.w=a
+s.x=b}s.a9()
 return}r=J.at(r.c[a],b).gjQ()
 s.b=r
 if(r!=null){s.w=a

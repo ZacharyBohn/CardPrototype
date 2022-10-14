@@ -198,11 +198,19 @@ class BoardProvider with ChangeNotifier {
   void highlightCard(int row, int column) {
     if (row == rows) {
       _highlightedCard = _board.player1Hand[column].topCard;
+      if (_highlightedCard != null) {
+        _highlightedRow = row;
+        _highlightedColumn = column;
+      }
       notifyListeners();
       return;
     }
     if (row == -1) {
       _highlightedCard = _board.player2Hand[column].topCard;
+      if (_highlightedCard != null) {
+        _highlightedRow = row;
+        _highlightedColumn = column;
+      }
       notifyListeners();
       return;
     }
