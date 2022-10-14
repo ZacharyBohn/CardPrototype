@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/app_button.dart';
 import 'package:game_prototype/components/app_text.dart';
 import 'package:game_prototype/components/app_text_field.dart';
+import 'package:game_prototype/components/board.dart';
 import 'package:game_prototype/components/spacing.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/models/game_card.model.dart';
@@ -114,23 +117,87 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
   }
 
   bool editingHighlightedCard(BoardProvider boardProvider) {
-    if (previousSelectedCard == null) return false;
-    return boardProvider.highlightedCard == previousSelectedCard;
+    return boardProvider.highlightedCard != null;
+  }
+
+  Timer? maybeSaveTimer;
+
+  void maybeSave() {
+    maybeSaveTimer?.cancel();
+    maybeSaveTimer = Timer(Duration(milliseconds: 200), () {
+      if (editingHighlightedCard(context.read<BoardProvider>())) {
+        save(errorResets: false);
+      }
+    });
+    return;
+  }
+
+  void save({bool errorResets = true}) {
+    BoardProvider boardProvider = context.read<BoardProvider>();
+    //error checking
+    if (checkCardValid() == false) return;
+    if (editingHighlightedCard(boardProvider)) {
+      var card = GameCardModel(
+        name: name!,
+        descriptionAccent: descriptionAccent,
+        description: description,
+        imageUrl: imageUrl,
+        topLeft: topLeft,
+        topRight: topRight,
+        bottomLeft: bottomLeft,
+        bottomRight: bottomRight,
+        faceup: true,
+      );
+      boardProvider.highlightedCard = card;
+      boardProvider.removeTopCard(
+        boardProvider.highlightedRow!,
+        boardProvider.highlightedColumn!,
+      );
+      boardProvider.addCardToTop(
+        boardProvider.highlightedRow!,
+        boardProvider.highlightedColumn!,
+        card,
+      );
+      boardProvider.updateAllCardsWithName(card.name, card);
+      if (errorResets) {
+        clearError();
+        clearDesignPanel();
+      }
+      return;
+    }
+    boardProvider.addCardToTop(
+        boardProvider.rows - 1,
+        boardProvider.columns - 1,
+        GameCardModel(
+          name: name!,
+          descriptionAccent: descriptionAccent,
+          description: description,
+          imageUrl: imageUrl,
+          topLeft: topLeft,
+          topRight: topRight,
+          bottomLeft: bottomLeft,
+          bottomRight: bottomRight,
+          faceup: true,
+        ));
+    boardProvider.highlightCard(
+      boardProvider.rows - 1,
+      boardProvider.columns - 1,
+    );
+    clearError();
+    clearDesignPanel();
+    return;
   }
 
   @override
   Widget build(BuildContext context) {
     BoardProvider boardProvider = Provider.of<BoardProvider>(context);
-    if (boardProvider.highlightedCard != previousSelectedCard) {
+    if (boardProvider.highlightedCardChanged) {
       if (boardProvider.highlightedCard != null) {
         loadHighlightedCardInfo(boardProvider);
       } else {
         clearDesignPanel();
       }
-      previousSelectedCard = boardProvider.highlightedCard;
-    }
-    if (boardProvider.highlightedCard?.faceup == false) {
-      clearDesignPanel();
+      boardProvider.highlightedCardChanged = false;
     }
     //This widget has 3/11 screen width
     //and 1/1 screen height -app bar
@@ -158,6 +225,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             controller: nameController,
             onTextChange: (String value) {
               name = value;
+              maybeSave();
               clearError();
             },
           ),
@@ -169,6 +237,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                   controller: topLeftController,
                   onTextChange: (String value) {
                     topLeft = value;
+                    maybeSave();
                     clearError();
                   },
                 ),
@@ -180,6 +249,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                   controller: topRightController,
                   onTextChange: (String value) {
                     topRight = value;
+                    maybeSave();
                     clearError();
                   },
                 ),
@@ -194,6 +264,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                   controller: bottomLeftController,
                   onTextChange: (String value) {
                     bottomLeft = value;
+                    maybeSave();
                     clearError();
                   },
                 ),
@@ -205,6 +276,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                   controller: bottomRightController,
                   onTextChange: (String value) {
                     bottomRight = value;
+                    maybeSave();
                     clearError();
                   },
                 ),
@@ -216,6 +288,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             controller: descriptionAccentController,
             onTextChange: (String value) {
               descriptionAccent = value;
+              maybeSave();
               clearError();
             },
           ),
@@ -225,6 +298,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             oneLine: false,
             onTextChange: (String value) {
               description = value;
+              maybeSave();
               clearError();
             },
           ),
@@ -233,6 +307,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             controller: imageUrlController,
             onTextChange: (String value) {
               imageUrl = value;
+              maybeSave();
               clearError();
             },
           ),
@@ -302,55 +377,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
                 child: AppButton(
                   label: 'Save Card',
                   onTap: () {
-                    //error checking
-                    if (checkCardValid() == false) return;
-                    if (editingHighlightedCard(boardProvider)) {
-                      var card = GameCardModel(
-                        name: name!,
-                        descriptionAccent: descriptionAccent,
-                        description: description,
-                        imageUrl: imageUrl,
-                        topLeft: topLeft,
-                        topRight: topRight,
-                        bottomLeft: bottomLeft,
-                        bottomRight: bottomRight,
-                        faceup: true,
-                      );
-                      boardProvider.highlightedCard = card;
-                      boardProvider.removeTopCard(
-                        boardProvider.highlightedRow!,
-                        boardProvider.highlightedColumn!,
-                      );
-                      boardProvider.addCardToTop(
-                        boardProvider.highlightedRow!,
-                        boardProvider.highlightedColumn!,
-                        card,
-                      );
-                      boardProvider.updateAllCardsWithName(card.name, card);
-                      clearError();
-                      clearDesignPanel();
-                      return;
-                    }
-                    boardProvider.addCardToTop(
-                        boardProvider.rows - 1,
-                        boardProvider.columns - 1,
-                        GameCardModel(
-                          name: name!,
-                          descriptionAccent: descriptionAccent,
-                          description: description,
-                          imageUrl: imageUrl,
-                          topLeft: topLeft,
-                          topRight: topRight,
-                          bottomLeft: bottomLeft,
-                          bottomRight: bottomRight,
-                          faceup: true,
-                        ));
-                    boardProvider.highlightCard(
-                      boardProvider.rows - 1,
-                      boardProvider.columns - 1,
-                    );
-                    clearError();
-                    clearDesignPanel();
+                    save();
                   },
                 ),
               ),

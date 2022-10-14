@@ -267,6 +267,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           child: GestureDetector(
             onTap: () {
               if (cardGroupCount == 0) {
+                boardProvider.highlightedCardChanged = true;
                 boardProvider.clearHighlight();
                 return;
               }

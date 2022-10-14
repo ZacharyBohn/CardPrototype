@@ -35,6 +35,8 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  bool highlightedCardChanged = false;
+
   GameCardGroupModel? movingCardGroup;
 
   Timer? saveToDiskTimer;
@@ -196,6 +198,7 @@ class BoardProvider with ChangeNotifier {
   }
 
   void highlightCard(int row, int column) {
+    highlightedCardChanged = true;
     if (row == rows) {
       _highlightedCard = _board.player1Hand[column].topCard;
       if (_highlightedCard != null) {

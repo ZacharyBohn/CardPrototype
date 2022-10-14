@@ -24,7 +24,7 @@ class GameCardModel {
     bottomRight,
     faceup,
   })  : this.name = name ?? 'Unknown',
-        this.description = description ?? 'Unknown',
+        this.description = description ?? '',
         this.faceup = faceup ?? false,
         this.descriptionAccent = descriptionAccent,
         this.imageUrl = imageUrl,
