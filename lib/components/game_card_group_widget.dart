@@ -88,8 +88,10 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             fontSize: FontSizes.small,
           ),
         ),
-        getInnerCardImage(topCard,
-            subtractOneFromCardCount: subtractOneFromCardCount),
+        getInnerCardImage(
+          topCard,
+          subtractOneFromCardCount: subtractOneFromCardCount,
+        ),
       ],
     );
   }
@@ -101,20 +103,35 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     if (topCard == null) return Container();
     if (topCard.faceup == false && widget.alwaysFaceUp == false)
       return Container();
-    if (topCard.hasImage) {
-      return Image.network(
-        topCard.imageUrl!,
-        errorBuilder: (context, _, __) {
-          return AppText(label: 'Failed to load image');
-        },
-      );
-    }
-    return Center(
-      child: AppText(
-        label: topCard.name.isNotEmpty ? topCard.name : '?',
-        fontSize: FontSizes.small,
+    return Column(children: [
+      if (topCard.hasImage)
+        Image.network(
+          topCard.imageUrl!,
+          errorBuilder: (context, _, __) {
+            return AppText(label: 'Failed to load image');
+          },
+        ),
+      Center(
+        child: AppText(
+          label: topCard.name.isNotEmpty ? topCard.name : '?',
+          fontSize: FontSizes.small,
+        ),
       ),
-    );
+    ]);
+    // if (topCard.hasImage) {
+    //   return Image.network(
+    //     topCard.imageUrl!,
+    //     errorBuilder: (context, _, __) {
+    //       return AppText(label: 'Failed to load image');
+    //     },
+    //   );
+    // }
+    // return Center(
+    //   child: AppText(
+    //     label: topCard.name.isNotEmpty ? topCard.name : '?',
+    //     fontSize: FontSizes.small,
+    //   ),
+    // );
   }
 
   int getEpochMs() {

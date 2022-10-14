@@ -11,7 +11,7 @@ class AppColors {
   static Color drawerHeader = ColorPalette.darkerGrey;
   static Color drawerBody = ColorPalette.cyan;
   static Color emptyPosition = ColorPalette.darkerGrey;
-  static Color cardForeground = ColorPalette.darkerGrey;
+  static Color cardForeground = ColorPalette.goldBrown;
   static Color cardBack = ColorPalette.red;
   static Color appBarBackground = ColorPalette.darkerGrey;
   static Color hightlight = ColorPalette.gold;
@@ -33,6 +33,8 @@ class ColorPalette {
   static Color darkGrey = Color.fromRGBO(55, 55, 65, 1);
   static Color darkerGrey = Color.fromRGBO(40, 40, 45, 1);
   static Color black = Color.fromRGBO(0, 0, 0, 1);
+
+  static Color goldBrown = Color.fromRGBO(140, 100, 30, 1);
 
   static Color lightCyan = Color.fromRGBO(0, 135, 120, 1);
   static Color cyan = Color.fromRGBO(0, 115, 100, 1);
