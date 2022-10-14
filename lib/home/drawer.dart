@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:game_prototype/enum/fonts.dart';
 import 'package:game_prototype/models/game_card.model.dart';
@@ -8,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../components/app_text.dart';
 import '../enum/app_colors.dart';
+import '../models/board.model.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -37,53 +40,33 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: AppText(label: 'Upload Card List (.csv)'),
+              title: AppText(label: 'Load from file (json)'),
               onTap: () async {
                 BoardProvider boardProvider =
                     Provider.of<BoardProvider>(context, listen: false);
-                int column = boardProvider.columns - 1;
-                int row = boardProvider.rows - 1;
-                String? data = await pickFile('Select Deck', ['csv']);
-                List<GameCardModel>? cards = getCardsFromCsv(data);
-                GameCardGroupModel cardGroup = GameCardGroupModel(
-                  columnPosition: column,
-                  rowPosition: row,
-                  cards: cards,
-                );
-                boardProvider.setCardGroup(row, column, cardGroup);
+                String? data = await pickFile('Select Save File', ['json']);
+                if (data != null) {
+                  Map? map = jsonDecode(data);
+                  if (map != null && map is Map<String, dynamic>) {
+                    boardProvider.board = BoardModel.fromJson(map);
+                  }
+                }
                 Navigator.of(context).pop();
                 return;
               },
             ),
             ListTile(
-              title: AppText(label: 'Download Card List (.csv)'),
+              title: AppText(label: 'Save to file (json)'),
               onTap: () async {
                 BoardProvider boardProvider =
                     Provider.of<BoardProvider>(context, listen: false);
-                String csvData = convertCardsToCsvString(boardProvider);
-                String topLine =
-                    'Name,Accent,Description,Image URL,Top Left,Top Right,Bottom Left,Bottom Right\n';
-                csvData = topLine + csvData;
+                String data = jsonEncode(boardProvider.board.toJson());
                 //download the file to the client here
-                await downloadCsvToClient(csvData);
+                await downloadJsonToClient(data);
                 Navigator.of(context).pop();
                 return;
               },
             ),
-            // ListTile(
-            //   title: AppText(label: 'Load Save State (.cpsave)'),
-            //   onTap: () {
-            //     Navigator.of(context).pop();
-            //     return;
-            //   },
-            // ),
-            // ListTile(
-            //   title: AppText(label: 'Save State'),
-            //   onTap: () {
-            //     Navigator.of(context).pop();
-            //     return;
-            //   },
-            // ),
           ],
         ),
       ),

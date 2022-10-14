@@ -73,9 +73,9 @@ range(int x) {
   return Iterable.generate(x);
 }
 
-Future<void> downloadCsvToClient(String data) async {
+Future<void> downloadJsonToClient(String data) async {
   if (kIsWeb) {
-    downloadCsvToClientWeb(data);
+    downloadJsonToClientWeb(data);
     return;
   }
   if (Platform.isWindows) {
@@ -85,14 +85,14 @@ Future<void> downloadCsvToClient(String data) async {
   return;
 }
 
-Future<void> downloadCsvToClientWeb(String data) async {
+Future<void> downloadJsonToClientWeb(String data) async {
   var bytes = utf8.encode(data);
   var blob = html.Blob([bytes]);
   var url = html.Url.createObjectUrlFromBlob(blob);
   var anchor = html.document.createElement('a') as html.AnchorElement
     ..href = url
     ..style.display = 'none'
-    ..download = 'Card List.csv';
+    ..download = 'CCG_Prototype_save.json';
   html.document.body!.children.add(anchor);
   // download
   anchor.click();

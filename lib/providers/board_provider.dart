@@ -25,6 +25,12 @@ class BoardProvider with ChangeNotifier {
     return;
   }
   late BoardModel _board;
+  BoardModel get board => _board;
+  set board(BoardModel value) {
+    _board = value;
+    notifyListeners();
+  }
+
   int get rows => _board.rows;
   int get columns => _board.columns;
   GameCardModel? _highlightedCard;
