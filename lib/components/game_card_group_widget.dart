@@ -108,16 +108,20 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         if (topCard.hasImage)
-          Image.network(
-            topCard.imageUrl!,
-            errorBuilder: (context, _, __) {
-              return AppText(label: 'Failed to load image');
-            },
+          Flexible(
+            child: Image.network(
+              topCard.imageUrl!,
+              errorBuilder: (context, _, __) {
+                return AppText(label: 'Failed to load image');
+              },
+            ),
           ),
-        Center(
-          child: AppText(
-            label: topCard.name.isNotEmpty ? topCard.name : '?',
-            fontSize: FontSizes.small,
+        Flexible(
+          child: Center(
+            child: AppText(
+              label: topCard.name.isNotEmpty ? topCard.name : '?',
+              fontSize: FontSizes.small,
+            ),
           ),
         ),
       ],
