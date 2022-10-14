@@ -182,8 +182,12 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         onLongPressEnd: (details) {},
         onDoubleTap: () {
           if (topCard == null || widget.alwaysFaceUp) return;
+          bool newFace = !topCard.faceup;
+          for (var x in groupModel.cards) {
+            x.faceup = newFace;
+          }
           setState(() {
-            topCard.faceup = !topCard.faceup;
+            groupModel = groupModel;
           });
           boardProvider.highlightedCard = boardProvider.highlightedCard;
         },
