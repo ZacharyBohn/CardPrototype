@@ -6,7 +6,6 @@ import 'package:game_prototype/models/board.model.dart';
 import 'package:game_prototype/models/game_card.model.dart';
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/utils/helpers.dart';
-import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BoardProvider with ChangeNotifier {
@@ -33,6 +32,8 @@ class BoardProvider with ChangeNotifier {
     notifyListeners();
     return;
   }
+
+  GameCardGroupModel? movingCardGroup;
 
   Timer? saveToDiskTimer;
   late SharedPreferences prefs;

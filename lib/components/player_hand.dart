@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/game_card_group_widget.dart';
 import 'package:game_prototype/enum/app_colors.dart';
-import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -49,18 +48,29 @@ class _PlayerHandState extends State<PlayerHand> {
                 required int column,
                 required bool moveAllCards,
               }) {
+                if (moveAllCards) {
+                  boardProvider.removeCardGroup(row, column);
+                  return;
+                }
                 boardProvider.removeTopCard(row, column);
               },
               onDraggedTo: ({
-                required GameCardGroupModel groupModel,
                 required int row,
                 required int column,
               }) {
                 if (Provider.of<BoardProvider>(context, listen: false)
                     .movingAllCards) {
-                  boardProvider.addGroupToTop(row, column, groupModel);
+                  boardProvider.addGroupToTop(
+                    row,
+                    column,
+                    boardProvider.movingCardGroup!,
+                  );
                 } else {
-                  boardProvider.addCardToTop(row, column, groupModel.topCard!);
+                  boardProvider.addCardToTop(
+                    row,
+                    column,
+                    boardProvider.movingCardGroup!.topCard!,
+                  );
                 }
                 boardProvider.highlightCard(row, column);
               },

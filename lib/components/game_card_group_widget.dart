@@ -23,7 +23,6 @@ class GameCardGroupWidget extends StatefulWidget {
   final void Function({
     required int row,
     required int column,
-    required GameCardGroupModel groupModel,
   }) onDraggedTo;
   final void Function(int)? onPopupItemSelected;
   const GameCardGroupWidget({
@@ -204,7 +203,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                     subtractOneFromCardCount: true,
                   ),
           ),
-          maxSimultaneousDrags: topCard != null ? 1 : 0,
+          maxSimultaneousDrags: 1,
           //card that is dragged
           feedback: Material(
             child: StreamBuilder(
@@ -236,6 +235,10 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             longDragTimer = Timer(
               Duration(milliseconds: 650),
               checkLongDrag,
+            );
+            boardProvider.movingCardGroup = boardProvider.getCardGroup(
+              widget.rowPosition,
+              widget.columnPosition,
             );
             return;
           },
@@ -297,7 +300,6 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 widget.onDraggedTo(
                   row: widget.rowPosition,
                   column: widget.columnPosition,
-                  groupModel: object as GameCardGroupModel,
                 );
               },
             ),
