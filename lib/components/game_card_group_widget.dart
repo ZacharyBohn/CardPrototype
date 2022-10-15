@@ -81,16 +81,16 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
     }
     return Stack(
       children: [
+        getInnerCardImage(
+          topCard,
+          subtractOneFromCardCount: subtractOneFromCardCount,
+        ),
         Align(
           alignment: Alignment.topRight,
           child: AppText(
             label: cards == 0 || cards == 1 ? '' : '$cards',
             fontSize: FontSizes.small,
           ),
-        ),
-        getInnerCardImage(
-          topCard,
-          subtractOneFromCardCount: subtractOneFromCardCount,
         ),
       ],
     );
