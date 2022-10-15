@@ -92,12 +92,7 @@ class CardPreviewer extends StatelessWidget {
         ),
         child: GestureDetector(
           onTap: () {
-            // TODO: this won't work, need to change this card
-            // manually and check for reprocussions
-            boardProvider.highlightCard(
-              highlightRow,
-              highlightColumn,
-            );
+            boardProvider.highlightedCard = card;
             return;
           },
           //stationary card
