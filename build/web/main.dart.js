@@ -67072,7 +67072,9 @@ A.SI.prototype={
 $3(a,b,c){return A.d5(null,null,null,"[Image Error]",!1)},
 $S:59}
 A.SH.prototype={
-$0(){this.b.e=A.vs(A.a([this.a.d],t.TG),-99,-99)
+$0(){var s=this.a.d
+s.x=!0
+this.b.e=A.vs(A.a([s],t.TG),-99,-99)
 return},
 $S:0}
 A.SG.prototype={

@@ -58,15 +58,6 @@ class _GameCardStackPreviewerState extends State<GameCardStackPreviewer> {
                     children: [
                       for (int cardIndex in Iterable.generate(
                           boardProvider.previewCards!.cards.length))
-                        // create one of these for each card in the group
-                        // create a game card group model constructor that takes
-                        // a single game card and creates a group from it
-                        // the row / column of each of these will be just the
-                        // highlighted group's row / column
-                        // will need to create a param to disable dragging
-                        // groups.
-                        //
-                        // maybe do something to pass in the game card group model?
                         Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: CardPreviewer(

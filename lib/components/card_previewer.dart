@@ -59,7 +59,7 @@ class CardPreviewer extends StatelessWidget {
           boardProvider.movingCardGroup = GameCardGroupModel(
             rowPosition: -99,
             columnPosition: -99,
-            cards: [card],
+            cards: [card..faceup = true],
           );
           return;
         },
