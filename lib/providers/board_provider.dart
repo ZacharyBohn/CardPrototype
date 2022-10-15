@@ -117,6 +117,25 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  void removeCardFromGroup({
+    required int column,
+    required int row,
+    required int cardIndex,
+  }) {
+    if (row == rows) {
+      _board.player1Hand[column].cards.removeAt(cardIndex);
+      return;
+    }
+    if (row == -1) {
+      _board.player2Hand[column].cards.removeAt(cardIndex);
+      return;
+    }
+    _board.positions[row][column].cards.removeAt(cardIndex);
+    notifyListeners();
+    saveToDisk();
+    return;
+  }
+
   void removeCardGroup(int row, int column) {
     if (row == rows) {
       _board.player1Hand[column] =

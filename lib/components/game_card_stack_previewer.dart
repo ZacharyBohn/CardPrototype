@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_prototype/components/board.dart';
+import 'package:game_prototype/components/card_preview.dart';
+import 'package:game_prototype/components/card_previewer.dart';
 import 'package:game_prototype/components/game_card_group_widget.dart';
 import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/providers/board_provider.dart';
@@ -27,7 +29,8 @@ class _GameCardStackPreviewerState extends State<GameCardStackPreviewer> {
 
   bool highlightedGroupTooSmall() {
     var boardProvider = context.read<BoardProvider>();
-    return boardProvider.previewCards == null ||
+    return boardProvider.highlightedCard == null ||
+        boardProvider.previewCards == null ||
         boardProvider
                 .getCardGroup(boardProvider.highlightedRow!,
                     boardProvider.highlightedColumn!)
@@ -48,13 +51,14 @@ class _GameCardStackPreviewerState extends State<GameCardStackPreviewer> {
         Spacer(),
         Container(
           color: AppColors.cardPreviewerBackground,
-          width: cardSize.width + 10,
+          width: cardSize.width + 30,
           // show three cards at a time
-          height: (cardSize.height * 3) + 5 * 3,
+          height: (cardSize.height * 4) + 5 * 3,
           child: highlightedGroupTooSmall()
               ? null
               : SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       for (int cardIndex in Iterable.generate(
                           boardProvider.previewCards!.cards.length))
@@ -67,29 +71,16 @@ class _GameCardStackPreviewerState extends State<GameCardStackPreviewer> {
                         // groups.
                         //
                         // maybe do something to pass in the game card group model?
-                        GameCardGroupWidget(
-                          rowPosition: cardIndex,
-                          columnPosition: boardProvider.highlightedColumn!,
-                          cardSize: cardSize,
-                          disableMovingAllCards: true,
-                          canDragTo: false,
-                          onDraggedFrom: ({
-                            required int row,
-                            required int column,
-                            required moveAllCards,
-                          }) {
-                            // remove the card that has dragged from the stack
-                            return;
-                          },
-                          onDraggedTo: ({
-                            required int row,
-                            required int column,
-                          }) {
-                            // add the dragged card to the row / column that is
-                            // was dragged to, then highlight it
-                            return;
-                          },
-                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: CardPreviewer(
+                            card: boardProvider.previewCards!.cards[cardIndex],
+                            cardSize: getCardSize(),
+                            highlightColumn: boardProvider.highlightedColumn!,
+                            highlightRow: boardProvider.highlightedRow!,
+                            cardIndex: cardIndex,
+                          ),
+                        )
                     ],
                   ),
                 ),

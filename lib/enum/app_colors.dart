@@ -24,7 +24,7 @@ class AppColors {
   static Color error = ColorPalette.lightBlue;
   static Color handArea = ColorPalette.grey;
   static Color grabbingAllCardsHighlight = ColorPalette.lightBlue;
-  static Color cardPreviewerBackground = ColorPalette.darkerGrey;
+  static Color cardPreviewerBackground = ColorPalette.darkGrey;
 }
 
 class ColorPalette {
