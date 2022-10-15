@@ -41,6 +41,8 @@ class BoardProvider with ChangeNotifier {
     return;
   }
 
+  GameCardGroupModel? previewCards;
+
   bool highlightedCardChanged = false;
 
   GameCardGroupModel? movingCardGroup;
@@ -211,6 +213,7 @@ class BoardProvider with ChangeNotifier {
     highlightedCardChanged = true;
     if (row == rows) {
       _highlightedCard = _board.player1Hand[column].topCard;
+      previewCards = _board.player1Hand[column];
       if (_highlightedCard != null) {
         _highlightedRow = row;
         _highlightedColumn = column;
@@ -220,6 +223,7 @@ class BoardProvider with ChangeNotifier {
     }
     if (row == -1) {
       _highlightedCard = _board.player2Hand[column].topCard;
+      previewCards = _board.player2Hand[column];
       if (_highlightedCard != null) {
         _highlightedRow = row;
         _highlightedColumn = column;
@@ -228,6 +232,7 @@ class BoardProvider with ChangeNotifier {
       return;
     }
     _highlightedCard = _board.positions[row][column].topCard;
+    previewCards = _board.positions[row][column];
     if (_highlightedCard != null) {
       _highlightedRow = row;
       _highlightedColumn = column;

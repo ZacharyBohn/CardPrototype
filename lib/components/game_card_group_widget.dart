@@ -15,6 +15,8 @@ class GameCardGroupWidget extends StatefulWidget {
   final Size cardSize;
   final bool alwaysFaceUp;
   final bool onlyOneCard;
+  final bool disableMovingAllCards;
+  final bool canDragTo;
   final void Function({
     required int row,
     required int column,
@@ -32,6 +34,8 @@ class GameCardGroupWidget extends StatefulWidget {
     required this.onDraggedFrom,
     required this.onDraggedTo,
     this.onPopupItemSelected,
+    this.disableMovingAllCards = false,
+    this.canDragTo = true,
     this.alwaysFaceUp = false,
     this.onlyOneCard = false,
   });
@@ -127,20 +131,6 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
         ),
       ],
     );
-    // if (topCard.hasImage) {
-    //   return Image.network(
-    //     topCard.imageUrl!,
-    //     errorBuilder: (context, _, __) {
-    //       return AppText(label: 'Failed to load image');
-    //     },
-    //   );
-    // }
-    // return Center(
-    //   child: AppText(
-    //     label: topCard.name.isNotEmpty ? topCard.name : '?',
-    //     fontSize: FontSizes.small,
-    //   ),
-    // );
   }
 
   int getEpochMs() {
@@ -165,6 +155,9 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
   }
 
   void checkLongDrag() {
+    if (widget.disableMovingAllCards) {
+      return;
+    }
     if (dragDetails == null) {
       return;
     }
@@ -320,6 +313,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
                 child: getCardImage(topCard),
               ),
               onWillAccept: (object) {
+                if (widget.canDragTo == false) return false;
                 if (object is GameCardGroupModel) return true;
                 return false;
               },
