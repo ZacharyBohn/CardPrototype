@@ -9,6 +9,7 @@ import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../components/app_text.dart';
+import '../components/game_card_stack_previewer.dart';
 import '../enum/app_colors.dart';
 
 class Home extends StatefulWidget {
@@ -48,7 +49,9 @@ class _HomeState extends State<Home> {
                 flex: 3,
                 child: PreviewPanel(),
               ),
-              Spacer(),
+              Expanded(
+                child: GameCardStackPreviewer(),
+              ),
               Expanded(
                 flex: 4,
                 child: Column(
