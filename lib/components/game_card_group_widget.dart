@@ -108,24 +108,21 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        // expand the column width
-        SizedBox(width: double.infinity),
         if (topCard.hasImage)
-          Flexible(
+          Expanded(
             child: Image.network(
               topCard.imageUrl!,
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.cover,
+              width: double.infinity,
               errorBuilder: (context, _, __) {
                 return AppText(label: '[Image Error]');
               },
             ),
           ),
-        Flexible(
-          child: Center(
-            child: AppText(
-              label: topCard.name.isNotEmpty ? topCard.name : '?',
-              fontSize: FontSizes.small,
-            ),
+        Center(
+          child: AppText(
+            label: topCard.name.isNotEmpty ? topCard.name : '?',
+            fontSize: FontSizes.small,
           ),
         ),
       ],
