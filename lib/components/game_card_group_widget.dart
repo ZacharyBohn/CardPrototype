@@ -111,8 +111,9 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           Flexible(
             child: Image.network(
               topCard.imageUrl!,
+              fit: BoxFit.fitWidth,
               errorBuilder: (context, _, __) {
-                return AppText(label: 'Failed to load image');
+                return AppText(label: '[Image Error]');
               },
             ),
           ),
