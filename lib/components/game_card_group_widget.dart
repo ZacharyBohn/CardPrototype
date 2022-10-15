@@ -105,8 +105,11 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
       return Container();
     return Column(
       mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        // expand the column width
+        SizedBox(width: double.infinity),
         if (topCard.hasImage)
           Flexible(
             child: Image.network(
