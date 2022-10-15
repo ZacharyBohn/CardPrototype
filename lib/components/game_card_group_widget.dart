@@ -205,6 +205,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
             groupModel = groupModel;
           });
           boardProvider.highlightedCard = boardProvider.highlightedCard;
+          boardProvider.saveToDisk();
         },
         child: Draggable(
           data: groupModel,
