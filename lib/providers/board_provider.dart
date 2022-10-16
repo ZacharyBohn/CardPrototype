@@ -43,6 +43,12 @@ class BoardProvider with ChangeNotifier {
 
   GameCardGroupModel? previewCards;
 
+  void shufflePreviewStack() {
+    previewCards?.cards.shuffle();
+    notifyListeners();
+    return;
+  }
+
   bool highlightedCardChanged = false;
 
   GameCardGroupModel? movingCardGroup;
@@ -262,6 +268,7 @@ class BoardProvider with ChangeNotifier {
 
   void clearHighlight() {
     _highlightedCard = null;
+    highlightedCardChanged = true;
     notifyListeners();
     return;
   }

@@ -38,8 +38,7 @@ class _HomeState extends State<Home> {
       drawer: AppDrawer(),
       body: GestureDetector(
         onTap: () {
-          Provider.of<BoardProvider>(context, listen: false).highlightedCard =
-              null;
+          Provider.of<BoardProvider>(context, listen: false).clearHighlight();
         },
         child: Container(
           color: AppColors.background,

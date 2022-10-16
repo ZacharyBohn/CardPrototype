@@ -5,6 +5,8 @@ import 'package:game_prototype/enum/app_colors.dart';
 import 'package:game_prototype/providers/board_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'app_button.dart';
+
 class GameCardStackPreviewer extends StatefulWidget {
   const GameCardStackPreviewer({Key? key}) : super(key: key);
 
@@ -56,6 +58,16 @@ class _GameCardStackPreviewerState extends State<GameCardStackPreviewer> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: AppButton(
+                          label: 'Shuffle',
+                          onTap: () {
+                            boardProvider.shufflePreviewStack();
+                            return;
+                          },
+                        ),
+                      ),
                       for (int cardIndex in Iterable.generate(
                           boardProvider.previewCards!.cards.length))
                         Padding(
