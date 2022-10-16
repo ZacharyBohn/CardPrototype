@@ -19826,14 +19826,15 @@ afI(a,b){return new A.Cp(a,b,null)},
 Cp:function Cp(a,b,c){this.c=a
 this.d=b
 this.a=c},
-cW(a,b,c,d,e){return new A.oQ(d,b,a,c,e,null)},
-oQ:function oQ(a,b,c,d,e,f){var _=this
+cW(a,b,c,d,e,f){return new A.oQ(d,b,a,c,f,e,null)},
+oQ:function oQ(a,b,c,d,e,f,g){var _=this
 _.c=a
 _.d=b
 _.e=c
 _.r=d
 _.w=e
-_.a=f},
+_.x=f
+_.a=g},
 m8(a,b,c,d){return new A.tZ(b,a,c,d,null)},
 tZ:function tZ(a,b,c,d,e){var _=this
 _.c=a
@@ -66975,11 +66976,12 @@ I(a){var s,r,q=null,p=$.aot()
 p=A.Sm(p,1)
 s=A.kr(4)
 r=$.aou()
-return A.hu(q,A.bD(q,A.fx(new A.ek(B.bI,A.cW(r,q,q,this.c,!1),q),q,q),B.l,q,q,new A.cs(q,q,p,s,q,q,B.U),q,q,q,q,q,q,q),B.a3,!1,q,q,q,q,q,q,q,q,q,q,this.d,q,q,q,q,q,q)}}
+return A.hu(q,A.bD(q,A.fx(new A.ek(B.bI,A.cW(r,q,q,this.c,q,!1),q),q,q),B.l,q,q,new A.cs(q,q,p,s,q,q,B.U),q,q,q,q,q,q,q),B.a3,!1,q,q,q,q,q,q,q,q,q,q,this.d,q,q,q,q,q,q)}}
 A.oQ.prototype={
 I(a){var s,r,q,p=this,o=null,n=p.c
 if(n==null)n=""
-s=p.w?1:o
+s=p.x
+if(s==null)s=p.w?1:o
 r=p.e
 if(r==null)r=$.aii()
 q=p.d
@@ -67044,7 +67046,7 @@ $S:142}
 A.CV.prototype={
 I(a){var s,r,q,p,o,n=null,m=A.Sm($.aij(),1),l=A.kr(8),k=this.e
 if(k!=null){s=t.p
-r=A.cY(A.jG(A.a([new A.f8(1,B.b3,A.cW(n,n,n,k.e,!1),n),new A.f8(4,B.b3,A.cW(n,n,n,k.a,!0),n),new A.f8(1,B.b3,A.cW(n,n,n,k.f,!1),n)],s),B.a2,B.rM,B.S),1)
+r=A.cY(A.jG(A.a([new A.f8(1,B.b3,A.cW(n,n,n,k.e,n,!1),n),new A.f8(4,B.b3,A.cW(n,n,n,k.a,n,!0),n),new A.f8(1,B.b3,A.cW(n,n,n,k.f,n,!1),n)],s),B.a2,B.rM,B.S),1)
 q=$.aij()
 p=A.ag2(q)
 o=k.d
@@ -67052,17 +67054,18 @@ o=o!=null&&o.length!==0
 if(o===!0){o=k.d
 o.toString
 o=A.fx(A.Yg(o,new A.SG(),n,n),n,n)}else o=A.bD(n,n,B.l,n,n,n,n,n,n,n,n,n,n)
-s=new A.ek(new A.aK(8,8,8,8),A.kx(A.a([r,p,A.cY(o,9),A.ag2(q),new A.f8(1,B.b3,A.cW(n,n,B.AF,k.b,!1),n),A.cY(A.alk(A.cW(n,n,n,k.c,!1)),4),A.ag2(q),A.cY(A.jG(A.a([new A.f8(1,B.b3,A.cW(n,n,n,k.r,!1),n),new A.f8(1,B.b3,A.cW(n,n,n,k.w,!1),n)],s),B.a2,B.rM,B.S),1)],s),B.dG,B.aE,B.S),n)
+s=new A.ek(new A.aK(8,8,8,8),A.kx(A.a([r,p,A.cY(o,9),A.ag2(q),new A.f8(1,B.b3,A.cW(n,n,B.AF,k.b,n,!1),n),A.cY(A.alk(A.cW(n,n,n,k.c,n,!1)),4),A.ag2(q),A.cY(A.jG(A.a([new A.f8(1,B.b3,A.cW(n,n,n,k.r,n,!1),n),new A.f8(1,B.b3,A.cW(n,n,n,k.w,n,!1),n)],s),B.a2,B.rM,B.S),1)],s),B.dG,B.aE,B.S),n)
 k=s}else k=A.bD(n,n,B.l,n,n,n,n,n,n,n,n,n,n)
 return A.bD(n,k,B.l,n,n,new A.cs(n,n,m,l,n,n,B.U),n,this.d,n,n,n,n,this.c)}}
 A.SG.prototype={
-$3(a,b,c){return A.cW(null,null,null,"Failed to load image",!1)},
+$3(a,b,c){var s=null
+return A.cW(s,s,s,"Failed to load image",s,!1)},
 $S:59}
 A.CW.prototype={
 BB(){var s=null,r=A.a([],t.p),q=this.d,p=q.d
 if(p!=null&&p.length!==0){p.toString
 r.push(A.cY(A.Yg(p,new A.SK(),B.l9,1/0),1))}q=q.a
-r.push(A.fx(A.cW(s,11,s,q.length!==0?q:"?",!1),s,s))
+r.push(A.fx(A.cW(s,11,s,q.length!==0?q:"?",s,!1),s,s))
 return A.kx(r,B.a2,B.rL,B.S)},
 I(a){var s,r,q=this,p=null,o=A.dm(a,!0,t.Y),n=A.ps(A.a([q.d],t.TG),-99,-99),m=A.bD(p,p,B.l,p,p,p,p,p,p,p,p,p,p),l=q.c,k=l.a
 l=l.b
@@ -67073,7 +67076,8 @@ l=Math.ceil(l)
 r=$.afo()
 return A.n7(B.N,p,A.ajL(A.hu(p,A.bD(p,q.BB(),B.l,p,p,new A.cs(r,p,p,p,p,p,B.U),p,l,p,p,p,p,k),B.a3,!1,p,p,p,p,p,p,p,p,p,p,new A.SH(q,o),p,p,p,p,p,p),m,n,s,1,new A.SI(q,o),new A.SJ(q,o),p,t.qt),B.l,p,0,p,p,p,p,p,B.b9)}}
 A.SK.prototype={
-$3(a,b,c){return A.cW(null,null,null,"[Image Error]",!1)},
+$3(a,b,c){var s=null
+return A.cW(s,s,s,"[Image Error]",s,!1)},
 $S:59}
 A.SJ.prototype={
 $0(){var s=this.a.d
@@ -67115,7 +67119,7 @@ q=r.length
 if(c)--q
 if(b)q=0
 s=this.MZ(a,c)
-return A.qS(B.c5,A.a([s,new A.hi(B.w5,p,p,A.cW(p,11,p,q===0||q===1?"":""+q,!1),p)],t.p),B.cw)},
+return A.qS(B.c5,A.a([s,new A.hi(B.w5,p,p,A.cW(p,11,p,q===0||q===1?"":""+q,p,!1),p)],t.p),B.cw)},
 MV(a,b){return this.uU(a,!1,b)},
 MT(a){return this.uU(a,!1,!1)},
 MU(a,b){return this.uU(a,b,!1)},
@@ -67125,7 +67129,7 @@ s=A.a([],t.p)
 r=a.d
 if(r!=null&&r.length!==0){r.toString
 s.push(A.cY(A.Yg(r,new A.a9I(),B.l9,1/0),1))}r=a.a
-s.push(A.fx(A.cW(q,11,q,r.length!==0?r:"?",!1),q,q))
+s.push(A.fx(A.cW(q,11,q,r.length!==0?r:"?",2,!1),q,q))
 return A.kx(s,B.a2,B.rL,B.S)},
 a4c(){var s,r,q=this.w.d,p=this.f,o=p.a
 p=p.b
@@ -67162,7 +67166,8 @@ p=l.x
 p=A.n7(B.N,k,new A.ye(new A.a9y(l,q,s,i),!1,new A.eW(p,A.l(p).j("eW<1>")),k,t.wu),B.l,k,0,k,k,k,k,k,B.b9)
 return A.n7(B.N,k,A.hu(k,A.ajL(A.hu(k,new A.pc(new A.a9z(l,s,o),new A.a9A(l,i),new A.a9B(l),k,t.BK),B.a3,!1,k,k,k,k,k,k,k,k,k,k,new A.a9C(l,q,i),k,k,k,k,k,k),h,g,p,1,new A.a9D(l,i),new A.a9E(l,i),new A.a9F(l),t.qt),B.a3,!1,k,new A.a9G(j,l,s,i),k,k,k,k,k,k,k,k,k,k,k,k,k,k,k),B.l,k,0,k,k,k,k,k,B.b9)}}
 A.a9I.prototype={
-$3(a,b,c){return A.cW(null,null,null,"[Image Error]",!1)},
+$3(a,b,c){var s=null
+return A.cW(s,s,s,"[Image Error]",s,!1)},
 $S:59}
 A.a9H.prototype={
 $0(){var s=this.a,r=s.c
@@ -67519,10 +67524,10 @@ g===$&&A.b()
 g=A.a([m,k,i,l,h,A.m8(g,"Image URL",new A.a80(f),!0),new A.rk(r*0.03,e)],j)
 m=f.Q
 if(m!=null&&m.length!==0){m.toString
-g.push(A.cY(A.Yg(m,new A.a81(),e,e),1))}if(f.Q==null)g.push(A.cW(e,e,e,"No image set.",!1))
+g.push(A.cY(A.Yg(m,new A.a81(),e,e),1))}if(f.Q==null)g.push(A.cW(e,e,e,"No image set.",e,!1))
 g.push(new A.jP(e))
 m=f.as
-if(m!=null)g.push(A.cW($.aoA(),e,e,m,!1))
+if(m!=null)g.push(A.cW($.aoA(),e,e,m,e,!1))
 r*=0.01
 g.push(new A.rk(r,e))
 g.push(A.jG(A.a([A.cY(A.afI("Copy Card",new A.a82(f,d)),1),new A.py(o,e),A.cY(A.afI("Delete Card",new A.a83(f,d)),1)],j),B.a2,B.aE,B.S))
@@ -67593,7 +67598,8 @@ s.jH()
 s.fF()},
 $S:14}
 A.a81.prototype={
-$3(a,b,c){return A.cW(null,null,null,"Failed to load image",!1)},
+$3(a,b,c){var s=null
+return A.cW(s,s,s,"Failed to load image",s,!1)},
 $S:59}
 A.a82.prototype={
 $0(){var s=this.b,r=s.b
@@ -67622,7 +67628,7 @@ $0(){this.a.bq(0)},
 $S:0}
 A.Cq.prototype={
 I(a){var s,r,q=null,p=a.P(t.w).f,o=$.aoy()
-p=A.a([A.iE(new A.Ew(new A.cs($.aoz(),q,q,q,q,q,B.U),A.fx(A.cW(q,18,q,"CCG Prototyper",!1),q,q),q),p.a.b*0.1,q),A.agu(new A.S_(a),A.cW(q,q,q,"Load deck (json)",!1)),A.agu(new A.S0(a),A.cW(q,q,q,"Load board from file (json)",!1)),A.agu(new A.S1(a),A.cW(q,q,q,"Save board to file (json)",!1))],t.p)
+p=A.a([A.iE(new A.Ew(new A.cs($.aoz(),q,q,q,q,q,B.U),A.fx(A.cW(q,18,q,"CCG Prototyper",q,!1),q,q),q),p.a.b*0.1,q),A.agu(new A.S_(a),A.cW(q,q,q,"Load deck (json)",q,!1)),A.agu(new A.S0(a),A.cW(q,q,q,"Load board from file (json)",q,!1)),A.agu(new A.S1(a),A.cW(q,q,q,"Save board to file (json)",q,!1))],t.p)
 s=A.aA([null,0],t.LO,t.S)
 r=!0
 r=r?B.w6:q
@@ -67675,7 +67681,7 @@ $S:22}
 A.vz.prototype={
 ad(){return new A.Ma(B.j)}}
 A.Ma.prototype={
-I(a){var s=null,r=a.P(t.w).f,q=A.cW(s,18,s,"CCG Prototyper",!1),p=$.aoq(),o=$.aor(),n=t.p
+I(a){var s=null,r=a.P(t.w).f,q=A.cW(s,18,s,"CCG Prototyper",s,!1),p=$.aoq(),o=$.aor(),n=t.p
 return new A.xB(new A.Ha(new A.tY(q,0,p,new A.NL(s,s,1/0,56),s),new A.Y(1/0,r.a.b*0.07),s),A.hu(s,A.bD(s,A.jG(A.a([A.cY(new A.x6(s),3),A.cY(new A.vt(s),1),A.cY(A.kx(A.a([A.cY(A.fx(new A.qh(!1,s),s,s),2),new A.jP(s),A.cY(new A.u3(s),10),new A.jP(s),A.cY(A.fx(new A.qh(!0,s),s,s),2)],n),B.a2,B.hd,B.S),4),new A.jP(s),A.cY(new A.ui(s),3)],n),B.a2,B.aE,B.S),B.l,o,s,s,s,s,s,s,s,s,s),B.a3,!1,s,s,s,s,s,s,s,s,s,s,new A.a9U(this),s,s,s,s,s,s),new A.Cq(s),s)}}
 A.a9U.prototype={
 $0(){var s=this.a.c

@@ -127,6 +127,7 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
           child: AppText(
             label: topCard.name.isNotEmpty ? topCard.name : '?',
             fontSize: FontSizes.small,
+            maxLines: 2,
           ),
         ),
       ],
