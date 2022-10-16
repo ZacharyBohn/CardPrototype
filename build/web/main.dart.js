@@ -67510,7 +67510,7 @@ i===$&&A.b()
 i=A.jG(A.a([l,new A.py(o,e),A.cY(A.m8(i,"Bottom Right Value",new A.a7Y(f),!0),1)],j),B.a2,B.aE,B.S)
 l=f.cx
 l===$&&A.b()
-l=A.m8(l,"Description Accent",new A.a7Z(f),!0)
+l=A.m8(l,"Description Accent",new A.a7Z(f),!1)
 h=f.cy
 h===$&&A.b()
 h=A.m8(h,"Description",new A.a8_(f),!1)

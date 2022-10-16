@@ -286,6 +286,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
           AppTextField(
             hint: 'Description Accent',
             controller: descriptionAccentController,
+            oneLine: false,
             onTextChange: (String value) {
               descriptionAccent = value;
               maybeSave();
