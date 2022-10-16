@@ -67532,7 +67532,7 @@ r*=0.01
 g.push(new A.rk(r,e))
 g.push(A.jG(A.a([A.cY(A.afI("Copy Card",new A.a82(f,d)),1),new A.py(o,e),A.cY(A.afI("Delete Card",new A.a83(f,d)),1)],j),B.a2,B.aE,B.S))
 g.push(new A.rk(r,e))
-g.push(A.jG(A.a([A.cY(A.afI("Save Card",new A.a7W(f)),1)],j),B.a2,B.aE,B.S))
+g.push(A.jG(A.a([A.cY(A.afI("Create Card",new A.a7W(f)),1)],j),B.a2,B.aE,B.S))
 return A.bD(e,A.kx(g,B.a2,B.aE,B.S),B.l,e,e,new A.cs(q,e,new A.cF(B.p,B.p,B.p,new A.cO(p,1,B.ak,B.T)),e,e,e,B.U),e,e,e,new A.aK(o,n,o,n),e,e,e)}}
 A.a84.prototype={
 $0(){this.a.as="Name must be set."},

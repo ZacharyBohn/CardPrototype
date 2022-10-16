@@ -376,7 +376,7 @@ class _CardDesignPanelState extends State<CardDesignPanel> {
             children: [
               Expanded(
                 child: AppButton(
-                  label: 'Save Card',
+                  label: 'Create Card',
                   onTap: () {
                     save();
                   },
