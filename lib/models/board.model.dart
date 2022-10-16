@@ -1,6 +1,8 @@
 import 'package:game_prototype/models/game_card_group.model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+import 'game_card.model.dart';
+
 part 'board.model.g.dart';
 
 @JsonSerializable()
@@ -30,6 +32,29 @@ class BoardModel {
       positions.add(row);
     }
     return;
+  }
+
+  GameCardGroupModel condenseCards(int row, int column) {
+    List<GameCardModel> allCards = [];
+    for (var row in positions) {
+      for (var group in row) {
+        allCards.addAll(group.cards);
+      }
+    }
+    for (var group in player1Hand) {
+      allCards.addAll(group.cards);
+    }
+    for (var group in player2Hand) {
+      allCards.addAll(group.cards);
+    }
+    for (var card in allCards) {
+      card.faceup = false;
+    }
+    return GameCardGroupModel(
+      rowPosition: row,
+      columnPosition: column,
+      cards: allCards,
+    );
   }
 
   factory BoardModel.fromJson(Map<String, dynamic> json) =>

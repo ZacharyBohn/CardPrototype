@@ -40,7 +40,25 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: AppText(label: 'Load from file (json)'),
+              title: AppText(label: 'Load deck (json)'),
+              onTap: () async {
+                BoardProvider boardProvider =
+                    Provider.of<BoardProvider>(context, listen: false);
+                String? data = await pickFile('Select deck File', ['json']);
+                if (data != null) {
+                  Map? map = jsonDecode(data);
+                  if (map != null && map is Map<String, dynamic>) {
+                    var board = BoardModel.fromJson(map);
+                    boardProvider.addGroupToTop(
+                        4, 6, board.condenseCards(4, 6));
+                  }
+                }
+                Navigator.of(context).pop();
+                return;
+              },
+            ),
+            ListTile(
+              title: AppText(label: 'Load board from file (json)'),
               onTap: () async {
                 BoardProvider boardProvider =
                     Provider.of<BoardProvider>(context, listen: false);
@@ -56,7 +74,7 @@ class AppDrawer extends StatelessWidget {
               },
             ),
             ListTile(
-              title: AppText(label: 'Save to file (json)'),
+              title: AppText(label: 'Save board to file (json)'),
               onTap: () async {
                 BoardProvider boardProvider =
                     Provider.of<BoardProvider>(context, listen: false);
