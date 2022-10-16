@@ -230,6 +230,9 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               initialData: false,
               stream: draggableStream.stream,
               builder: (context, _) {
+                if (cardGroupCount == 0) {
+                  return Container();
+                }
                 return Container(
                   width: widget.cardSize.width * 1.2,
                   height: widget.cardSize.height * 1.1,
@@ -315,6 +318,12 @@ class _GameCardGroupWidgetState extends State<GameCardGroupWidget> {
               ),
               onWillAccept: (object) {
                 if (widget.canDragTo == false) return false;
+                // can't drag to yourself
+                if (object ==
+                    boardProvider.getCardGroup(
+                        widget.rowPosition, widget.columnPosition)) {
+                  return false;
+                }
                 if (object is GameCardGroupModel) return true;
                 return false;
               },
